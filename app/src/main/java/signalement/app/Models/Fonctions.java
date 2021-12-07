@@ -182,6 +182,164 @@ public class Fonctions {
         }
         return resultat;
     }
+
+
+    public Object[] findLike(Connection con) {
+        Class<? extends Fonctions> c = this.getClass();
+        Object[] resultat = null;
+        Method[] allGet = getGet(this);
+        Method[] allSet = getSet(this);
+        String condition = " where ";
+        String and = "";
+        try {
+            int count = 0;
+            for (int i = 0; i < allGet.length; i++) {
+                if (allGet[i].invoke(this, (Object[]) null) != null) {
+                    condition = condition + and + allGet[i].getName().substring(4) + " LIKE '"+ allGet[i].invoke(this, (Object[]) null) + "%'";
+                    and = " and ";
+                }
+                else{
+                    count+=1;
+                }
+            }
+            String nomTable = this.getClass().getSimpleName();
+            java.sql.Statement stmt = con.createStatement();
+            String query ="";
+            if(count==allGet.length){
+                query ="select* from "+ nomTable;
+            }
+            else{
+                query="Select * from " + nomTable + condition;
+            }
+            ResultSet resTaille = stmt.executeQuery(query);
+            int taille = 0;
+            int indice = 0;
+            while (resTaille.next()) {
+                taille++;
+            }
+            resTaille.close();
+            resultat = new Object[taille];
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                resultat[indice] = new Object();
+                resultat[indice] = c.newInstance();
+                for (int x = 0; x < allSet.length; x++) {
+                    allSet[x].invoke(resultat[indice], res.getString(allSet[x].getName().substring(4)));
+                }
+                indice++;
+            }
+            res.close();
+            stmt.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultat;
+    }
+
+
+    // postgres specific
+    public Object[] pgFind(Connection con) {
+        Class<? extends Fonctions> c = this.getClass();
+        Object[] resultat = null;
+        Method[] allGet = getGet(this);
+        Method[] allSet = getSet(this);
+        String condition = " where ";
+        String and = "";
+        try {
+            int count = 0;
+            for (int i = 0; i < allGet.length; i++) {
+                if (allGet[i].invoke(this, (Object[]) null) != null) {
+                    condition = condition + and + allGet[i].getName().substring(4) + "='"+ allGet[i].invoke(this, (Object[]) null) + "'";
+                    and = " and ";
+                }
+                else{
+                    count+=1;
+                }
+            }
+            String nomTable = this.getClass().getSimpleName();
+            java.sql.Statement stmt = con.createStatement();
+            String query ="";
+            if(count==allGet.length){
+                query ="select* from "+ nomTable;
+            }
+            else{
+                query="Select * from " + nomTable + condition;
+            }
+            ResultSet resTaille = stmt.executeQuery(query);
+            int taille = 0;
+            int indice = 0;
+            while (resTaille.next()) {
+                taille++;
+            }
+            resTaille.close();
+            resultat = new Object[taille];
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                resultat[indice] = new Object();
+                resultat[indice] = c.newInstance();
+                for (int x = 0; x < allSet.length; x++) {
+                    allSet[x].invoke(resultat[indice], res.getString(allSet[x].getName().substring(4)));
+                }
+                indice++;
+            }
+            res.close();
+            stmt.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultat;
+    }
+    public Object[] pgFindLike(Connection con) {
+        Class<? extends Fonctions> c = this.getClass();
+        Object[] resultat = null;
+        Method[] allGet = getGet(this);
+        Method[] allSet = getSet(this);
+        String condition = " where ";
+        String and = "";
+        try {
+            int count = 0;
+            for (int i = 0; i < allGet.length; i++) {
+                if (allGet[i].invoke(this, (Object[]) null) != null) {
+                    condition = condition + and + allGet[i].getName().substring(4) + " ILIKE '"+ allGet[i].invoke(this, (Object[]) null) + "%'";
+                    and = " and ";
+                }
+                else{
+                    count+=1;
+                }
+            }
+            String nomTable = this.getClass().getSimpleName();
+            java.sql.Statement stmt = con.createStatement();
+            String query ="";
+            if(count==allGet.length){
+                query ="select* from "+ nomTable;
+            }
+            else{
+                query="Select * from " + nomTable + condition;
+            }
+            ResultSet resTaille = stmt.executeQuery(query);
+            int taille = 0;
+            int indice = 0;
+            while (resTaille.next()) {
+                taille++;
+            }
+            resTaille.close();
+            resultat = new Object[taille];
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                resultat[indice] = new Object();
+                resultat[indice] = c.newInstance();
+                for (int x = 0; x < allSet.length; x++) {
+                    allSet[x].invoke(resultat[indice], res.getString(allSet[x].getName().substring(4)));
+                }
+                indice++;
+            }
+            res.close();
+            stmt.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultat;
+    }
     //Fonctions keeeeeely bdb 
     public static Method[] getGetWithoutId(Object o) {
         Class<? extends Object> c = o.getClass();

@@ -4,6 +4,8 @@ import java.sql.Connection;
 
 import com.google.gson.Gson;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import signalement.app.Models.*;
@@ -46,5 +48,23 @@ public class MainController {
         }
         return result;
     }
-    
+    @GetMapping("/test/{name}")
+    public String getSpecificMaladies(@PathVariable("name") String name) throws Exception {
+        Gson gson = new Gson();
+        Log log=null;
+        Object[]all=null;
+        try {
+            log = new Log();
+            Connection con = log.getCon();
+            Test filter = new Test(name);
+            all = filter.pgFindLike(con);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return e.getMessage();
+        }finally{
+            log.close();
+        }
+        return gson.toJson(new ReturnMessage("token", "ehehe", true, true, all));
+    }
 }
