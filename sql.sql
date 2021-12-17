@@ -20,15 +20,34 @@ create table signalement(
     foreign key (idType) references typeSignalement(id)
 );
 
+create table imageSignalement (
+    id int serial primary key,
+    -- id int identity primary key, ho an Sitraka ihany
+    idSignalement int not null,
+    imageSignalement bytea not null,
+    -- imageSignalement binary not null, ho an Sitraka ihany
+    foreign key (idSignalement) references signalement(id)
+);
 create table enCours(
+    id int serial primary key,
+    -- id int identity primary key, ho an Sitraka ihany
     idSignalement int not null,
     foreign key(idSignalement) references signalement(id)
 );
 
 create table termine(
+    id int serial primary key,
+    -- id int identity primary key, ho an Sitraka ihany
     idSignalement int not null,
     foreign key(idSignalement) references signalement(id)
 );
+
+
+
+
+
+
+
 -- create table test(
 --     nom varchar(255) not null
 -- );
