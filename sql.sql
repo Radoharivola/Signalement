@@ -20,7 +20,15 @@ create table signalement(
     foreign key (idType) references typeSignalement(id)
 );
 
+create table enCours(
+    idSignalement int not null,
+    foreign key(idSignalement) references signalement(id)
+);
 
+create table termine(
+    idSignalement int not null,
+    foreign key(idSignalement) references signalement(id)
+);
 -- create table test(
 --     nom varchar(255) not null
 -- );
