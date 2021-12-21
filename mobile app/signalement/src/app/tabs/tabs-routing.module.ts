@@ -7,36 +7,41 @@ const routes: Routes = [
     path: 'tabs',
     component: TabsPage,
     children: [
+
       {
-        path: 'tab1',
-        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+        path: 'details-notification',
+        loadChildren: () => import('../pages/notifications/details-notification/details-notification.module').then(m => m.DetailsNotificationPageModule)
       },
       {
-        path: 'tab2',
-        loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+        path: 'list-notification',
+        loadChildren: () => import('../pages/notifications/list-notification/list-notification.module').then(m => m.ListNotificationPageModule)
       },
       {
-        path: 'tab3',
-        loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+        path: 'list-signalement',
+        loadChildren: () => import('../pages/signalement/list-signalement/list-signalement.module').then(m => m.ListSignalementPageModule)
       },
       {
-        path: 'register',
-        loadChildren: () => import('../auth/register/register.module').then(m => m.RegisterPageModule)
+        path: 'insert-signalement',
+        loadChildren: () => import('../pages/signalement/insert-signalement/insert-signalement.module').then(m => m.InsertSignalementPageModule)
       },
       {
-        path: 'login',
-        loadChildren: () => import('../auth/login/login.module').then(m => m.LoginPageModule)
+        path: 'details-signalement',
+        loadChildren: () => import('../pages/signalement/details-signalement/details-signalement.module').then(m => m.DetailsSignalementPageModule)
+      },
+      {
+        path: 'menu',
+        loadChildren: () => import('../pages/menu/menu.module').then(m => m.MenuPageModule)
       },
       {
         path: '',
-        redirectTo: '/tabs/tab1',
+        redirectTo: '/tabs/list-signalement',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/tab1',
+    redirectTo: '/tabs/list-signalement',
     pathMatch: 'full'
   }
 ];
@@ -44,4 +49,4 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
 })
-export class TabsPageRoutingModule {}
+export class TabsPageRoutingModule { }

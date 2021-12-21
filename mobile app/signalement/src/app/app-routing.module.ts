@@ -8,12 +8,37 @@ const routes: Routes = [
   },
   {
     path: 'register',
-    loadChildren: () => import('./auth/register/register.module').then( m => m.RegisterPageModule)
+    loadChildren: () => import('./pages/auth/register/register.module').then( m => m.RegisterPageModule)
   },
   {
     path: 'login',
-    loadChildren: () => import('./auth/login/login.module').then( m => m.LoginPageModule)
-  }
+    loadChildren: () => import('./pages/auth/login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'details-notification',
+    loadChildren: () => import('./pages/notifications/details-notification/details-notification.module').then( m => m.DetailsNotificationPageModule)
+  },
+  {
+    path: 'list-notification',
+    loadChildren: () => import('./pages/notifications/list-notification/list-notification.module').then( m => m.ListNotificationPageModule)
+  },
+  {
+    path: 'list-signalement',
+    loadChildren: () => import('./pages/signalement/list-signalement/list-signalement.module').then( m => m.ListSignalementPageModule)
+  },
+  {
+    path: 'insert-signalement',
+    loadChildren: () => import('./pages/signalement/insert-signalement/insert-signalement.module').then( m => m.InsertSignalementPageModule)
+  },
+  {
+    path: 'details-signalement',
+    loadChildren: () => import('./pages/signalement/details-signalement/details-signalement.module').then( m => m.DetailsSignalementPageModule)
+  },
+  {
+    path: 'menu',
+    loadChildren: () => import('./pages/menu/menu.module').then( m => m.MenuPageModule)
+  },
+
 ];
 @NgModule({
   imports: [
