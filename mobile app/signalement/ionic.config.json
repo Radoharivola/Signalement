@@ -1,7 +1,0 @@
-{
-  "name": "signalement",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}
