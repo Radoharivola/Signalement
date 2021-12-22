@@ -27,7 +27,14 @@
       <ion-fab-button ><ion-icon name="image"></ion-icon></ion-fab-button>
     </ion-fab-list>
     <ion-fab-list side="start">
-      <ion-fab-button (click)="addPhotoToGallery()"><ion-icon name="camera"></ion-icon></ion-fab-button>
+      <ion-fab-button (click)="captureImage()"><ion-icon name="camera"></ion-icon></ion-fab-button>
     </ion-fab-list>
   </ion-fab>
+
+
+  <ion-button (click)="selectImage()">
+    Click Picture
+ </ion-button>
+ 
+ <img [src]="clickedImage" />
 </ion-content>

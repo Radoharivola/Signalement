@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { InsertSignalementPageRoutingModule } from './insert-signalement-routing.module';
 
 import { InsertSignalementPage } from './insert-signalement.page';
-
 @NgModule({
   imports: [
     CommonModule,
