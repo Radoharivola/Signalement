@@ -1,18 +1,18 @@
 <ion-header>
   <ion-toolbar>
     Créer un signalement
-    <ion-button slot="end">
+    <ion-button slot="end" (click)="insertSignalement()">
       Poster
     </ion-button>
   </ion-toolbar>
-  
+
 </ion-header>
 
 <ion-content>
- 
+
   <ion-item>
     <ion-label>Type du problème:</ion-label>
-    <ion-select value="brown" okText="Okay" cancelText="Dismiss">
+    <ion-select value="brown" okText="valider" cancelText="annuler">
       <ion-select-option value="brown">Infrastructure</ion-select-option>
     </ion-select>
   </ion-item>
@@ -22,19 +22,27 @@
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>
       <ion-icon name="camera"></ion-icon>
-    </ion-fab-button>
+    </ion-fab-button >
     <ion-fab-list side="top">
-      <ion-fab-button ><ion-icon name="image"></ion-icon></ion-fab-button>
+      <ion-fab-button (click)="getGallery()">
+        <ion-icon name="image"></ion-icon>
+      </ion-fab-button>
     </ion-fab-list>
     <ion-fab-list side="start">
-      <ion-fab-button (click)="captureImage()"><ion-icon name="camera"></ion-icon></ion-fab-button>
+      <ion-fab-button (click)="getCamera()">
+        <ion-icon name="camera"></ion-icon>
+      </ion-fab-button>
     </ion-fab-list>
   </ion-fab>
 
-
-  <ion-button (click)="selectImage()">
-    Click Picture
- </ion-button>
- 
- <img [src]="clickedImage" />
+  <!-- <ion-button (click)="test()">
+    open my ass
+  </ion-button>
+  <ion-button (click)="getCamera()">
+    open camera
+  </ion-button>
+  <ion-button (click)="getGallery()">
+    open gallery
+  </ion-button> -->
+  <img [src]="imgURL" width="300" height="300"/>
 </ion-content>
