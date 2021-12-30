@@ -39,7 +39,7 @@ public class MainController {
             Connection con=log.getCon();
             Gson gson=new Gson();
             Signalement sign=new Signalement();
-            Object[]signs=sign.pgFind(con);
+            Object[]signs=sign.find(con);
             if(signs.length==0){
                                 System.out.println(signs.length);
 
@@ -55,6 +55,8 @@ public class MainController {
         return retour;
 
         }
+
+
     
 
 

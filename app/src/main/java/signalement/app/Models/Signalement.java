@@ -10,11 +10,11 @@ public class Signalement  extends Fonctions{
      
 
     public int get_Id(){
-        return id;
+        return this.id;
     }
 
     public int get_IdUser(){
-        return idUser;
+        return this.idUser;
     }
 
     public int get_IdType(){
@@ -37,26 +37,25 @@ public class Signalement  extends Fonctions{
         return descriptionSignalement;
     }
 
-    public void set_Id(int idS){
-        id=idS;
+    public void set_Id(Object idS){
+        id=Integer.valueOf(String.valueOf(idS));
     }
-    public void set_IdType(int idT){
-        idType=idT;
+    public void set_IdType(Object idT){
+        idType=Integer.valueOf(String.valueOf(idT));
     }
-    public void set_IdUser(int idU){
-        idUser=idU;
+    public void set_IdUser(Object idU){
+        idUser=Integer.valueOf(String.valueOf(idU));
     }
-    public void set_Latitude(double lat){
-        latitude=lat;
+    public void set_Latitude(Object lat){
+        latitude=Double.valueOf(String.valueOf(lat));
     }
-    public void set_Longitude(double lon){
-        longitude=lon;
-        
+    public void set_Longitude(Object lon){
+        longitude=Double.valueOf(String.valueOf(lon));  
     }
-    public void set_ImageSignalement(String img){
-        imageSignalement=img; 
+    public void set_ImageSignalement(Object img){
+        imageSignalement=String.valueOf(img); 
     }
-    public void set_DescriptionSignalement(String descri){
-        descriptionSignalement=descri;  
+    public void set_DescriptionSignalement(Object descri){
+        descriptionSignalement=String.valueOf(descri);
     }
 }
