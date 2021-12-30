@@ -41,3 +41,19 @@ create table termine(
     idSignalement int not null,
     foreign key(idSignalement) references signalement(id)
 );
+
+
+
+-- ilaina am login
+create table appUser(
+    id int serial primary key,
+    nom varchar(25) not null,
+    prenom varchar(25) not null,
+    email varchar(25) not null,
+    mdp varchar(255) not null
+);
+create table appUserToken(
+    idUser int not null,
+    token varchar(255) not null,
+    foreign key(idUser) references user(id)
+);
