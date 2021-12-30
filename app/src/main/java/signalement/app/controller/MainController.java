@@ -31,40 +31,35 @@ public class MainController {
     //     }
     //     return result;
     // }
-    @RequestMapping("/test")
-    public String eleves(){
-        String result=null;
-        try {
+    @RequestMapping("/Signalements")
+    public String signalements(){
+        String retour=null;
+        try{
             Log log=new Log();
             Connection con=log.getCon();
             Gson gson=new Gson();
-            Test filter=new Test();
-            Object[]test=filter.find(con);
-            result=gson.toJson(test); 
+            Signalement sign=new Signalement();
+            Object[]signs=sign.find(con);
+            if(signs.length==0){
+                                System.out.println(signs.length);
+
+                return gson.toJson("Problems occured.");
+            }
+            
+            retour=gson.toJson(signs); 
             log.close();
         }catch(Exception e){
             e.printStackTrace();
             return e.getMessage();
         }
-        return result;
-    }
-    @GetMapping("/test/{name}")
-    public String getSpecificMaladies(@PathVariable("name") String name) throws Exception {
-        Gson gson = new Gson();
-        Log log=null;
-        Object[]all=null;
-        try {
-            log = new Log();
-            Connection con = log.getCon();
-            Test filter = new Test(name);
-            all = filter.pgFindLike(con);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return e.getMessage();
-        }finally{
-            log.close();
+        return retour;
+
         }
-        return gson.toJson(new ReturnMessage("token", "ehehe", true, true, all));
-    }
+
+
+    
+
+
+    
+   
 }
