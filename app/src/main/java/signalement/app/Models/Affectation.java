@@ -1,17 +1,21 @@
-public class Affectation {
+package signalement.app.Models;
+
+import java.util.Date;
+
+public class Affectation extends Fonctions{
     Integer id;
     Date dateAffectation;
-    Integer idRregion;
+    Integer idRegion;
     Integer idSignalement; 
 
     public Affectation() {
 
     }
 
-    public Affectation(Integer id, Date dateAffectation, Integer idRregion, Integer idSignalement) {
+    public Affectation(Integer id, Date dateAffectation, Integer idRegion, Integer idSignalement) {
         this.id = id;
         this.dateAffectation = dateAffectation;
-        this.idRregion = idRregion;
+        this.idRegion = idRegion;
         this.idSignalement = idSignalement;
     }
 
@@ -28,69 +32,23 @@ public class Affectation {
     }
 
     public void set_DateAffectation(Object dateAffectation) {
-        this.dateAffectation = Date.valueOf(String.valueOf(dateAffectation));
+        this.dateAffectation = new Date(String.valueOf(dateAffectation));
     }
 
-    public Integer get_IdRregion() {
-        return this.idRregion;
+    public Integer get_IdRegion() {
+        return this.idRegion;
     }
 
-    public void set_IdRregion(Integer idRregion) {
-        this.idRregion = idRregion;
+    public void set_IdRegion(Object idRegion) {
+        this.idRegion = Integer.valueOf(String.valueOf(idRegion));
     }
 
     public Integer get_IdSignalement() {
         return this.idSignalement;
     }
 
-    public void set_IdSignalement(Integer idSignalement) {
-        this.idSignalement = idSignalement;
-    }
-
-    public Affectation id(Integer id) {
-        setId(id);
-        return this;
-    }
-
-    public Affectation dateAffectation(Date dateAffectation) {
-        setDateAffectation(dateAffectation);
-        return this;
-    }
-
-    public Affectation idRregion(Integer idRregion) {
-        setIdRregion(idRregion);
-        return this;
-    }
-
-    public Affectation idSignalement(Integer idSignalement) {
-        setIdSignalement(idSignalement);
-        return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof Affectation)) {
-            return false;
-        }
-        Affectation affectation = (Affectation) o;
-        return Objects.equals(id, affectation.id) && Objects.equals(dateAffectation, affectation.dateAffectation) && Objects.equals(idRregion, affectation.idRregion) && Objects.equals(idSignalement, affectation.idSignalement);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, dateAffectation, idRregion, idSignalement);
-    }
-
-    @Override
-    public String toString() {
-        return "{" +
-            " id='" + getId() + "'" +
-            ", dateAffectation='" + getDateAffectation() + "'" +
-            ", idRregion='" + getIdRregion() + "'" +
-            ", idSignalement='" + getIdSignalement() + "'" +
-            "}";
+    public void set_IdSignalement(Object idSignalement) {
+        this.idSignalement = Integer.valueOf(String.valueOf(idSignalement));
     }
 
 }
