@@ -40,6 +40,16 @@ insert into signalement values('4','1','3','image4.jpg','24.3421','21.343223','t
 insert into signalement values('5','1','3','image5.jpg','24.3421','21.343223','this is a test 5');
 
 
+create table Test2(
+    id serial primary key,
+    nom varchar(100),
+    money float
+);
+
+insert into Test2 values('1','Jab','10033.23');
+insert into Test2 values('2','Joob','324321.12243');
+insert into Test2 values('3','Jebe','343548964');
+
 
 create table imageSignalement (
     id serial primary key,
@@ -56,12 +66,22 @@ create table enCours(
     foreign key(idSignalement) references signalement(id)
 );
 
+insert into enCours values('1','1');
+insert into enCours values('2','3');
+
+
+
 create table termine(
     id serial primary key,
     -- id int identity primary key, ho an Sitraka ihany
     idSignalement int not null,
     foreign key(idSignalement) references signalement(id)
 );
+
+insert into termine values('1','2');
+insert into termine values('2','5');
+
+
 
 
 

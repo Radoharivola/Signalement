@@ -1,31 +1,42 @@
 package signalement.app.Models;
+import java.sql.Connection;
+
 public class Signalement  extends Fonctions{
-    int id;
-    int idUser;
-    int idType;
+    Integer id;
+    Integer idUser;
+    Integer idType;
     String imageSignalement;
-    double longitude;
-    double latitude;
+    Double longitude;
+    Double latitude;
     String descriptionSignalement;
      
 
-    public int get_Id(){
+     public Signalement(){
+
+     }
+
+    //  public Signalement(Object id,Object idU,Object idT,Object img,Object longitude,Object latitude,Object descri){
+    //      set_Id(id);
+    //      set_IdUser(idU);
+    //  }
+
+    public Integer get_Id(){
         return this.id;
     }
 
-    public int get_IdUser(){
+    public Integer get_IdUser(){
         return this.idUser;
     }
 
-    public int get_IdType(){
+    public Integer get_IdType(){
         return idType;
     }
 
-    public double get_Longitude(){
+    public Double get_Longitude(){
         return longitude;
     }
 
-      public double get_Latitude(){
+      public Double get_Latitude(){
         return latitude;
     }
 
@@ -58,4 +69,6 @@ public class Signalement  extends Fonctions{
     public void set_DescriptionSignalement(Object descri){
         descriptionSignalement=String.valueOf(descri);
     }
+
+
 }

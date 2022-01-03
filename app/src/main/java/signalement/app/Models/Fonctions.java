@@ -211,6 +211,7 @@ public class Fonctions {
             else{
                 query="Select * from " + nomTable + condition;
             }
+            System.out.println(query);
             ResultSet resTaille = stmt.executeQuery(query);
             int taille = 0;
             int indice = 0;
