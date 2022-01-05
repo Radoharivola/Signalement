@@ -1,6 +1,6 @@
 package signalement.app.controller;
 
-import java.sql.Connection;
+import java.sql.*;
 
 import com.google.gson.Gson;
 
@@ -181,9 +181,212 @@ public class MainController {
         }
         return retour;
     }
+    // notifications debut
 
-    
+    @GetMapping("/notifications/{id}")
+    String getAllNotifications(@PathVariable Integer year) throws Exception{
+        Log log=null;
+        Gson json=new Gson();
+        Object[]all=null;
+        try{
+            log=new Log();
+            UserNotification filter=new UserNotification();
+            all=filter.find(con);
+        }catch(Exception e){
+            throw e;
+        }finally{
+            log.close();
+        }
+        return json.toJson(all);
+    }
+    // notifications fin
+    // stats debut
+    @GetMapping("/typeGlobalStat/{year}")
+    String typeGlobalStat(@PathVariable Integer year) throws Exception{
+        Log log=null;
+        Gson json=new Gson();
+        Stat[]stat=null;
+        try{
+            log=new Log();
+            Connection con=log.getCon();
+            String query="select typesignalement.id,typeSignalement.nom,(count(idType)*100/count(signalement.id)) as pourcentage from typesignalement join signalement on signalement.idtype=typesignalement.id where extract(year from datesignalement)="+String.valueOf(year)+" group by typesignalement.id;";
+            java.sql.Statement stmt = con.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+            TypeSignalement allTypeFilter=new TypeSignalement();
+            Object[]allType=allTypeFilter.find(con);
+            TypeSignalement t=null;
+            stat=new Stat[allType.length];
+            for(int i=0;i<allType.length;i++){
+                t=(TypeSignalement)allType[i];
+                stat[i]=new Stat(t.get_Id(),t.get_Nom(),0.0);
+            }
+            while(res.next()){
+                Integer id=Integer.valueOf(String.valueOf(res.getString("id")));
+                Double pourcentage=Double.valueOf(String.valueOf(res.getString("pourcentage")));
+                for(int i=0;i<stat.length;i++){
+                    if(stat[i].getIdType()==id){
+                        stat[i].setPourcenntage(pourcentage);
+                        break;
+                    }
+                }
+            }
+            
+        }catch(Exception e){
+            throw e;
+        }finally{
+            log.close();
+        }
+        return json.toJson(stat);
+    }
 
+    @GetMapping("/typeGlobalStat/{month}/{year}")
+    String typeGlobalStat(@PathVariable Integer month,@PathVariable Integer year) throws Exception{
+        Log log=null;
+        Gson json=new Gson();
+        Stat[]stat=null;
+        try{
+            log=new Log();
+            Connection con=log.getCon();
+            String query="select typesignalement.id,typeSignalement.nom,(count(idType)*100/count(signalement.id)) as pourcentage from typesignalement join signalement on signalement.idtype=typesignalement.id where extract(year from datesignalement)="+String.valueOf(year)+" and extract(month from datesignalement)="+String.valueOf(month)+" group by typesignalement.id;";
+            java.sql.Statement stmt = con.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+            TypeSignalement allTypeFilter=new TypeSignalement();
+            Object[]allType=allTypeFilter.find(con);
+            TypeSignalement t=null;
+            stat=new Stat[allType.length];
+            for(int i=0;i<allType.length;i++){
+                t=(TypeSignalement)allType[i];
+                stat[i]=new Stat(t.get_Id(),t.get_Nom(),0.0);
+            }
+            while(res.next()){
+                Integer id=Integer.valueOf(String.valueOf(res.getString("id")));
+                Double pourcentage=Double.valueOf(String.valueOf(res.getString("pourcentage")));
+                for(int i=0;i<stat.length;i++){
+                    if(stat[i].getIdType()==id){
+                        stat[i].setPourcenntage(pourcentage);
+                        break;
+                    }
+                }
+            }
+            
+        }catch(Exception e){
+            throw e;
+        }finally{
+            log.close();
+        }
+        return json.toJson(stat);
+    }
+
+    @GetMapping("/signalementRegionStat/{year}")
+    String signalementRegionStat(@PathVariable Integer year) throws Exception{
+        Log log=null;
+        Gson json=new Gson();
+        Stat[]stat=null;
+        try{
+            log=new Log();
+            Connection con=log.getCon();
+            String query="select region.id,region.nom,(count(signalement.idRegion)*100/count(signalement.id)) as pourcentage from signalement join region on region.id=signalement.idRegion where extract(year from datesignalement)="+String.valueOf(year)+" group by region.id;";
+            java.sql.Statement stmt = con.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+            Region allRegionFilter=new Region();
+            Object[]allType=allRegionFilter.find(con);
+            Region t=null;
+            stat=new Stat[allType.length];
+            for(int i=0;i<allType.length;i++){
+                t=(Region)allType[i];
+                stat[i]=new Stat(t.get_Id(),t.get_Nom(),0.0);
+            }
+            while(res.next()){
+                Integer id=Integer.valueOf(String.valueOf(res.getString("id")));
+                Double pourcentage=Double.valueOf(String.valueOf(res.getString("pourcentage")));
+                for(int i=0;i<stat.length;i++){
+                    if(stat[i].getIdType()==id){
+                        stat[i].setPourcenntage(pourcentage);
+                        break;
+                    }
+                }
+            }
+            
+        }catch(Exception e){
+            throw e;
+        }finally{
+            log.close();
+        }
+        return json.toJson(stat);
+    }
+
+    @GetMapping("/signalementRegionStat/{year}/{month}")
+    String signalementRegionStat(@PathVariable Integer year) throws Exception{
+        Log log=null;
+        Gson json=new Gson();
+        Stat[]stat=null;
+        try{
+            log=new Log();
+            Connection con=log.getCon();
+            String query="select region.id,region.nom,(count(signalement.idRegion)*100/count(signalement.id)) as pourcentage from signalement join region on region.id=signalement.idRegion where extract(year from datesignalement)="+String.valueOf(year)+" and extract(month from datesignalement)="+String.valueOf(month)+" group by region.id;";
+            java.sql.Statement stmt = con.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+            Region allRegionFilter=new Region();
+            Object[]allType=allRegionFilter.find(con);
+            Region t=null;
+            stat=new Stat[allType.length];
+            for(int i=0;i<allType.length;i++){
+                t=(Region)allType[i];
+                stat[i]=new Stat(t.get_Id(),t.get_Nom(),0.0);
+            }
+            while(res.next()){
+                Integer id=Integer.valueOf(String.valueOf(res.getString("id")));
+                Double pourcentage=Double.valueOf(String.valueOf(res.getString("pourcentage")));
+                for(int i=0;i<stat.length;i++){
+                    if(stat[i].getIdType()==id){
+                        stat[i].setPourcenntage(pourcentage);
+                        break;
+                    }
+                }
+            }
+            
+        }catch(Exception e){
+            throw e;
+        }finally{
+            log.close();
+        }
+        return json.toJson(stat);
+    }
+
+    // stats fin
+    @PostMapping("/Login")
+    String newSign(@RequestBody AppUser user){
+        Gson json=new Gson();
+        ReturnMessage result=null;
+        try{
+            Log log=new Log();
+            Connection con=log.getCon();
+            String mdp=user.get_Mdp();
+            String email=user.get_Email();
+            AppUser eUser=new AppUser(null,null,null,email,null);
+            AppUser emUser=new AppUser(null,null,null,email,mdp);
+            Object[]eUserResult=eUser.find(con);
+            if(eUserResult.length!=0){
+                Object[]emUserResult=emUser.find(con);
+                if(emUserResult.length!=0){
+                    Integer idUser=((AppUser)emUserResult[0]).get_Id();
+                    UserToken token=new UserToken(idUser,"tokeeeeeeeen");
+
+                    //jereo fonction mamorona token anaty pc an Kenny....ana mo zany e
+                }else{
+                    result=new ReturnMessage(null,"Invalid password!",false,false,null);
+                }
+
+            }else{
+                result=new ReturnMessage(null,"This user does not exist!",false,false,null);
+            }
+            con.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return json.toJson(result);
+    }
     // @RequestMapping("/Signalements/idSignalement")
     // public String signalements(){
     //     String retour=null;
