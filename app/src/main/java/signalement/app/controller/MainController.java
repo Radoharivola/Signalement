@@ -132,6 +132,107 @@ public class MainController {
         return term;
     }
 
+    @PostMapping("/Region")
+    Region newReg(@RequestBody Region regi){
+        try{
+            Log log=new Log();
+            Connection con=log.getCon();
+            regi.insert(con);
+            con.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return regi;
+    }
+
+    @RequestMapping("/Region")
+    public String getReg(){
+        String retour=null;
+        try{
+            Log log=new Log();
+            Connection con=log.getCon();
+            Gson gson=new Gson();
+            Region sign=new Region();
+            Object[]signs=sign.find(con);
+            retour=gson.toJson(signs); 
+            log.close();
+        }catch(Exception e){
+            e.printStackTrace();
+            return e.getMessage();
+        }
+        return retour;
+    }   
+
+
+    @DeleteMapping("Region/{id}")
+    void del(@PathVariable Long id){
+        try{
+            Log log=new Log();
+            Connection con=log.getCon();
+            Region sign=new Region();
+            sign.set_Id(id);
+            sign.delete(con);
+            con.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+  @PostMapping("/TypeSignalement")
+    TypeSignalement newType(@RequestBody TypeSignalement regi){
+        try{
+            Log log=new Log();
+            Connection con=log.getCon();
+            regi.insert(con);
+            con.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return regi;
+    }
+
+    @RequestMapping("/TypeSignalement")
+    public String getType(){
+        String retour=null;
+        try{
+            Log log=new Log();
+            Connection con=log.getCon();
+            Gson gson=new Gson();
+            TypeSignalement sign=new TypeSignalement();
+            Object[]signs=sign.find(con);
+            retour=gson.toJson(signs); 
+            log.close();
+        }catch(Exception e){
+            e.printStackTrace();
+            return e.getMessage();
+        }
+        return retour;
+    }   
+
+
+    @DeleteMapping("TypeSignalement/{id}")
+    void delType(@PathVariable Long id){
+        try{
+            Log log=new Log();
+            Connection con=log.getCon();
+            TypeSignalement sign=new TypeSignalement();
+            sign.set_Id(id);
+            sign.delete(con);
+            con.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    
+
+
+
     @PostMapping("/Signalements")
     Signalement newSign(@RequestBody Signalement sign){
         try{
@@ -183,22 +284,22 @@ public class MainController {
     }
     // notifications debut
 
-    @GetMapping("/notifications/{id}")
-    String getAllNotifications(@PathVariable Integer year) throws Exception{
-        Log log=null;
-        Gson json=new Gson();
-        Object[]all=null;
-        try{
-            log=new Log();
-            UserNotification filter=new UserNotification();
-            all=filter.find(con);
-        }catch(Exception e){
-            throw e;
-        }finally{
-            log.close();
-        }
-        return json.toJson(all);
-    }
+    // @GetMapping("/notifications/{id}")
+    // String getAllNotifications(@PathVariable Integer id) throws Exception{
+    //     Log log=null;
+    //     Gson json=new Gson();
+    //     Object[]all=null;
+    //     try{
+    //         log=new Log();
+    //         UserNotification filter=new UserNotification(null,null,id,null,null);
+    //         all=filter.find(con);
+    //     }catch(Exception e){
+    //         throw e;
+    //     }finally{
+    //         log.close();
+    //     }
+    //     return json.toJson(all);
+    // }
     // notifications fin
     // stats debut
     @GetMapping("/typeGlobalStat/{year}")
@@ -315,43 +416,43 @@ public class MainController {
         return json.toJson(stat);
     }
 
-    @GetMapping("/signalementRegionStat/{year}/{month}")
-    String signalementRegionStat(@PathVariable Integer year) throws Exception{
-        Log log=null;
-        Gson json=new Gson();
-        Stat[]stat=null;
-        try{
-            log=new Log();
-            Connection con=log.getCon();
-            String query="select region.id,region.nom,(count(signalement.idRegion)*100/count(signalement.id)) as pourcentage from signalement join region on region.id=signalement.idRegion where extract(year from datesignalement)="+String.valueOf(year)+" and extract(month from datesignalement)="+String.valueOf(month)+" group by region.id;";
-            java.sql.Statement stmt = con.createStatement();
-            ResultSet res = stmt.executeQuery(query);
-            Region allRegionFilter=new Region();
-            Object[]allType=allRegionFilter.find(con);
-            Region t=null;
-            stat=new Stat[allType.length];
-            for(int i=0;i<allType.length;i++){
-                t=(Region)allType[i];
-                stat[i]=new Stat(t.get_Id(),t.get_Nom(),0.0);
-            }
-            while(res.next()){
-                Integer id=Integer.valueOf(String.valueOf(res.getString("id")));
-                Double pourcentage=Double.valueOf(String.valueOf(res.getString("pourcentage")));
-                for(int i=0;i<stat.length;i++){
-                    if(stat[i].getIdType()==id){
-                        stat[i].setPourcenntage(pourcentage);
-                        break;
-                    }
-                }
-            }
+    // @GetMapping("/signalementRegionStat/{year}/{month}")
+    // String signalementRegionStat(@PathVariable Integer year,@PathVariable Integer month) throws Exception{
+    //     Log log=null;
+    //     Gson json=new Gson();
+    //     Stat[]stat=null;
+    //     try{
+    //         log=new Log();
+    //         Connection con=log.getCon();
+    //         String query="select region.id,region.nom,(count(signalement.idRegion)*100/count(signalement.id)) as pourcentage from signalement join region on region.id=signalement.idRegion where extract(year from datesignalement)="+String.valueOf(year)+" and extract(month from datesignalement)="+String.valueOf(month)+" group by region.id;";
+    //         java.sql.Statement stmt = con.createStatement();
+    //         ResultSet res = stmt.executeQuery(query);
+    //         Region allRegionFilter=new Region();
+    //         Object[]allType=allRegionFilter.find(con);
+    //         Region t=null;
+    //         stat=new Stat[allType.length];
+    //         for(int i=0;i<allType.length;i++){
+    //             t=(Region)allType[i];
+    //             stat[i]=new Stat(t.get_Id(),t.get_Nom(),0.0);
+    //         }
+    //         while(res.next()){
+    //             Integer id=Integer.valueOf(String.valueOf(res.getString("id")));
+    //             Double pourcentage=Double.valueOf(String.valueOf(res.getString("pourcentage")));
+    //             for(int i=0;i<stat.length;i++){
+    //                 if(stat[i].getIdType()==id){
+    //                     stat[i].setPourcenntage(pourcentage);
+    //                     break;
+    //                 }
+    //             }
+    //         }
             
-        }catch(Exception e){
-            throw e;
-        }finally{
-            log.close();
-        }
-        return json.toJson(stat);
-    }
+    //     }catch(Exception e){
+    //         throw e;
+    //     }finally{
+    //         log.close();
+    //     }
+    //     return json.toJson(stat);
+    // }
 
     // stats fin
     @PostMapping("/Login")
