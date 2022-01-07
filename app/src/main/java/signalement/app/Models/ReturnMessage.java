@@ -20,7 +20,9 @@ public class ReturnMessage {
 		this.tokenStatus = tokenStatus;
 		this.data = data;
 	}
-	public String getToken() {
+	public ReturnMessage() {
+    }
+    public String getToken() {
 		return token;
 	}
 	public void setToken(String token) {

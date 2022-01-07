@@ -1,11 +1,14 @@
 package signalement.app.controller;
 
 import java.sql.Connection;
+import java.util.Date;
 
 import com.google.gson.Gson;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import signalement.app.Models.*;
@@ -67,4 +70,29 @@ public class MainController {
         }
         return gson.toJson(new ReturnMessage("token", "ehehe", true, true, all));
     }
+
+    // affectation debut
+    @PostMapping("/affectations")
+    public String affect(@RequestBody Affectation aff) throws Exception{
+        Gson gson = new Gson();
+        Log log=null;
+        Object[]all=null;
+        try {
+            log = new Log();
+            Connection con = log.getCon();
+            String query="update signalement set idRegion="+String.valueOf(aff.getIdRegion())+" where id="+String.valueOf(aff.getIdSignalement());
+            java.sql.Statement stmt = con.createStatement();
+            stmt.executeUpdate(query);
+            stmt.executeUpdate("commit");
+            stmt.close();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return e.getMessage();
+        }finally{
+            log.close();
+        }
+        return gson.toJson(new ReturnMessage("token", "ehehe", true, true, all));
+    }
+    // affectation fin
 }
