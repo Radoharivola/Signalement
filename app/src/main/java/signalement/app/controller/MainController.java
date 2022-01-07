@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import signalement.app.Models.*;
@@ -71,17 +72,19 @@ public class MainController {
     }
 
     // affectation debut
-    @PostMapping("/affectations/{idRegion}/{idSignalement}")
-    public String affect(@PathVariable("idRegion") String idRegion, @PathVariable("idSignalement") String idSignalement) throws Exception{
+    @PostMapping("/affectations")
+    public String affect(@RequestBody Affectation aff) throws Exception{
         Gson gson = new Gson();
         Log log=null;
         Object[]all=null;
         try {
             log = new Log();
             Connection con = log.getCon();
-            Date date= new Date(Fonctions.dateNow());
-            Affectation a= new Affectation(null,date,Integer.valueOf(idRegion),Integer.valueOf(idSignalement));
-            a.insert(con);
+            String query="update signalement set idRegion="+String.valueOf(aff.getIdRegion())+" where id="+String.valueOf(aff.getIdSignalement());
+            java.sql.Statement stmt = con.createStatement();
+            stmt.executeUpdate(query);
+            stmt.executeUpdate("commit");
+            stmt.close();
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
