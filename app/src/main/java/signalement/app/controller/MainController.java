@@ -416,6 +416,33 @@ public class MainController {
         return json.toJson(stat);
     }
 
+
+
+    // affectation début
+    @PostMapping("/affectations")
+    public String affect(@RequestBody Affectation aff) throws Exception{
+        Gson gson = new Gson();
+        Log log=null;
+        Object[]all=null;
+        try {
+            log = new Log();
+            Connection con = log.getCon();
+            String query="update signalement set idRegion="+String.valueOf(aff.getIdRegion())+" where id="+String.valueOf(aff.getIdSignalement());
+            java.sql.Statement stmt = con.createStatement();
+            stmt.executeUpdate(query);
+            stmt.executeUpdate("commit");
+            stmt.close();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return e.getMessage();
+        }finally{
+            log.close();
+        }
+        return gson.toJson(new ReturnMessage("token", "ehehe", true, true, all));
+    }
+    // affectation fin
+
     // @GetMapping("/signalementRegionStat/{year}/{month}")
     // String signalementRegionStat(@PathVariable Integer year,@PathVariable Integer month) throws Exception{
     //     Log log=null;
