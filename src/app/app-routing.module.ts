@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {ListSignalementComponent} from '../app/pages/signalement/list-signalement/list-signalement.component';
+import { ListSignalementComponent } from './pages/body/list-signalement/list-signalement.component';
+import { AdminComponent } from './pages/body/admin/admin.component';
 
 const routes: Routes = [
-  {path: 'signalement', component: ListSignalementComponent}
-
+  {path: 'list', component: ListSignalementComponent},
+  {path: 'admin', component: AdminComponent}
 ];
 
 @NgModule({
