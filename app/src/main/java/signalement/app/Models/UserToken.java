@@ -1,19 +1,29 @@
 package signalement.app.Models;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+@Getter
+@Setter
+@ToString
+@Document(collection ="UserToken")
 public class UserToken extends Fonctions{
+    @Id
     Integer idUser;
     String token;
-    public Integer get_IdUser(){
+    public Integer getIdUser(){
         return idUser;
     }
-    public String get_Token(){
+    public String getToken(){
         return token;
     }
-    public void set_IdUser(Object newValue){
+    public void setIdUser(Object newValue){
         idUser=Integer.valueOf(String.valueOf(newValue));
     }
-    public void set_Token(String newValue){
+    public void setToken(String newValue){
         token=newValue;
     }
     public UserToken(){

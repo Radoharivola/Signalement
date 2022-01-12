@@ -1,16 +1,23 @@
 package signalement.app.controller;
 
 import java.sql.*;
+import java.util.List;
 
 import com.google.gson.Gson;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import signalement.app.Models.*;
 
 @RestController
 public class MainController {
-
+    @Autowired
+    private UserTokenRepository userTokenRepository;
+    @GetMapping("/userTokens")
+    List<UserToken> userTokens(){
+        return userTokenRepository.findAll();
+    }
     @RequestMapping("/EnCours")
     public String enCours() {
         String retour = null;
@@ -468,8 +475,9 @@ public class MainController {
                 if (emUserResult.length != 0) {
                     Integer idUser = ((AppUser) emUserResult[0]).get_Id();
                     UserToken token = new UserToken(idUser, Fonctions.createToken(email));
-                    token.insert(con);
-                    result = new ReturnMessage(token.get_Token(), "success", true, true, null);
+                    // token.insert(con);
+                    userTokenRepository.save(token);
+                    result = new ReturnMessage(token.getToken(), "success", true, true, null);
                     // jereo fonction mamorona token anaty pc an Kenny....ana mo zany e
                 } else {
                     result = new ReturnMessage(null, "Invalid password!", false, false, null);
@@ -504,8 +512,9 @@ public class MainController {
                 if (emUserResult.length != 0) {
                     Integer idUser = ((SuperAdmin) emUserResult[0]).get_Id();
                     UserToken token = new UserToken(idUser, Fonctions.createToken(email));
-                    token.insert(con);
-                    result = new ReturnMessage(token.get_Token(), "success", true, true, null);
+                    userTokenRepository.save(token);
+                    // token.insert(con);
+                    result = new ReturnMessage(token.getToken(), "success", true, true, null);
                     // jereo fonction mamorona token anaty pc an Kenny....ana mo zany e
                 } else {
                     result = new ReturnMessage(null, "Invalid password!", false, false, null);
@@ -519,6 +528,14 @@ public class MainController {
             throw e;
         }
         return json.toJson(result);
+    }
+
+
+    @GetMapping("/testToken")
+    String testToken() {
+        Gson gson = new Gson();
+        return gson.toJson(Fonctions.verifyToken("389e133ddaf641652fecb90f703acfe5e6cea4c6",userTokenRepository));
+
     }
     // @RequestMapping("/Signalements/idSignalement")
     // public String signalements(){

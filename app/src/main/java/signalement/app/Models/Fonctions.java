@@ -1,4 +1,5 @@
 package signalement.app.Models;
+
 import java.sql.*;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
@@ -7,30 +8,31 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.time.*;
+
 public class Fonctions {
     public Fonctions() {
 
     }
 
-    //insert
+    // insert
     public void insert(Connection con) throws Exception {
         String[] nomChampsSplited = getGetWithoutGet(this);
         Method[] allGet = getGetWithoutId(this);
         String nomTable = getNomTable(this);
         String valeurs = "'" + String.valueOf(allGet[0].invoke(this, (Object[]) null)) + "'";
         String nomChamps = "";
-        String virj="";
+        String virj = "";
         for (int i = 0; i < nomChampsSplited.length; i++) {
             if (nomChampsSplited[i].compareToIgnoreCase("id") != 0) {
                 nomChamps = nomChamps + virj + nomChampsSplited[i];
-                virj=",";
+                virj = ",";
             }
         }
         for (int j = 1; j < allGet.length; j++) {
             valeurs = valeurs + ",'" + String.valueOf(allGet[j].invoke(this, (Object[]) null)) + "'";
         }
         try {
-            String req = "INSERT INTO " + nomTable + "(" + nomChamps + ") VALUES("+ valeurs + ")";
+            String req = "INSERT INTO " + nomTable + "(" + nomChamps + ") VALUES(" + valeurs + ")";
             System.out.println(req);
             java.sql.Statement stmt = con.createStatement();
             stmt.executeUpdate(req);
@@ -43,8 +45,9 @@ public class Fonctions {
             stmt.close();
         }
     }
-    //simple insert
-    public void simpleInsert(Connection con,String query) throws Exception {
+
+    // simple insert
+    public void simpleInsert(Connection con, String query) throws Exception {
         try {
             java.sql.Statement stmt = con.createStatement();
             stmt.executeUpdate(query);
@@ -57,30 +60,30 @@ public class Fonctions {
             throw e;
         }
     }
-    //delete
+
+    // delete
     public void delete(Connection con) throws Exception {
-    	Method[] allGet = getGet(this);
+        Method[] allGet = getGet(this);
         String condition = " where ";
         String and = "";
         try {
             int count = 0;
             for (int i = 0; i < allGet.length; i++) {
                 if (allGet[i].invoke(this, (Object[]) null) != null) {
-                    condition = condition + and + allGet[i].getName().substring(4) + "='"+ allGet[i].invoke(this, (Object[]) null) + "'";
+                    condition = condition + and + allGet[i].getName().substring(4) + "='"
+                            + allGet[i].invoke(this, (Object[]) null) + "'";
                     and = " and ";
-                }
-                else{
-                    count+=1;
+                } else {
+                    count += 1;
                 }
             }
             String nomTable = this.getClass().getSimpleName();
             java.sql.Statement stmt = con.createStatement();
-            String query ="";
-            if(count==allGet.length){
-                query ="Delete  from "+ nomTable;
-            }
-            else{
-                query="Delete from " + nomTable + condition;
+            String query = "";
+            if (count == allGet.length) {
+                query = "Delete  from " + nomTable;
+            } else {
+                query = "Delete from " + nomTable + condition;
             }
             stmt.executeUpdate(query);
             stmt.executeUpdate("commit");
@@ -90,11 +93,11 @@ public class Fonctions {
         }
     }
 
-    //test update
-    public void set(String id,Object initial, Object newValue, Connection con){
+    // test update
+    public void set(String id, Object initial, Object newValue, Connection con) {
         try {
             Method[] allGet = getGetWithoutId(this);
-            String condition = " where id='"+id+"'";
+            String condition = " where id='" + id + "'";
             Vector<String> toUpdate = new Vector<String>();
             String virj = "";
             String set = " SET ";
@@ -118,24 +121,23 @@ public class Fonctions {
             java.sql.Statement stmt = con.createStatement();
             stmt.executeUpdate(req);
             stmt.executeUpdate("commit");
-            
+
             stmt.close();
-        } 
-        catch (Exception ee) {
+        } catch (Exception ee) {
             ee.printStackTrace();
-            try{
+            try {
                 java.sql.Statement stmt = con.createStatement();
                 stmt.executeQuery("rollback");
                 stmt.close();
-            }
-            catch (Exception eee) {
+            } catch (Exception eee) {
                 eee.printStackTrace();
             }
         }
     }
-    //find
+
+    // find
     @SuppressWarnings("deprecation")
-	public Object[] find(Connection con) {
+    public Object[] find(Connection con) {
         Class<? extends Fonctions> c = this.getClass();
         Object[] resultat = null;
         Method[] allGet = getGet(this);
@@ -146,21 +148,20 @@ public class Fonctions {
             int count = 0;
             for (int i = 0; i < allGet.length; i++) {
                 if (allGet[i].invoke(this, (Object[]) null) != null) {
-                    condition = condition + and + allGet[i].getName().substring(4) + "='"+ allGet[i].invoke(this, (Object[]) null) + "'";
+                    condition = condition + and + allGet[i].getName().substring(4) + "='"
+                            + allGet[i].invoke(this, (Object[]) null) + "'";
                     and = " and ";
-                }
-                else{
-                    count+=1;
+                } else {
+                    count += 1;
                 }
             }
             String nomTable = this.getClass().getSimpleName();
             java.sql.Statement stmt = con.createStatement();
-            String query ="";
-            if(count==allGet.length){
-                query ="select* from "+ nomTable;
-            }
-            else{
-                query="Select * from " + nomTable + condition;
+            String query = "";
+            if (count == allGet.length) {
+                query = "select* from " + nomTable;
+            } else {
+                query = "Select * from " + nomTable + condition;
             }
             ResultSet resTaille = stmt.executeQuery(query);
             int taille = 0;
@@ -187,7 +188,6 @@ public class Fonctions {
         return resultat;
     }
 
-
     public Object[] findLike(Connection con) {
         Class<? extends Fonctions> c = this.getClass();
         Object[] resultat = null;
@@ -199,21 +199,20 @@ public class Fonctions {
             int count = 0;
             for (int i = 0; i < allGet.length; i++) {
                 if (allGet[i].invoke(this, (Object[]) null) != null) {
-                    condition = condition + and + allGet[i].getName().substring(4) + " LIKE '"+ allGet[i].invoke(this, (Object[]) null) + "%'";
+                    condition = condition + and + allGet[i].getName().substring(4) + " LIKE '"
+                            + allGet[i].invoke(this, (Object[]) null) + "%'";
                     and = " and ";
-                }
-                else{
-                    count+=1;
+                } else {
+                    count += 1;
                 }
             }
             String nomTable = this.getClass().getSimpleName();
             java.sql.Statement stmt = con.createStatement();
-            String query ="";
-            if(count==allGet.length){
-                query ="select* from "+ nomTable;
-            }
-            else{
-                query="Select * from " + nomTable + condition;
+            String query = "";
+            if (count == allGet.length) {
+                query = "select* from " + nomTable;
+            } else {
+                query = "Select * from " + nomTable + condition;
             }
             System.out.println(query);
             ResultSet resTaille = stmt.executeQuery(query);
@@ -241,7 +240,6 @@ public class Fonctions {
         return resultat;
     }
 
-
     // postgres specific
     public Object[] pgFind(Connection con) {
         Class<? extends Fonctions> c = this.getClass();
@@ -254,21 +252,20 @@ public class Fonctions {
             int count = 0;
             for (int i = 0; i < allGet.length; i++) {
                 if (allGet[i].invoke(this, (Object[]) null) != null) {
-                    condition = condition + and + allGet[i].getName().substring(4) + "='"+ allGet[i].invoke(this, (Object[]) null) + "'";
+                    condition = condition + and + allGet[i].getName().substring(4) + "='"
+                            + allGet[i].invoke(this, (Object[]) null) + "'";
                     and = " and ";
-                }
-                else{
-                    count+=1;
+                } else {
+                    count += 1;
                 }
             }
             String nomTable = this.getClass().getSimpleName();
             java.sql.Statement stmt = con.createStatement();
-            String query ="";
-            if(count==allGet.length){
-                query ="select* from "+ nomTable;
-            }
-            else{
-                query="Select * from " + nomTable + condition;
+            String query = "";
+            if (count == allGet.length) {
+                query = "select* from " + nomTable;
+            } else {
+                query = "Select * from " + nomTable + condition;
             }
             ResultSet resTaille = stmt.executeQuery(query);
             int taille = 0;
@@ -294,6 +291,7 @@ public class Fonctions {
         }
         return resultat;
     }
+
     public Object[] pgFindLike(Connection con) {
         Class<? extends Fonctions> c = this.getClass();
         Object[] resultat = null;
@@ -305,21 +303,20 @@ public class Fonctions {
             int count = 0;
             for (int i = 0; i < allGet.length; i++) {
                 if (allGet[i].invoke(this, (Object[]) null) != null) {
-                    condition = condition + and + allGet[i].getName().substring(4) + " ILIKE '"+ allGet[i].invoke(this, (Object[]) null) + "%'";
+                    condition = condition + and + allGet[i].getName().substring(4) + " ILIKE '"
+                            + allGet[i].invoke(this, (Object[]) null) + "%'";
                     and = " and ";
-                }
-                else{
-                    count+=1;
+                } else {
+                    count += 1;
                 }
             }
             String nomTable = this.getClass().getSimpleName();
             java.sql.Statement stmt = con.createStatement();
-            String query ="";
-            if(count==allGet.length){
-                query ="select* from "+ nomTable;
-            }
-            else{
-                query="Select * from " + nomTable + condition;
+            String query = "";
+            if (count == allGet.length) {
+                query = "select* from " + nomTable;
+            } else {
+                query = "Select * from " + nomTable + condition;
             }
             ResultSet resTaille = stmt.executeQuery(query);
             int taille = 0;
@@ -345,7 +342,8 @@ public class Fonctions {
         }
         return resultat;
     }
-    //Fonctions keeeeeely bdb 
+
+    // Fonctions keeeeeely bdb
     public static Method[] getGetWithoutId(Object o) {
         Class<? extends Object> c = o.getClass();
         Method[] all = c.getDeclaredMethods();
@@ -365,6 +363,7 @@ public class Fonctions {
         }
         return resultat;
     }
+
     public static Method[] getGet(Object o) {
         Class<? extends Object> c = o.getClass();
         Method[] all = c.getDeclaredMethods();
@@ -382,6 +381,7 @@ public class Fonctions {
         }
         return resultat;
     }
+
     public static Method[] getSet(Object o) {
         Class<? extends Object> c = o.getClass();
         Method[] all = c.getDeclaredMethods();
@@ -412,29 +412,41 @@ public class Fonctions {
     public static String getNomTable(Object o) {
         return o.getClass().getSimpleName();
     }
+
     public static String dateNow() {
         LocalDateTime now = LocalDateTime.now();
         String aaa = String.valueOf(now.getDayOfMonth()) + "/" + String.valueOf(now.getMonthValue()) + "/"
                 + String.valueOf(now.getYear()) + " " + String.valueOf(now.getHour()) + ":"
                 + String.valueOf(now.getMinute()) + ":" + String.valueOf(now.getSecond());
-        return aaa; 
+        return aaa;
     }
 
     // token related debut
-	public static String createToken(String newUserId) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-		newUserId = newUserId + Fonctions.dateNow();
-		MessageDigest crypt = MessageDigest.getInstance("SHA-1");
-		crypt.reset();
-		crypt.update(newUserId.getBytes("UTF-8"));
-		return new BigInteger(1, crypt.digest()).toString(16);
-	}
+    public static String createToken(String newUserId) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        newUserId = newUserId + Fonctions.dateNow();
+        MessageDigest crypt = MessageDigest.getInstance("SHA-1");
+        crypt.reset();
+        crypt.update(newUserId.getBytes("UTF-8"));
+        return new BigInteger(1, crypt.digest()).toString(16);
+    }
+
+    public static ReturnMessage verifyToken(String newToken, UserTokenRepository userTokenRepository) {
+        ReturnMessage resultat = null;
+        UserToken result=userTokenRepository.findByToken(newToken);
+        if (result.getIdUser()==null) {
+            resultat = new ReturnMessage(null, "invalid token", false, false, null);
+        } else {
+            resultat = new ReturnMessage(newToken, "valid Token", true, true, result.getIdUser());
+        }
+        return resultat;
+    }
 
     // token related fin
     // mdp encryption
-    public String encrypt(String mdp) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+    public String encrypt(String mdp) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         MessageDigest crypt = MessageDigest.getInstance("SHA-1");
-		crypt.reset();
-		crypt.update(mdp.getBytes("UTF-8"));
-		return new BigInteger(1, crypt.digest()).toString(16);
+        crypt.reset();
+        crypt.update(mdp.getBytes("UTF-8"));
+        return new BigInteger(1, crypt.digest()).toString(16);
     }
 }
