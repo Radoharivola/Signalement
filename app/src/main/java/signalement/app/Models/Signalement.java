@@ -1,7 +1,9 @@
 package signalement.app.Models;
-import java.sql.Connection;
-import java.util.*;
-public class Signalement  extends Fonctions{
+
+import java.util.Date;
+import java.sql.*;
+
+public class Signalement extends Fonctions {
     Integer id;
     Integer idUser;
     Integer idType;
@@ -12,132 +14,115 @@ public class Signalement  extends Fonctions{
     Date datesignalement;
     Object[] images;
     Object[] type;
-    Object[] region;
-     
+    public Signalement() {
+    }
 
-     public Signalement(){
-         
-     }
+    public Signalement(Integer id, Integer idUser, Integer idType, Integer idRegion, Double longitude, Double latitude,
+            String descriptionSignalement, Date datesignalement) {
+        this.id = id;
+        this.idUser = idUser;
+        this.idType = idType;
+        this.idRegion = idRegion;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.descriptionSignalement = descriptionSignalement;
+        this.datesignalement = datesignalement;
+    }
 
-    //  public Signalement(Object id,Object idU,Object idT,Object img,Object longitude,Object latitude,Object descri){
-    //      set_Id(id);
-    //      set_IdUser(idU);
-    //  }
-
-    public Integer get_Id(){
+    public Integer get_Id() {
         return this.id;
     }
 
-  
+    public void set_Id(Object id) throws Exception {
+        this.id = Integer.valueOf(String.valueOf(id));
+        images = this.getImages(id);
+    }
 
-    public Integer get_IdUser(){
+    public Integer get_IdUser() {
         return this.idUser;
     }
 
-    public Integer get_IdType(){
-        return idType;
+    public void set_IdUser(Object idUser) {
+        this.idUser = Integer.valueOf(String.valueOf(idUser));
     }
 
-    public Double get_Longitude(){
-        return longitude;
+    public Integer get_IdType() {
+        return this.idType;
     }
 
-      public Double get_Latitude(){
-        return latitude;
+    public void set_IdType(Object idType) throws Exception {
+        this.idType = Integer.valueOf(String.valueOf(idType));
+        type=getType(idType);
     }
 
-    public Integer get_IdRegion(){
-        return idRegion;
+    public Integer get_IdRegion() {
+        return this.idRegion;
     }
 
-    public String get_DescriptionSignalement(){
-        return descriptionSignalement;
+    public void set_IdRegion(Object idRegion) {
+        this.idRegion = Integer.valueOf(String.valueOf(idRegion));
     }
 
-    public Date get_DateSignalement(){
-        return datesignalement;
+    public Double get_Longitude() {
+        return this.longitude;
     }
 
-    public void set_Id(Object idS){
-        id=Integer.valueOf(String.valueOf(idS));
-        images=this.Images(idS);
+    public void set_Longitude(Object longitude) {
+        this.longitude = Double.valueOf(String.valueOf(longitude));
     }
 
-    public void set_IdRegion(Object idR){
-        idRegion=Integer.valueOf(String.valueOf(idR));
-        region=this.Region(idR);
+    public Double get_Latitude() {
+        return this.latitude;
     }
 
-   
-    public void set_IdType(Object idT){
-        idType=Integer.valueOf(String.valueOf(idT));
-        type=this.Type(idT);
-    }
-    public void set_IdUser(Object idU){
-        idUser=Integer.valueOf(String.valueOf(idU));
-    }
-    public void set_Latitude(Object lat){
-        latitude=Double.valueOf(String.valueOf(lat));
-    }
-    public void set_Longitude(Object lon){
-        longitude=Double.valueOf(String.valueOf(lon));  
-    }
-  
-    public void set_DescriptionSignalement(Object descri){
-        descriptionSignalement=String.valueOf(descri);
+    public void set_Latitude(Object latitude) {
+        this.latitude = Double.valueOf(String.valueOf(latitude));
     }
 
-    public void set_DateSignalement(String newValue){
-        this.datesignalement=new Date(newValue);
+    public String get_DescriptionSignalement() {
+        return this.descriptionSignalement;
     }
 
-    public Object[] Images(Object id){
-        Object[] imgs=null;
-        try{
-            ImageSignalement img=new ImageSignalement();
+    public void set_DescriptionSignalement(String descriptionSignalement) {
+        this.descriptionSignalement = descriptionSignalement;
+    }
+
+    public Date getDatesignalement() {
+        return this.datesignalement;
+    }
+
+    public void setDatesignalement(String datesignalement) {
+        this.datesignalement = new Date(datesignalement);
+    }
+
+    public Object[] getImages(Object id) throws Exception {
+        Object[] imgs = null;
+        try {
+            ImageSignalement img = new ImageSignalement();
             img.set_IdSignalement(id);
-            Log log=new Log();
-            Connection con=log.getCon();
-            imgs=img.pgFind(con);
+            Log log = new Log();
+            Connection con = log.getCon();
+            imgs = img.pgFind(con);
             con.close();
-        }
-        catch(Exception e){
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw e;
         }
         return imgs;
     }
 
-
-    public Object[] Type(Object id){
-        Object[] type=null;
-        try{
-            TypeSignalement typ=new TypeSignalement();
+    public Object[] getType(Object id) throws Exception{
+        Object[] type = null;
+        try {
+            TypeSignalement typ = new TypeSignalement();
             typ.set_Id(id);
-            Log log=new Log();
-            Connection con=log.getCon();
-            type=typ.pgFind(con);
+            Log log = new Log();
+            Connection con = log.getCon();
+            type = typ.pgFind(con);
             con.close();
         }
-        catch(Exception e){
-            e.printStackTrace();
+        catch (Exception e) {
+            throw e;
         }
         return type;
     } 
-
-    public Object[] Region(Object id){
-        Object[] regs=null;
-        try{
-            Region region=new Region();
-            region.set_Id(id);
-            Log log=new Log();
-            Connection con=log.getCon();
-            regs=region.pgFind(con);
-            con.close();
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        return regs;
-    } 
-
 }

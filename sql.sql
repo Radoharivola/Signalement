@@ -105,10 +105,11 @@ create table admin(
 
 create table superAdmin(
     id serial primary key,
-    SuName varchar(255),
-    email varchar(255),
-    password varchar(255)
+    email varchar(255) not null,
+    mdp varchar(255) not null
 );
+
+insert into superAdmin(email, mdp) values('kenny@kenny.com','123');
 
 create table appUser(
     id serial primary key,

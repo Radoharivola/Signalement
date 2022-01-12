@@ -1,4 +1,6 @@
 package signalement.app.Models;
+
+
 public class UserToken extends Fonctions{
     Integer idUser;
     String token;

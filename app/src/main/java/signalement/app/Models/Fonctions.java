@@ -1,6 +1,10 @@
 package signalement.app.Models;
 import java.sql.*;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.time.*;
 public class Fonctions {
@@ -414,5 +418,23 @@ public class Fonctions {
                 + String.valueOf(now.getYear()) + " " + String.valueOf(now.getHour()) + ":"
                 + String.valueOf(now.getMinute()) + ":" + String.valueOf(now.getSecond());
         return aaa; 
+    }
+
+    // token related debut
+	public static String createToken(String newUserId) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		newUserId = newUserId + Fonctions.dateNow();
+		MessageDigest crypt = MessageDigest.getInstance("SHA-1");
+		crypt.reset();
+		crypt.update(newUserId.getBytes("UTF-8"));
+		return new BigInteger(1, crypt.digest()).toString(16);
+	}
+
+    // token related fin
+    // mdp encryption
+    public String encrypt(String mdp) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+        MessageDigest crypt = MessageDigest.getInstance("SHA-1");
+		crypt.reset();
+		crypt.update(mdp.getBytes("UTF-8"));
+		return new BigInteger(1, crypt.digest()).toString(16);
     }
 }
