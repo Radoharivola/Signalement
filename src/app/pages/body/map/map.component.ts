@@ -4,6 +4,8 @@ import Tile from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import View from 'ol/View';
 import { fromLonLat } from 'ol/proj';
+import Feature from 'ol/Feature';
+import {Point} from 'ol/geom'
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -15,6 +17,10 @@ export class MapComponent implements OnInit {
 
   ngOnInit(): void {
     this.initMap();
+    // const iconFeature = new Feature({
+    //   geometry: new Point(fromLonLat([47.4424745, -18.887503])),
+    //   name: 'Somewhere near Nottingham',
+    // });
   }
   initMap(): void {
     this.map = new Map({
@@ -26,7 +32,7 @@ export class MapComponent implements OnInit {
       ],
       view: new View({
         center: fromLonLat([47.4424745,-18.887503]),
-        zoom: 6.4
+        zoom: 6.47
       })
     });
   }
