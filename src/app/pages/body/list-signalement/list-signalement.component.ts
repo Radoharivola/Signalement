@@ -15,8 +15,6 @@ export class ListSignalementComponent implements OnInit {
   private getSignalement() {
     this.WsService.getSignalement().subscribe((data: any) => {
       this.signalements = data;
-      console.log(data);
-      console.log(data[0].type[0].nom);
     });
   }
 

@@ -4,8 +4,13 @@ import Tile from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import View from 'ol/View';
 import { fromLonLat } from 'ol/proj';
-import Feature from 'ol/Feature';
-import {Point} from 'ol/geom'
+import { Vector } from 'ol/layer';
+import { Vector as sourceVector } from 'ol/source';
+import { Point } from 'ol/geom';
+import { Feature } from 'ol';
+import { SignalementServiceService } from './signalement-service.service';
+import Select from 'ol/interaction/Select';
+import { map } from 'rxjs';
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -13,14 +18,22 @@ import {Point} from 'ol/geom'
 })
 export class MapComponent implements OnInit {
   map: any;
-  constructor() { }
+  selectSingleClick = new Select();
+  constructor(private signalementService: SignalementServiceService) { }
 
   ngOnInit(): void {
     this.initMap();
-    // const iconFeature = new Feature({
-    //   geometry: new Point(fromLonLat([47.4424745, -18.887503])),
-    //   name: 'Somewhere near Nottingham',
-    // });
+    this.map.on('singleclick', (event: any) => {
+      var f = new Vector();
+      f = this.map.forEachFeatureAtPixel(
+        event.pixel,
+        function (ft: any, layer: any) { return layer; }
+      );
+      if (f != null) {
+        this.loadSignalementDetails(6);
+      }
+    })
+    this.loadSignalements();
   }
   initMap(): void {
     this.map = new Map({
@@ -31,9 +44,31 @@ export class MapComponent implements OnInit {
         })
       ],
       view: new View({
-        center: fromLonLat([47.4424745,-18.887503]),
+        center: fromLonLat([47.4424745, -18.887503]),
         zoom: 6.47
       })
+    });
+  }
+  loadSignalements() {
+    this.signalementService.getNASignalement().subscribe((data: any) => {
+      for (let i = 0; i < data.length; i++) {
+        let layer = new Vector({
+          source: new sourceVector({
+            features: [
+              new Feature({
+                geometry: new Point(fromLonLat([data[i].longitude, data[i].latitude]))
+              })
+            ]
+          })
+        });
+        layer.set('customAttributes', data[i].id);
+        this.map.addLayer(layer);
+      }
+    });
+  }
+  loadSignalementDetails(id: any) {
+    this.signalementService.getSignalementById(id).subscribe((data: any) => {
+      console.log(data);
     });
   }
 }
