@@ -7,10 +7,11 @@ import { fromLonLat } from 'ol/proj';
 import { Vector } from 'ol/layer';
 import { Vector as sourceVector } from 'ol/source';
 import { Point } from 'ol/geom';
-import { Feature } from 'ol';
+import { Feature, Overlay } from 'ol';
 import { SignalementServiceService } from './signalement-service.service';
 import Select from 'ol/interaction/Select';
-import { map } from 'rxjs';
+import { Affectation } from './Affectation';
+// import { map } from 'rxjs';
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -19,6 +20,10 @@ import { map } from 'rxjs';
 export class MapComponent implements OnInit {
   map: any;
   selectSingleClick = new Select();
+  popup = false;
+  details: any;
+  regions: any;
+  affectation = new Affectation();
   constructor(private signalementService: SignalementServiceService) { }
 
   ngOnInit(): void {
@@ -27,15 +32,18 @@ export class MapComponent implements OnInit {
       var f = new Vector();
       f = this.map.forEachFeatureAtPixel(
         event.pixel,
-        function (ft: any, layer: any) { return layer; }
+        function (_ft: any, layer: any) { return layer; }
       );
       if (f != null) {
-        this.loadSignalementDetails(6);
+        this.loadSignalementDetails(Number(f.get('customAttributes')));
       }
     })
     this.loadSignalements();
   }
   initMap(): void {
+
+
+
     this.map = new Map({
       target: 'map',
       layers: [
@@ -68,7 +76,25 @@ export class MapComponent implements OnInit {
   }
   loadSignalementDetails(id: any) {
     this.signalementService.getSignalementById(id).subscribe((data: any) => {
-      console.log(data);
+      this.details = data[0];
+      this.loadRegions();
+      this.popup = true;
+      console.log(this.details);
     });
   }
+  loadRegions() {
+    this.signalementService.getRegions().subscribe((data: any) => {
+      this.regions = data;
+      console.log(this.regions);
+    });
+  }
+  affectRegion() {
+    this.affectation.idSignalement=this.details.id;
+    console.log(this.affectation);
+    this.signalementService.affectRegion(this.affectation).subscribe(data => {
+      console.log(data)
+    });
+    window.location.reload();
+  }
+
 }
