@@ -12,11 +12,16 @@ export class ListSignalementComponent implements OnInit {
     this.getSignalement();
   }
   public signalements: any;
+  public verif=0;
   private getSignalement() {
     this.WsService.getSignalement().subscribe((data: any) => {
-      this.signalements = data;
+      
+      if(data.length!=0){
+        this.verif=1;
+        this.signalements = data;
+      }
       console.log(data);
-      console.log(data[0].type[0].nom);
+      // console.log(data[0].type[0].nom);
     });
   }
 

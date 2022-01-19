@@ -13,6 +13,7 @@ import { TypeProblemComponent } from './pages/body/type-problem/type-problem.com
 import { StatsComponent } from './pages/body/stats/stats.component';
 import {HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,6 +28,7 @@ import { RouterModule } from '@angular/router';
   ],
  
   imports: [
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

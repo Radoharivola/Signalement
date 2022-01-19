@@ -119,6 +119,7 @@ public class Fonctions {
             String req = "UPDATE " + nomTable + set + condition;
 
             java.sql.Statement stmt = con.createStatement();
+            System.out.println(req);
             stmt.executeUpdate(req);
             stmt.executeUpdate("commit");
 
@@ -430,16 +431,16 @@ public class Fonctions {
         return new BigInteger(1, crypt.digest()).toString(16);
     }
 
-    public static ReturnMessage verifyToken(String newToken, UserTokenRepository userTokenRepository) {
-        ReturnMessage resultat = null;
-        UserToken result=userTokenRepository.findByToken(newToken);
-        if (result.getIdUser()==null) {
-            resultat = new ReturnMessage(null, "invalid token", false, false, null);
-        } else {
-            resultat = new ReturnMessage(newToken, "valid Token", true, true, result.getIdUser());
-        }
-        return resultat;
-    }
+    // public static ReturnMessage verifyToken(String newToken, UserTokenRepository userTokenRepository) {
+    //     ReturnMessage resultat = null;
+    //     UserToken result=userTokenRepository.findByToken(newToken);
+    //     if (result.getIdUser()==null) {
+    //         resultat = new ReturnMessage(null, "invalid token", false, false, null);
+    //     } else {
+    //         resultat = new ReturnMessage(newToken, "valid Token", true, true, result.getIdUser());
+    //     }
+    //     return resultat;
+    // }
 
     // token related fin
     // mdp encryption

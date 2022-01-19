@@ -62,83 +62,33 @@ $(document).ready(function(){
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
+					<tr *ngFor="let region of realList">
 						<td>
 							<span class="custom-checkbox">
 								<input type="checkbox" id="checkbox1" name="options[]" value="1">
 								<label for="checkbox1"></label>
 							</span>
 						</td>
-						<td>89 Chiaroscuro Rd, Portland, USA</td>
+						<td>{{ region.nom }}</td>
 						<td>
-							<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-							<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+							<a href="#editEmployeeModal" (click)="clickModif(region.id,region.nom)" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+							<a href="#deleteEmployeeModal" (click)="clickDel(region.id,region.nom)" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 						</td>
 					</tr>
-					<tr>
-						<td>
-							<span class="custom-checkbox">
-								<input type="checkbox" id="checkbox2" name="options[]" value="1">
-								<label for="checkbox2"></label>
-							</span>
-						</td>
-						<td>Obere Str. 57, Berlin, Germany</td>
-						<td>
-							<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-							<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<span class="custom-checkbox">
-								<input type="checkbox" id="checkbox3" name="options[]" value="1">
-								<label for="checkbox3"></label>
-							</span>
-						</td>
-						<td>25, rue Lauriston, Paris, France</td>
-						<td>
-							<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-							<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<span class="custom-checkbox">
-								<input type="checkbox" id="checkbox4" name="options[]" value="1">
-								<label for="checkbox4"></label>
-							</span>
-						</td>
-						<td>C/ Araquil, 67, Madrid, Spain</td>
-						<td>
-							<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-							<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-						</td>
-					</tr>					
-					<tr>
-						<td>
-							<span class="custom-checkbox">
-								<input type="checkbox" id="checkbox5" name="options[]" value="1">
-								<label for="checkbox5"></label>
-							</span>
-						</td>
-						<td>Via Monte Bianco 34, Turin, Italy</td>
-						<td>
-							<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-							<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-						</td>
-					</tr> 
+					
 				</tbody>
 			</table>
 			<div class="clearfix">
-				<div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+				<div class="hint-text">Montrant <b>5</b> des <b>{{ regionList.length}}</b> regions</div>
 				<ul class="pagination">
-					<li class="page-item disabled"><a href="#">Previous</a></li>
-					<li class="page-item"><a href="#" class="page-link">1</a></li>
+					<li class="page-item "><a href="#" (click)="previous()" class="page-link">Precedent</a></li>
+					
+					<!-- <li class="page-item"><a href="#" class="page-link">1</a></li>
 					<li class="page-item"><a href="#" class="page-link">2</a></li>
 					<li class="page-item active"><a href="#" class="page-link">3</a></li>
 					<li class="page-item"><a href="#" class="page-link">4</a></li>
-					<li class="page-item"><a href="#" class="page-link">5</a></li>
-					<li class="page-item"><a href="#" class="page-link">Next</a></li>
+					<li class="page-item"><a href="#" class="page-link">5</a></li>  -->
+					<li class="page-item"><a href="#" (click)="next()" class="page-link">Suivant</a></li>
 				</ul>
 			</div>
 		</div>
@@ -150,7 +100,6 @@ $(document).ready(function(){
 <div id="addEmployeeModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form>
 				<div class="modal-header">						
 					<h4 class="modal-title">Ajout d'un Assistant</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -158,7 +107,7 @@ $(document).ready(function(){
 				<div class="modal-body">					
 					<div class="form-group">
 						<label>Nom</label>
-						<input type="text" class="form-control" required>
+						<input type="text" id="nom" class="form-control" required>
 					</div>
 					
                     
@@ -166,9 +115,8 @@ $(document).ready(function(){
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Annuler">
-					<input type="submit" class="btn btn-success" value="Ajouter">
+					<input type="button" (click)="ajout()"  data-dismiss="modal"  class="btn btn-success" value="Ajouter">
 				</div>
-			</form>
 		</div>
 	</div>
 </div>
@@ -176,7 +124,7 @@ $(document).ready(function(){
 <div id="editEmployeeModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form>
+			
 				<div class="modal-header">						
 					<h4 class="modal-title">Modification </h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -184,15 +132,15 @@ $(document).ready(function(){
 				<div class="modal-body">					
 					<div class="form-group">
 						<label>Nom</label>
-						<input type="text" class="form-control" required>
+						<input type="text" id="nomRegion" value="{{ nomTemp }}" class="form-control" required>
 					</div>
 							
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Annuler">
-					<input type="submit" class="btn btn-success" value="Modifier">
+					<input type="button" class="btn btn-success" data-dismiss="modal" (click)="modifier()" value="Modifier">
 				</div>
-			</form>
+			
 		</div>
 	</div>
 </div>
@@ -200,20 +148,20 @@ $(document).ready(function(){
 <div id="deleteEmployeeModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form>
+			
 				<div class="modal-header">						
 					<h4 class="modal-title">Suppression</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">					
-					<p>Etes vous sur de vouloir supprimer cette region?</p>
+					<p>Etes vous sur de vouloir supprimer la region <strong>{{ nomTemp }}</strong> ?</p>
 					<p class="text-warning"><small>Cette action ne peut etre reconsiderer.</small></p>
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Annuler">
-					<input type="submit" class="btn btn-danger" value="Supprimer">
+					<input type="button" class="btn btn-danger" data-dismiss="modal" (click)="deleteRegion()" value="Supprimer">
 				</div>
-			</form>
+	
 		</div>
 	</div>
 </div>

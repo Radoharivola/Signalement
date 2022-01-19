@@ -1,11 +1,11 @@
-<div class="card shadow mb-4">
+<div class="card shadow mb-4" >
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">Signalements</h6>
     </div>
-    <div class="card-body">
+    <div class="card-body" >
         <div class="table-responsive">
-            <!-- <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0"> -->
-            <table class="table table-bordered"  width="100%" cellspacing="0">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <!-- <table class="table table-bordered"  width="100%" cellspacing="0"> -->
 
                 <thead>
                     <tr>
@@ -15,16 +15,53 @@
 
                     </tr>
                 </thead>
-                <tbody *ngFor='let signalement of signalements'>
-                    <tr>
-                        <td>{{signalement.type[0].nom}}</td>
+                <tbody >
+                    <tr *ngFor="let sign of signalements">
+                        <td>{{sign.type[0].nom}}</td>
 
-                        <td>{{signalement.region[0].nom}}</td>
+                        <td>{{sign.region[0].nom}}</td>
 
-                        <td>{{signalement.dateSignalement}}</td>
+                        <td>{{sign.dateSignalement}} </td>
 
                     </tr>
+                    
                 </tbody>
+
+                <!-- <tbody >
+                    <tr >
+                        <td>Coteyej</td>
+
+                        <td>Bla;as</td>
+
+                        <td>Book </td>
+
+                    </tr>
+                    <tr >
+                        <td>Coteyej</td>
+
+                        <td>Bla;as</td>
+
+                        <td>Book </td>
+
+                    </tr>
+                    <tr >
+                        <td>Coteyej</td>
+
+                        <td>Bla;as</td>
+
+                        <td>Book </td>
+
+                    </tr>
+                    <tr >
+                        <td>Coteyej</td>
+
+                        <td>Bla;as</td>
+
+                        <td>Book </td>
+
+                    </tr>
+                    
+                </tbody> -->
             </table>
         </div>
     </div>

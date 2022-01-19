@@ -44,7 +44,7 @@ $(document).ready(function(){
 						<h2>Liste <b>des Assistants</b></h2>
 					</div>
 					<div class="col-sm-6">
-						<a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Ajouter un Assistant</span></a>
+						<a href="#addEmployeeModal" class="btn btn-success" (click)="setListRegion()" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Ajouter un Assistant</span></a>
 					</div>
 				</div>
 			</div>
@@ -65,98 +65,35 @@ $(document).ready(function(){
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
+					<tr  *ngFor="let admin of realList">
 						<td>
 							<span class="custom-checkbox">
 								<input type="checkbox" id="checkbox1" name="options[]" value="1">
 								<label for="checkbox1"></label>
 							</span>
 						</td>
-						<td>Thomas Hardy</td>
-						<td>thomashardy@mail.com</td>
-						<td>89 Chiaroscuro Rd, Portland, USA</td>
-						<td>(171) 555-2222</td>
+						<td>{{admin.nom}}</td>
+						<td>{{admin.email}}</td>
+						<td ><p *ngIf="admin.regions.length!=0">{{admin.regions[0].nom}}</p><p *ngIf="admin.regions.length==0">Deleted</p></td>
+						<td>{{admin.mdp}}</td>
 						<td>
-							<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-							<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+							<a href="#editEmployeeModal" class="edit" (click)="clickModif(admin.id,admin.nom,admin.email,admin.idRegion,admin.regions,admin.mdp)" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+							<a href="#deleteEmployeeModal" class="delete" (click)="clickDel(admin.id)" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 						</td>
 					</tr>
-					<tr>
-						<td>
-							<span class="custom-checkbox">
-								<input type="checkbox" id="checkbox2" name="options[]" value="1">
-								<label for="checkbox2"></label>
-							</span>
-						</td>
-						<td>Dominique Perrier</td>
-						<td>dominiqueperrier@mail.com</td>
-						<td>Obere Str. 57, Berlin, Germany</td>
-						<td>(313) 555-5735</td>
-						<td>
-							<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-							<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<span class="custom-checkbox">
-								<input type="checkbox" id="checkbox3" name="options[]" value="1">
-								<label for="checkbox3"></label>
-							</span>
-						</td>
-						<td>Maria Anders</td>
-						<td>mariaanders@mail.com</td>
-						<td>25, rue Lauriston, Paris, France</td>
-						<td>(503) 555-9931</td>
-						<td>
-							<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-							<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<span class="custom-checkbox">
-								<input type="checkbox" id="checkbox4" name="options[]" value="1">
-								<label for="checkbox4"></label>
-							</span>
-						</td>
-						<td>Fran Wilson</td>
-						<td>franwilson@mail.com</td>
-						<td>C/ Araquil, 67, Madrid, Spain</td>
-						<td>(204) 619-5731</td>
-						<td>
-							<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-							<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-						</td>
-					</tr>					
-					<tr>
-						<td>
-							<span class="custom-checkbox">
-								<input type="checkbox" id="checkbox5" name="options[]" value="1">
-								<label for="checkbox5"></label>
-							</span>
-						</td>
-						<td>Martin Blank</td>
-						<td>martinblank@mail.com</td>
-						<td>Via Monte Bianco 34, Turin, Italy</td>
-						<td>(480) 631-2097</td>
-						<td>
-							<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-							<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-						</td>
-					</tr> 
+				
 				</tbody>
 			</table>
 			<div class="clearfix">
-				<div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+				<div class="hint-text">Showing <b>10</b> out of <b>25</b> entries</div>
 				<ul class="pagination">
-					<li class="page-item disabled"><a href="#">Previous</a></li>
-					<li class="page-item"><a href="#" class="page-link">1</a></li>
+					<li class="page-item "><a href="#" (click)="previous()" class="page-link">Previous</a></li>
+					<!-- <li class="page-item"><a href="#" class="page-link">1</a></li>
 					<li class="page-item"><a href="#" class="page-link">2</a></li>
 					<li class="page-item active"><a href="#" class="page-link">3</a></li>
 					<li class="page-item"><a href="#" class="page-link">4</a></li>
-					<li class="page-item"><a href="#" class="page-link">5</a></li>
-					<li class="page-item"><a href="#" class="page-link">Next</a></li>
+					<li class="page-item"><a href="#" class="page-link">5</a></li> -->
+					<li class="page-item"><a href="#" (click)="next()" class="page-link">Next</a></li>
 				</ul>
 			</div>
 		</div>
@@ -168,7 +105,7 @@ $(document).ready(function(){
 <div id="addEmployeeModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form>
+			
 				<div class="modal-header">						
 					<h4 class="modal-title">Ajout d'un Assistant</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -176,49 +113,30 @@ $(document).ready(function(){
 				<div class="modal-body">					
 					<div class="form-group">
 						<label>Nom</label>
-						<input type="text" class="form-control" required>
+						<input [(ngModel)]="admin._Nom" type="text" class="form-control" required>
 					</div>
 					<div class="form-group">
 						<label>Email</label>
-						<input type="email" class="form-control" required>
+						<input [(ngModel)]="admin._Email" type="email" class="form-control" required>
 					</div>
 					<div class="form-group">
 						<label>Mot de Passe</label>
-						<input type="text" class="form-control" required>
+						<input [(ngModel)]="admin._Mdp" type="text" class="form-control" required>
 					</div>
                     
 					<div class="form-group">
-						<select class="form-select" aria-label="Default select example">
-							<option selected>Open this select menu</option>
-							<option value="1">One</option>
-							<option value="2">Two</option>
-							<option value="3">Three</option>
-							<option value="1">One</option>
-							<option value="2">Two</option>
-							<option value="3">Three</option>
-							<option value="1">One</option>
-							<option value="2">Two</option>
-							<option value="3">Three</option>
-							<option value="1">One</option>
-							<option value="2">Two</option>
-							<option value="3">Three</option>
-							<option value="1">One</option>
-							<option value="2">Two</option>
-							<option value="3">Three</option>
-							<option value="1">One</option>
-							<option value="2">Two</option>
-							<option value="3">Three</option>
-							<option value="1">One</option>
-							<option value="2">Two</option>
-							<option value="3">Three</option>
+						<select  id="idRegion" class="form-select" aria-label="Default select example">
+							<option selected>Choisir und region</option>
+							<option *ngFor="let reg of listRegion" value="{{reg.id}}" >{{reg.nom}}</option>
+						
 						</select>
 					</div>					
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Annuler">
-					<input type="submit" class="btn btn-success" value="Ajouter">
+					<input type="button" data-dismiss="modal" class="btn btn-success" (click)="addAdmin()" value="Ajouter">
 				</div>
-			</form>
+			
 		</div>
 	</div>
 </div>
@@ -226,57 +144,39 @@ $(document).ready(function(){
 <div id="editEmployeeModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form>
+			
 				<div class="modal-header">						
 					<h4 class="modal-title">Modification </h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
-				<div class="modal-body">					
+				<div class="modal-body">		
+					<input type="hidden" id="idRegionModif" value="{{adminTemp._Id}}">			
 					<div class="form-group">
 						<label>Nom</label>
-						<input type="text" class="form-control" required>
+						<input type="text" id="nom" value="{{adminTemp._Nom}}" class="form-control" required>
 					</div>
 					<div class="form-group">
 						<label>Email</label>
-						<input type="email" class="form-control" required>
+						<input type="email" id="email" value="{{adminTemp._Email}}" class="form-control" required>
 					</div>
 					<div class="form-group">
 						<label>Mot de Passe</label>
-						<input type="text" class="form-control" required>
+						<input type="text" id="mdp" value="{{adminTemp._Mdp}}" class="form-control" required>
 					</div>
                     
 					<div class="form-group">
-						<select class="form-select" aria-label="Default select example">
-							<option selected>Choisir un region>u</option>
-							<option value="1">One</option>
-							<option value="2">Two</option>
-							<option value="3">Three</option>
-							<option value="1">One</option>
-							<option value="2">Two</option>
-							<option value="3">Three</option>
-							<option value="1">One</option>
-							<option value="2">Two</option>
-							<option value="3">Three</option>
-							<option value="1">One</option>
-							<option value="2">Two</option>
-							<option value="3">Three</option>
-							<option value="1">One</option>
-							<option value="2">Two</option>
-							<option value="3">Three</option>
-							<option value="1">One</option>
-							<option value="2">Two</option>
-							<option value="3">Three</option>
-							<option value="1">One</option>
-							<option value="2">Two</option>
-							<option value="3">Three</option>
+						<select  id="idRegionModified" class="form-select" aria-label="Default select example">
+							<option value="{{adminTemp._IdRegion}}" selected>{{regName}}</option>
+							<option *ngFor="let reg of listRegion" value="{{reg.id}}" >{{reg.nom}}</option>
+						
 						</select>
 					</div>					
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Annuler">
-					<input type="submit" class="btn btn-success" value="Modifier">
+					<input type="button" class="btn btn-success" data-dismiss="modal" (click)="modif()" value="Modifier">
 				</div>
-			</form>
+			
 		</div>
 	</div>
 </div>
@@ -284,7 +184,7 @@ $(document).ready(function(){
 <div id="deleteEmployeeModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form>
+			
 				<div class="modal-header">						
 					<h4 class="modal-title">Suppression</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -295,9 +195,9 @@ $(document).ready(function(){
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Annuler">
-					<input type="submit" class="btn btn-danger" value="Supprimer">
+					<input type="button" class="btn btn-danger" data-dismiss="modal" (click)="delete()" value="Supprimer">
 				</div>
-			</form>
+			
 		</div>
 	</div>
 </div>
