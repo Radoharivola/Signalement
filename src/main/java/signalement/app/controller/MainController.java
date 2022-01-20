@@ -13,11 +13,11 @@ import signalement.app.Models.*;
 @RestController
 public class MainController {
     @Autowired
-    private UserTokenRepository userTokenRepository;
-    @GetMapping("/userTokens")
-    List<UserToken> userTokens(){
-        return userTokenRepository.findAll();
-    }
+    // private UserTokenRepository userTokenRepository;
+    // @GetMapping("/userTokens")
+    // List<UserToken> userTokens(){
+    //     return userTokenRepository.findAll();
+    // }
     @RequestMapping("/EnCours")
     public String enCours() {
         String retour = null;
@@ -468,89 +468,89 @@ public class MainController {
     }
     // affectation fin
 
-    @PostMapping("/Login")
-    String login(@RequestBody AppUser user) {
-        Gson json = new Gson();
-        ReturnMessage result = null;
-        try {
-            Log log = new Log();
-            Connection con = log.getCon();
-            String mdp = user.get_Mdp();
-            String email = user.get_Email();
-            AppUser eUser = new AppUser(null, null, null, email, null);
-            AppUser emUser = new AppUser(null, null, null, email, mdp);
-            Object[] eUserResult = eUser.find(con);
-            if (eUserResult.length != 0) {
-                Object[] emUserResult = emUser.find(con);
-                if (emUserResult.length != 0) {
-                    Integer idUser = ((AppUser) emUserResult[0]).get_Id();
-                    UserToken token = new UserToken(idUser, Fonctions.createToken(email));
-                    // token.insert(con);
-                    userTokenRepository.save(token);
-                    result = new ReturnMessage(token.getToken(), "success", true, true, null);
-                    // jereo fonction mamorona token anaty pc an Kenny....ana mo zany e
-                } else {
-                    result = new ReturnMessage(null, "Invalid password!", false, false, null);
-                }
+    // @PostMapping("/Login")
+    // String login(@RequestBody AppUser user) {
+    //     Gson json = new Gson();
+    //     ReturnMessage result = null;
+    //     try {
+    //         Log log = new Log();
+    //         Connection con = log.getCon();
+    //         String mdp = user.get_Mdp();
+    //         String email = user.get_Email();
+    //         AppUser eUser = new AppUser(null, null, null, email, null);
+    //         AppUser emUser = new AppUser(null, null, null, email, mdp);
+    //         Object[] eUserResult = eUser.find(con);
+    //         if (eUserResult.length != 0) {
+    //             Object[] emUserResult = emUser.find(con);
+    //             if (emUserResult.length != 0) {
+    //                 Integer idUser = ((AppUser) emUserResult[0]).get_Id();
+    //                 UserToken token = new UserToken(idUser, Fonctions.createToken(email));
+    //                 // token.insert(con);
+    //                 userTokenRepository.save(token);
+    //                 result = new ReturnMessage(token.getToken(), "success", true, true, null);
+    //                 // jereo fonction mamorona token anaty pc an Kenny....ana mo zany e
+    //             } else {
+    //                 result = new ReturnMessage(null, "Invalid password!", false, false, null);
+    //             }
 
-            } else {
-                result = new ReturnMessage(null, "This user does not exist!", false, false, null);
-            }
-            con.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return json.toJson(result);
-    }
-
-
-    @CrossOrigin(origins="http://localhost:4200")
-    @PostMapping("/SULogin")
-    String suLogin(@RequestBody SuperAdmin user) throws Exception {
-        Gson json = new Gson();
-        ReturnMessage result = null;
-        if(user.get_Email()!=null && user.get_Email()!=null){
-            try {
-                Log log = new Log();
-                Connection con = log.getCon();
-                String mdp = user.get_Mdp();
-                String email = user.get_Email();
-                SuperAdmin eUser = new SuperAdmin(null, email, null);
-                SuperAdmin emUser = new SuperAdmin(null, email, mdp);
-                Object[] eUserResult = eUser.find(con);
-                if (eUserResult.length != 0) {
-                    Object[] emUserResult = emUser.find(con);
-                    if (emUserResult.length != 0) {
-                        Integer idUser = ((SuperAdmin) emUserResult[0]).get_Id();
-                        UserToken token = new UserToken(idUser, Fonctions.createToken(email));
-                        userTokenRepository.save(token);
-                        // token.insert(con);
-                        result = new ReturnMessage(token.getToken(), "success", true, true, null);
-                        // jereo fonction mamorona token anaty pc an Kenny....ana mo zany e
-                    } else {
-                        result = new ReturnMessage(null, "Invalid password!", false, false, null);
-                    }
-
-                } else {
-                    result = new ReturnMessage(null, "This user does not exist!", false, false, null);
-                }
-                con.close();
-            } catch (Exception e) {
-                throw e;
-            }
-        }else{
-            result = new ReturnMessage(null, "This user does not exist!", false, false, null);
-        }  
-        return json.toJson(result);
-    }
+    //         } else {
+    //             result = new ReturnMessage(null, "This user does not exist!", false, false, null);
+    //         }
+    //         con.close();
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+    //     return json.toJson(result);
+    // }
 
 
-    @GetMapping("/testToken")
-    String testToken() {
-        Gson gson = new Gson();
-        return gson.toJson(Fonctions.verifyToken("389e133ddaf641652fecb90f703acfe5e6cea4c6",userTokenRepository));
+    // @CrossOrigin(origins="http://localhost:4200")
+    // @PostMapping("/SULogin")
+    // String suLogin(@RequestBody SuperAdmin user) throws Exception {
+    //     Gson json = new Gson();
+    //     ReturnMessage result = null;
+    //     if(user.get_Email()!=null && user.get_Email()!=null){
+    //         try {
+    //             Log log = new Log();
+    //             Connection con = log.getCon();
+    //             String mdp = user.get_Mdp();
+    //             String email = user.get_Email();
+    //             SuperAdmin eUser = new SuperAdmin(null, email, null);
+    //             SuperAdmin emUser = new SuperAdmin(null, email, mdp);
+    //             Object[] eUserResult = eUser.find(con);
+    //             if (eUserResult.length != 0) {
+    //                 Object[] emUserResult = emUser.find(con);
+    //                 if (emUserResult.length != 0) {
+    //                     Integer idUser = ((SuperAdmin) emUserResult[0]).get_Id();
+    //                     UserToken token = new UserToken(idUser, Fonctions.createToken(email));
+    //                     userTokenRepository.save(token);
+    //                     // token.insert(con);
+    //                     result = new ReturnMessage(token.getToken(), "success", true, true, null);
+    //                     // jereo fonction mamorona token anaty pc an Kenny....ana mo zany e
+    //                 } else {
+    //                     result = new ReturnMessage(null, "Invalid password!", false, false, null);
+    //                 }
 
-    }
+    //             } else {
+    //                 result = new ReturnMessage(null, "This user does not exist!", false, false, null);
+    //             }
+    //             con.close();
+    //         } catch (Exception e) {
+    //             throw e;
+    //         }
+    //     }else{
+    //         result = new ReturnMessage(null, "This user does not exist!", false, false, null);
+    //     }  
+    //     return json.toJson(result);
+    // }
+
+
+    // @GetMapping("/testToken")
+    // String testToken() {
+    //     Gson gson = new Gson();
+    //     return gson.toJson(Fonctions.verifyToken("389e133ddaf641652fecb90f703acfe5e6cea4c6",userTokenRepository));
+
+    // }
     // @RequestMapping("/Signalements/idSignalement")
     // public String signalements(){
     // String retour=null;
