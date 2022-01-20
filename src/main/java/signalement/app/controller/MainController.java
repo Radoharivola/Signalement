@@ -125,11 +125,13 @@ public class MainController {
         return term;
     }
 
-    @PostMapping("/Regions")
+//      @CrossOrigin(origins="http://localhost:4200")
+    @PostMapping("/Region")
     Region newReg(@RequestBody Region regi) {
         try {
             Log log = new Log();
             Connection con = log.getCon();
+            // regi.set_Etat(1);
             regi.insert(con);
             con.close();
         } catch (Exception e) {
@@ -137,8 +139,9 @@ public class MainController {
         }
         return regi;
     }
-    // @CrossOrigin(origins="http://localhost:4200")
-    @RequestMapping("/Regions")
+        
+//     @CrossOrigin(origins="http://localhost:4200")
+    @RequestMapping("/Region")
     public String getReg() {
         String retour = null;
         try {
@@ -146,6 +149,7 @@ public class MainController {
             Connection con = log.getCon();
             Gson gson = new Gson();
             Region sign = new Region();
+            // sign.set_Etat(1);
             Object[] signs = sign.find(con);
             retour = gson.toJson(signs);
             log.close();
@@ -156,6 +160,47 @@ public class MainController {
         return retour;
     }
 
+//     @CrossOrigin(origins="http://localhost:4200")
+    @GetMapping("/Region/{id}")
+    public String getSimpleReg(@PathVariable Long id) {
+        String retour = null;
+        try {
+            Log log = new Log();
+            Connection con = log.getCon();
+            Gson gson = new Gson();
+            Region sign = new Region();
+            sign.set_Id(id);
+            // sign.set_Etat(1);
+            Object[] signs = sign.find(con);
+            retour = gson.toJson(signs);
+            log.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return e.getMessage();
+        }
+        return retour;
+    }
+
+//     @CrossOrigin(origins="http://localhost:4200")
+    @PutMapping("Region")
+    String updateRegion(@RequestBody Region reg){
+        String retour="";
+         try {
+            Log log = new Log();
+            Connection con = log.getCon();
+            Region temp = new Region();
+            Gson gson=new Gson();
+            reg.update(con);
+            retour=gson.toJson("Success");
+            // sign.delete(con);
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  retour;
+    }
+
+//     @CrossOrigin(origins="http://localhost:4200")
     @DeleteMapping("Region/{id}")
     void del(@PathVariable Long id) {
         try {
@@ -163,13 +208,114 @@ public class MainController {
             Connection con = log.getCon();
             Region sign = new Region();
             sign.set_Id(id);
-            sign.delete(con);
+            sign.deleteData(con);
             con.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    ///Admin
+
+//     @CrossOrigin(origins="http://localhost:4200")
+    @PostMapping("/Admin")
+    Admin newAdmin(@RequestBody Admin admin) {
+        try {
+            Log log = new Log();
+            Connection con = log.getCon();
+            // admin.set_Etat(1);
+            admin.insert(con);
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return admin;
+    }
+        
+//     @CrossOrigin(origins="http://localhost:4200")
+    @RequestMapping("/Admin")
+    public String getAdmin() {
+        String retour = null;
+        try {
+            Log log = new Log();
+            Connection con = log.getCon();
+            Gson gson = new Gson();
+            Admin admin = new Admin();
+            // admin.set_Etat(1);
+            Object[] admins = admin.find(con);
+            
+            retour = gson.toJson(admins);
+            log.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return e.getMessage();
+        }
+        return retour;
+    }
+
+//     @CrossOrigin(origins="http://localhost:4200")
+    @GetMapping("/Admin/{id}")
+    public String getSingleAdmin(@PathVariable Long id) {
+        String retour = null;
+        try {
+            Log log = new Log();
+            Connection con = log.getCon();
+            Gson gson = new Gson();
+            Admin admin = new Admin();
+            admin.set_Id(id);
+            // admin.set_Etat(1);
+            Object[] signs = admin.find(con);
+            retour = gson.toJson(signs);
+            log.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return e.getMessage();
+        }
+        return retour;
+    }
+
+//     @CrossOrigin(origins="http://localhost:4200")
+    @PutMapping("/Admin")
+    Admin updateAdmin(@RequestBody Admin reg){
+        String retour="";
+         try {
+            Log log = new Log();
+            Connection con = log.getCon();
+            
+            Gson gson=new Gson();
+            reg.update(con);
+            // temp.set_Id(reg.get_Id());
+            // Object[] temps=temp.find(con);
+            // temp=(Region)temps[0];
+            // temp.set(String.valueOf(reg.get_Id()),temp,reg,con);
+
+            retour=gson.toJson("Success");
+            // sign.delete(con);
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  reg;
+    }
+
+//     @CrossOrigin(origins="http://localhost:4200")
+    @DeleteMapping("Admin/{id}")
+    void delAdmin(@PathVariable Long id) {
+        try {
+            Log log = new Log();
+            Connection con = log.getCon();
+            Admin sign = new Admin();
+            sign.set_Id(id);
+            sign.deleteData(con);
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    ///End Admin
+
+//     @CrossOrigin(origins="http://localhost:4200")
     @PostMapping("/TypeSignalement")
     TypeSignalement newType(@RequestBody TypeSignalement regi) {
         try {
@@ -183,6 +329,7 @@ public class MainController {
         return regi;
     }
 
+//     @CrossOrigin(origins="http://localhost:4200")
     @RequestMapping("/TypeSignalement")
     public String getType() {
         String retour = null;
@@ -201,19 +348,40 @@ public class MainController {
         return retour;
     }
 
-    @DeleteMapping("TypeSignalement/{id}")
+//     @CrossOrigin(origins="http://localhost:4200")
+    @PutMapping("/TypeSignalement")
+    String updateRegion(@RequestBody TypeSignalement reg){
+        String retour="";
+         try {
+            Log log = new Log();
+            Connection con = log.getCon();
+            TypeSignalement temp = new TypeSignalement();
+            Gson gson=new Gson();
+            reg.update(con);
+            retour=gson.toJson("Success");
+            // sign.delete(con);
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  retour;
+    }
+
+//     @CrossOrigin(origins="http://localhost:4200")
+    @DeleteMapping("/TypeSignalement/{id}")
     void delType(@PathVariable Long id) {
         try {
             Log log = new Log();
             Connection con = log.getCon();
             TypeSignalement sign = new TypeSignalement();
             sign.set_Id(id);
-            sign.delete(con);
+            sign.deleteData(con);
             con.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     @PostMapping("/Signalements")
     Signalement newSign(@RequestBody Signalement sign) {
