@@ -1,10 +1,13 @@
 package signalement.app.Models;
+import java.sql.*;
 
 public class Region  extends Fonctions{
     Integer id;
     String nom;
+    Integer etat=1;
 
     public Region() {
+        etat=1;
     }
 
     public String get_Nom() {
@@ -22,6 +25,40 @@ public class Region  extends Fonctions{
 
     public Integer get_Id(){
         return id;
+    }
+    public void set_Etat(Object etat){
+        this.etat=Integer.valueOf(String.valueOf(etat));
+
+    }
+
+    public Integer get_Etat(){
+        return etat;
+    }
+
+    public void update(Connection con){
+        try{
+
+            java.sql.Statement stmt = con.createStatement();
+            stmt.executeUpdate("Update region set nom='"+this.get_Nom()+"' where id='"+this.get_Id()+"'");
+            stmt.executeUpdate("commit");
+            stmt.close();
+        }
+        catch(Exception e ){
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteData(Connection con){
+        try{
+
+            java.sql.Statement stmt = con.createStatement();
+            stmt.executeUpdate("Update region set etat=0 where id='"+this.get_Id()+"'");
+            stmt.executeUpdate("commit");
+            stmt.close();
+        }
+        catch(Exception e ){
+            e.printStackTrace();
+        }
     }
 
 }
