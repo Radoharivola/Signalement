@@ -18,6 +18,7 @@ public class MainController {
     // List<UserToken> userTokens(){
     //     return userTokenRepository.findAll();
     // }
+    @CrossOrigin(origins="http://localhost:4200")
     @RequestMapping("/EnCours")
     public String enCours() {
         String retour = null;
@@ -44,7 +45,7 @@ public class MainController {
         return retour;
 
     }
-
+    @CrossOrigin(origins="http://localhost:4200")
     @RequestMapping("/Termine")
     public String termine() {
         String retour = null;
@@ -71,7 +72,7 @@ public class MainController {
         return retour;
 
     }
-    // @CrossOrigin(origins="http://localhost:4200")
+    @CrossOrigin(origins="http://localhost:4200")
     @GetMapping("/Signalements")
     public String signalements() {
         String retour = null;
@@ -91,14 +92,14 @@ public class MainController {
 
     }
 
-    // @CrossOrigin(origins="http://localhost:4200")
+    @CrossOrigin(origins="http://localhost:4200")
     @GetMapping("/NASignalements")
     public String nASignalements() throws Exception {
         Signalement sign = new Signalement();
         return sign.getNASignalement();
     }
 
-
+    @CrossOrigin(origins="http://localhost:4200")
     @PostMapping("/EnCours")
     EnCours newEC(@RequestBody EnCours EC) {
         try {
@@ -111,7 +112,7 @@ public class MainController {
         }
         return EC;
     }
-
+    @CrossOrigin(origins="http://localhost:4200")
     @PostMapping("/Termine")
     Termine newTerm(@RequestBody Termine term) {
         try {
@@ -125,7 +126,7 @@ public class MainController {
         return term;
     }
 
-//      @CrossOrigin(origins="http://localhost:4200")
+    @CrossOrigin(origins="http://localhost:4200")
     @PostMapping("/Region")
     Region newReg(@RequestBody Region regi) {
         try {
@@ -140,7 +141,7 @@ public class MainController {
         return regi;
     }
         
-//     @CrossOrigin(origins="http://localhost:4200")
+    @CrossOrigin(origins="http://localhost:4200")
     @RequestMapping("/Region")
     public String getReg() {
         String retour = null;
@@ -160,7 +161,7 @@ public class MainController {
         return retour;
     }
 
-//     @CrossOrigin(origins="http://localhost:4200")
+    @CrossOrigin(origins="http://localhost:4200")
     @GetMapping("/Region/{id}")
     public String getSimpleReg(@PathVariable Long id) {
         String retour = null;
@@ -181,7 +182,7 @@ public class MainController {
         return retour;
     }
 
-//     @CrossOrigin(origins="http://localhost:4200")
+    @CrossOrigin(origins="http://localhost:4200")
     @PutMapping("Region")
     String updateRegion(@RequestBody Region reg){
         String retour="";
@@ -200,7 +201,7 @@ public class MainController {
         return  retour;
     }
 
-//     @CrossOrigin(origins="http://localhost:4200")
+    @CrossOrigin(origins="http://localhost:4200")
     @DeleteMapping("Region/{id}")
     void del(@PathVariable Long id) {
         try {
@@ -217,7 +218,7 @@ public class MainController {
 
     ///Admin
 
-//     @CrossOrigin(origins="http://localhost:4200")
+    @CrossOrigin(origins="http://localhost:4200")
     @PostMapping("/Admin")
     Admin newAdmin(@RequestBody Admin admin) {
         try {
@@ -232,7 +233,7 @@ public class MainController {
         return admin;
     }
         
-//     @CrossOrigin(origins="http://localhost:4200")
+    @CrossOrigin(origins="http://localhost:4200")
     @RequestMapping("/Admin")
     public String getAdmin() {
         String retour = null;
@@ -253,7 +254,7 @@ public class MainController {
         return retour;
     }
 
-//     @CrossOrigin(origins="http://localhost:4200")
+    @CrossOrigin(origins="http://localhost:4200")
     @GetMapping("/Admin/{id}")
     public String getSingleAdmin(@PathVariable Long id) {
         String retour = null;
@@ -274,7 +275,7 @@ public class MainController {
         return retour;
     }
 
-//     @CrossOrigin(origins="http://localhost:4200")
+    @CrossOrigin(origins="http://localhost:4200")
     @PutMapping("/Admin")
     Admin updateAdmin(@RequestBody Admin reg){
         String retour="";
@@ -298,7 +299,7 @@ public class MainController {
         return  reg;
     }
 
-//     @CrossOrigin(origins="http://localhost:4200")
+    @CrossOrigin(origins="http://localhost:4200")
     @DeleteMapping("Admin/{id}")
     void delAdmin(@PathVariable Long id) {
         try {
@@ -315,7 +316,7 @@ public class MainController {
 
     ///End Admin
 
-//     @CrossOrigin(origins="http://localhost:4200")
+    @CrossOrigin(origins="http://localhost:4200")
     @PostMapping("/TypeSignalement")
     TypeSignalement newType(@RequestBody TypeSignalement regi) {
         try {
@@ -329,7 +330,7 @@ public class MainController {
         return regi;
     }
 
-//     @CrossOrigin(origins="http://localhost:4200")
+    @CrossOrigin(origins="http://localhost:4200")
     @RequestMapping("/TypeSignalement")
     public String getType() {
         String retour = null;
@@ -348,7 +349,7 @@ public class MainController {
         return retour;
     }
 
-//     @CrossOrigin(origins="http://localhost:4200")
+    @CrossOrigin(origins="http://localhost:4200")
     @PutMapping("/TypeSignalement")
     String updateRegion(@RequestBody TypeSignalement reg){
         String retour="";
@@ -367,7 +368,7 @@ public class MainController {
         return  retour;
     }
 
-//     @CrossOrigin(origins="http://localhost:4200")
+    @CrossOrigin(origins="http://localhost:4200")
     @DeleteMapping("/TypeSignalement/{id}")
     void delType(@PathVariable Long id) {
         try {
@@ -382,7 +383,7 @@ public class MainController {
         }
     }
 
-
+    @CrossOrigin(origins="http://localhost:4200")
     @PostMapping("/Signalements")
     Signalement newSign(@RequestBody Signalement sign) {
         try {
@@ -395,7 +396,7 @@ public class MainController {
         }
         return sign;
     }
-
+    @CrossOrigin(origins="http://localhost:4200")
     @GetMapping("/Signalements/Users/{id}")
     String signs(@PathVariable Long id) {
         String retour = null;
@@ -413,7 +414,7 @@ public class MainController {
         return retour;
     }
 
-    // @CrossOrigin(origins="http://localhost:4200")
+    @CrossOrigin(origins="http://localhost:4200")
     @GetMapping("/Signalements/{id}")
     String fiche(@PathVariable Long id) {
         String retour = null;
@@ -431,7 +432,7 @@ public class MainController {
         return retour;
     }
     // notifications debut
-
+    @CrossOrigin(origins="http://localhost:4200")
     @GetMapping("/notifications/{id}")
     String getAllNotifications(@PathVariable Integer id) throws Exception {
         Log log = null;
@@ -451,6 +452,7 @@ public class MainController {
     // notifications fin
 
     // stats debut
+    @CrossOrigin(origins="http://localhost:4200")
     @GetMapping("/typeGlobalStat/{year}")
     String typeGlobalStat(@PathVariable Integer year) throws Exception {
         Log log = null;
@@ -489,7 +491,7 @@ public class MainController {
         }
         return json.toJson(stat);
     }
-
+    @CrossOrigin(origins="http://localhost:4200")
     @GetMapping("/typeGlobalStat/{month}/{year}")
     String typeGlobalStat(@PathVariable Integer month, @PathVariable Integer year) throws Exception {
         Log log = null;
@@ -529,7 +531,7 @@ public class MainController {
         }
         return json.toJson(stat);
     }
-
+    @CrossOrigin(origins="http://localhost:4200")
     @GetMapping("/signalementRegionStat/{year}")
     String signalementRegionStat(@PathVariable Integer year) throws Exception {
         Log log = null;
@@ -568,7 +570,7 @@ public class MainController {
         }
         return json.toJson(stat);
     }
-
+    @CrossOrigin(origins="http://localhost:4200")
     @GetMapping("/signalementRegionStat/{year}/{month}")
     String signalementRegionStatym(@PathVariable Integer year,@PathVariable Integer month) throws Exception{
         Log log=null;
@@ -610,7 +612,7 @@ public class MainController {
     // stats fin
 
     // affectation début
-    // @CrossOrigin(origins="http://localhost:4200")
+    @CrossOrigin(origins="http://localhost:4200")
     @PostMapping("/affectations")
     public String affect(@RequestBody Affectation aff) throws Exception {
         Gson gson = new Gson();
