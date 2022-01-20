@@ -71,7 +71,7 @@ public class MainController {
         return retour;
 
     }
-    @CrossOrigin(origins="http://localhost:4200")
+    // @CrossOrigin(origins="http://localhost:4200")
     @GetMapping("/Signalements")
     public String signalements() {
         String retour = null;
@@ -91,7 +91,7 @@ public class MainController {
 
     }
 
-    @CrossOrigin(origins="http://localhost:4200")
+    // @CrossOrigin(origins="http://localhost:4200")
     @GetMapping("/NASignalements")
     public String nASignalements() throws Exception {
         Signalement sign = new Signalement();
@@ -137,7 +137,7 @@ public class MainController {
         }
         return regi;
     }
-    @CrossOrigin(origins="http://localhost:4200")
+    // @CrossOrigin(origins="http://localhost:4200")
     @RequestMapping("/Regions")
     public String getReg() {
         String retour = null;
@@ -245,7 +245,7 @@ public class MainController {
         return retour;
     }
 
-    @CrossOrigin(origins="http://localhost:4200")
+    // @CrossOrigin(origins="http://localhost:4200")
     @GetMapping("/Signalements/{id}")
     String fiche(@PathVariable Long id) {
         String retour = null;
@@ -442,7 +442,7 @@ public class MainController {
     // stats fin
 
     // affectation début
-    @CrossOrigin(origins="http://localhost:4200")
+    // @CrossOrigin(origins="http://localhost:4200")
     @PostMapping("/affectations")
     public String affect(@RequestBody Affectation aff) throws Exception {
         Gson gson = new Gson();
