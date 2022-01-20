@@ -41,7 +41,7 @@ export class AdminComponent implements OnInit {
   setPagination(nb1:number,nb2:number){
 
     this.realList=[];
-     for(let i=nb1;i<=nb2;i++){
+     for(let i=nb1+1;i<=nb2;i++){
        if(i<this.listAdmins.length){
         this.realList.push(this.listAdmins[i]);
 
@@ -50,7 +50,7 @@ export class AdminComponent implements OnInit {
   }
 
   next(){
-    if(this.lim2<=this.listAdmins.length){
+    if(this.lim2+1<this.listAdmins.length){
       this.lim1=this.lim1+2;
       this.lim2=this.lim2+2;
       this.setPagination(this.lim1,this.lim2);
@@ -85,7 +85,12 @@ export class AdminComponent implements OnInit {
     this.admin._IdRegion=idRegion;
     this.http.addAdmin(this.admin).subscribe(data=>{
       console.log(data);
+      this.admin._Email="";
+      this.admin._Nom="";
+      this.admin._Mdp="";
       this.getAdmins();
+
+
     });
   }
 

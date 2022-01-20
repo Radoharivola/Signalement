@@ -61,6 +61,7 @@ export class RegionComponent implements OnInit {
     var nom=(document.getElementById("nom") as HTMLInputElement).value;
     console.log(nom);
     this.ajouterRegion(nom);
+    (document.getElementById("nom") as HTMLInputElement).value="";
     this.getRegions();
 
   }
@@ -85,7 +86,7 @@ export class RegionComponent implements OnInit {
   setPagination(nb1:number,nb2:number){
 
     this.realList=[];
-     for(let i=nb1;i<=nb2;i++){
+     for(let i=nb1+1;i<=nb2;i++){
        if(i<this.regionList.length){
         this.realList.push(this.regionList[i]);
 
@@ -94,9 +95,10 @@ export class RegionComponent implements OnInit {
   }
 
   next(){
-    if(this.lim2<=this.regionList.length){
+    if(this.lim2+1<this.regionList.length){
       this.lim1=this.lim1+4;
       this.lim2=this.lim2+4;
+     
       this.setPagination(this.lim1,this.lim2);
 
     }

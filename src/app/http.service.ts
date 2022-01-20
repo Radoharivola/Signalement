@@ -11,11 +11,11 @@ export class HttpService {
 
   apiUrl="https://api.publicapis.org/entries";
 
-  apiRegion="http://localhost:8080/Region";
+  apiRegion="https://s5-signalement.herokuapp.com/Region";
 
-  apiAdmin="http://localhost:8080/Admin"
+  apiAdmin="https://s5-signalement.herokuapp.com/Admin"
 
-  apiTypeSignalement="http://localhost:8080/TypeSignalement";
+  apiTypeSignalement="https://s5-signalement.herokuapp.com/TypeSignalement";
 
   public getRegion(){
     return this.httpclient.get(this.apiRegion);

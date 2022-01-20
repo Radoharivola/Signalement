@@ -51,24 +51,14 @@ $(document).ready(function(){
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
-						<th>
-							<span class="custom-checkbox">
-								<input type="checkbox" id="selectAll">
-								<label for="selectAll"></label>
-							</span>
-						</th>
+					
 						<th>Nom de la region</th>
                         <th>Options</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr *ngFor="let region of realList">
-						<td>
-							<span class="custom-checkbox">
-								<input type="checkbox" id="checkbox1" name="options[]" value="1">
-								<label for="checkbox1"></label>
-							</span>
-						</td>
+						
 						<td>{{ region.nom }}</td>
 						<td>
 							<a href="#editEmployeeModal" (click)="clickModif(region.id,region.nom)" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
@@ -79,16 +69,15 @@ $(document).ready(function(){
 				</tbody>
 			</table>
 			<div class="clearfix">
-				<div class="hint-text">Montrant <b>5</b> des <b>{{ regionList.length}}</b> regions</div>
+				<!-- <div class="hint-text">Montrant <b>5</b> des <b>{{ regionList.length}}</b> regions</div> -->
 				<ul class="pagination">
-					<li class="page-item "><a href="#" (click)="previous()" class="page-link">Precedent</a></li>
-					
+					<li class="page-item "><button (click)="previous()" class="page-link">Precedent</button></li>
 					<!-- <li class="page-item"><a href="#" class="page-link">1</a></li>
 					<li class="page-item"><a href="#" class="page-link">2</a></li>
 					<li class="page-item active"><a href="#" class="page-link">3</a></li>
 					<li class="page-item"><a href="#" class="page-link">4</a></li>
 					<li class="page-item"><a href="#" class="page-link">5</a></li>  -->
-					<li class="page-item"><a href="#" (click)="next()" class="page-link">Suivant</a></li>
+					<li class="page-item"><button (click)="next()" class="page-link">Suivant</button></li>
 				</ul>
 			</div>
 		</div>
