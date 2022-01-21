@@ -20,7 +20,6 @@ import { MapComponent } from './pages/body/map/map.component';
 
 // resaka chart
 import {NgChartsModule} from 'ng2-charts';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +37,7 @@ import {NgChartsModule} from 'ng2-charts';
   ],
  
   imports: [
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
