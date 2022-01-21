@@ -1,13 +1,5 @@
-<!-- <div>
-    <div style="display: block">
-        <canvas baseChart
-        class="chart"
-        [data]="barChartData"
-        [labels]="barChartLabels"
-        [options]="barChartOptions"
-        [chartType]="barChartType">
-     </canvas> 
-
-     
-    </div>
-</div> -->
+<div>
+    <canvas baseChart [type]="'bar'" [datasets]="chartData" [labels]="labels" [options]="chartOptions"
+        [legend]="true" (chartClick)="onChartClick($event)">
+    </canvas>
+</div>

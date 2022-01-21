@@ -13,6 +13,14 @@ import { TypeProblemComponent } from './pages/body/type-problem/type-problem.com
 import { StatsComponent } from './pages/body/stats/stats.component';
 import {HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { AuthComponent } from './pages/auth/auth.component';
+import { CookieService } from 'ngx-cookie-service';
+import { FormsModule } from '@angular/forms';
+import { MapComponent } from './pages/body/map/map.component';
+
+// resaka chart
+import {NgChartsModule} from 'ng2-charts';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,14 +32,19 @@ import { RouterModule } from '@angular/router';
     AdminComponent,
     TypeProblemComponent,
     StatsComponent,
+    AuthComponent,
+    ListSignalementComponent,
+    MapComponent
   ],
  
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
+    NgChartsModule
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
