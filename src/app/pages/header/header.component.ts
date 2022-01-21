@@ -15,5 +15,4 @@ export class HeaderComponent implements OnInit {
   goToPage(pageName:string):void {
     this.router.navigate([`${pageName}`]);
   }
-
 }
