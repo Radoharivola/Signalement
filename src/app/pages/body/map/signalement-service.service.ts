@@ -10,18 +10,18 @@ export class SignalementServiceService {
 
   constructor(private http: HttpClient) { }
   getNASignalement(){
-    return this.http.get('http://localhost:8080/NASignalements');
+    return this.http.get('https://s5-signalement.herokuapp.com/NASignalements');
   }
   getSignalementById(id: number){
-    return this.http.get('http://localhost:8080/Signalements/'+id);
+    return this.http.get('https://s5-signalement.herokuapp.com/Signalements/'+id);
   }
   getRegions(){
-    return this.http.get('http://localhost:8080/Regions');
+    return this.http.get('https://s5-signalement.herokuapp.com/Region');
   }
   affectRegion(aff: Affectation): Observable<any> {
     const headers = { 'content-type': 'application/json' }
     const body = JSON.stringify(aff);
     console.log(body)
-    return this.http.post('http://localhost:8080/affectations', body, { 'headers': headers })
+    return this.http.post('https://s5-signalement.herokuapp.com/affectations', body, { 'headers': headers })
   }
 }
