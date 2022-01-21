@@ -17,6 +17,10 @@ import { AuthComponent } from './pages/auth/auth.component';
 import { CookieService } from 'ngx-cookie-service';
 import { FormsModule } from '@angular/forms';
 import { MapComponent } from './pages/body/map/map.component';
+
+// resaka chart
+import {NgChartsModule} from 'ng2-charts';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +41,8 @@ import { MapComponent } from './pages/body/map/map.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgChartsModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

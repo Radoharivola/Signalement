@@ -14,7 +14,7 @@ export class AuthComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.cookieService.get('token')!=='') {
-      window.localStorage.setItem('page','list');
+      window.localStorage.setItem('page','map');
       window.location.reload();
     }
   }
@@ -24,7 +24,7 @@ export class AuthComponent implements OnInit {
       this.message = data.message;
       if (data.connectionStatus) {
         this.cookieService.set('token', data.token); // To Set Cookie
-        window.localStorage.setItem('page','list');
+        window.localStorage.setItem('page','map');
         window.location.reload();
       }
     })

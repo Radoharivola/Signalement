@@ -19,7 +19,7 @@ export class AppComponent {
     }
     if(window.localStorage.getItem('page')!=null){
       window.localStorage.removeItem('page');
-      this.goToPage('list');
+      this.goToPage('map');
     }
   }
 
