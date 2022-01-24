@@ -1,0 +1,47 @@
+<div class="container">
+
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+
+        <div class="col-xl-10 col-lg-12 col-md-9">
+
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body p-0">
+                    <!-- Nested Row within Card Body -->
+                    <div class="row">
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-8">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Super Admin</h1>
+                                    <p>{{message}}</p>
+                                </div>
+                                <div class="form-group">
+                                    <input [(ngModel)]="superAdmin._Email" type="email" placeholdertype="email"
+                                        class="form-control form-control-user" id="exampleInputEmail"
+                                        aria-describedby="emailHelp" placeholder="Email">
+                                </div>
+                                <div class="form-group">
+                                    <input [(ngModel)]="superAdmin._Mdp" type="password"
+                                        class="form-control form-control-user" id="exampleInputPassword"
+                                        placeholder="Mot de passe">
+                                </div>
+                                <a href="javascript:;" (click)="login()" class="btn btn-primary btn-user btn-block">
+                                    Se connecter
+                                </a>
+                                <hr>
+                                <a href="javascript:;" class="btn btn-google btn-user btn-block">
+                                    Admin région
+                                </a>
+                            </div>
+                        </div>                                      
+                        <div class="col-lg-2"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
