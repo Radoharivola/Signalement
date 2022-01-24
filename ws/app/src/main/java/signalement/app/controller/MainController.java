@@ -91,6 +91,37 @@ public class MainController {
 
     }
 
+    @CrossOrigin(origins="http://localhost:4200")
+    @GetMapping("/Signalements/Admin/{token}")
+    public String signalements(@PathVariable String token) {
+        String retour = null;
+        try {
+            Log log = new Log();
+            Connection con = log.getCon();
+            Gson gson = new Gson();
+            Admin admin =new Admin();
+            // if(admin.VerifierToken()==true){
+            //     Integer idReg=admin.get_IdReg();
+            //     Signalement sign = new Signalement();
+            //     sign.set_IdRegion(idReg);
+            //     Object[] signs = sign.find(con);
+            //     retour = gson.toJson(signs);
+            // }
+            Signalement sign = new Signalement();
+            sign.set_IdRegion(2);
+            Object[] signs = sign.find(con);
+            retour = gson.toJson(signs);
+            log.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return e.getMessage();
+        }
+        return retour;
+
+    }
+
+
     @PostMapping("/EnCours")
     EnCours newEC(@RequestBody EnCours EC) {
         try {
