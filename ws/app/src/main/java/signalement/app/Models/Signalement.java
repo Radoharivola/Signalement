@@ -9,7 +9,7 @@ public class Signalement extends Fonctions {
     Integer id;
     Integer idUser;
     Integer idType;
-    Integer idRegion;
+    Integer idRegion=null;
     Double longitude;
     Double latitude;
     String descriptionSignalement;
@@ -93,16 +93,26 @@ public class Signalement extends Fonctions {
         this.descriptionSignalement = descriptionSignalement;
     }
 
+    public void setImages(Object[] imgs){
+        this.images=imgs;
+    }
     
     public Object[] getImages(Object id) throws Exception {
+
         Object[] imgs = null;
         try {
-            ImageSignalement img = new ImageSignalement();
-            img.set_IdSignalement(id);
-            Log log = new Log();
-            Connection con = log.getCon();
-            imgs = img.pgFind(con);
-            con.close();
+            if(this.images.length!=0){
+                return this.images;
+            }
+            else{
+                ImageSignalement img = new ImageSignalement();
+                img.set_IdSignalement(id);
+                Log log = new Log();
+                Connection con = log.getCon();
+                imgs = img.pgFind(con);
+                con.close();
+            }
+          
         } catch (Exception e) {
             throw e;
         }

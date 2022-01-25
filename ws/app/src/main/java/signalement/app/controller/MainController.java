@@ -92,23 +92,53 @@ public class MainController {
     }
 
     @CrossOrigin(origins="http://localhost:4200")
-    @GetMapping("/Signalements/Admin/{token}")
-    public String signalements(@PathVariable String token) {
+    @PostMapping("/Signalements")
+    public String Newsignalements(@RequestBody Signalement sign) {
+        String retour = null;
+        try {
+            Log log = new Log();
+            Connection con = log.getCon();
+            Gson gson = new Gson();
+            sign.insert(con);
+
+            String id=sign.getIdMax(con);
+            Object[] imgs=sign.getImages(con);
+            ImageSignalement[] imgsSign=new ImageSignalement[imgs.length];
+
+
+            for(int i=0;i<imgs.length;i++){
+                imgsSign[i]=new ImageSignalement();
+                imgsSign[i].set_IdSignalement(id);
+                imgsSign[i].set_ImageSignalement(imgs[i]);
+                imgsSign[i].insert(con);
+            }
+
+
+
+
+            // Signalement sign = new Signalement();
+            // Object[] signs = sign.find(con);
+            retour = gson.toJson(sign);
+            log.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return e.getMessage();
+        }
+        return retour;
+
+    }
+
+    @CrossOrigin(origins="http://localhost:4200")
+    @GetMapping("/Signalements/Regions/{id}")
+    public String signalements(@PathVariable Long id) {
         String retour = null;
         try {
             Log log = new Log();
             Connection con = log.getCon();
             Gson gson = new Gson();
             Admin admin =new Admin();
-            // if(admin.VerifierToken()==true){
-            //     Integer idReg=admin.get_IdReg();
-            //     Signalement sign = new Signalement();
-            //     sign.set_IdRegion(idReg);
-            //     Object[] signs = sign.find(con);
-            //     retour = gson.toJson(signs);
-            // }
             Signalement sign = new Signalement();
-            sign.set_IdRegion(2);
+            sign.set_IdRegion(id);
             Object[] signs = sign.find(con);
             retour = gson.toJson(signs);
             log.close();
@@ -150,17 +180,22 @@ public class MainController {
 
     @CrossOrigin(origins="http://localhost:4200")
     @PostMapping("/Region")
-    Region newReg(@RequestBody Region regi) {
+    String newReg(@RequestBody Region regi) {
+        Gson gson=new Gson();
         try {
             Log log = new Log();
             Connection con = log.getCon();
             // regi.set_Etat(1);
+             
+            if(regi.get_Nom().compareTo("")==0){
+                return gson.toJson("Error: le Nom ne peut etre vide!");
+            }
             regi.insert(con);
             con.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return regi;
+        return gson.toJson(regi);
     }
         
     @CrossOrigin(origins="http://localhost:4200")
@@ -213,6 +248,9 @@ public class MainController {
             Connection con = log.getCon();
             Region temp = new Region();
             Gson gson=new Gson();
+            if(reg.get_Nom().compareTo("")==0){
+                return gson.toJson("Error: le Nom ne peut etre vide!");
+            }
             reg.update(con);
 
             // temp.set_Id(reg.get_Id());
@@ -257,14 +295,31 @@ public class MainController {
     Admin newAdmin(@RequestBody Admin admin) {
         try {
             Log log = new Log();
+            String comp="";
             Connection con = log.getCon();
+             Gson gson=new Gson();
+            if(this.verificationAdmin(admin)==false){
+                gson.toJson("Error: le Nom ne peut etre vide!");
+            }
+            else{
+                admin.insert(con);
+            }
             // admin.set_Etat(1);
-            admin.insert(con);
             con.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return admin;
+    }
+
+    public boolean verificationAdmin(Admin admin){
+        String comp="";
+        if(comp.compareTo(String.valueOf(admin.get_Nom()))==0 && comp.compareTo(String.valueOf(admin.get_Email()))==0 && comp.compareTo(String.valueOf(admin.get_IdRegion()))==0 && comp.compareTo(String.valueOf(admin.get_Mdp()))==0){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
         
     @CrossOrigin(origins="http://localhost:4200")
@@ -417,18 +472,18 @@ public class MainController {
         }
     }
 
-    @PostMapping("/Signalements")
-    Signalement newSign(@RequestBody Signalement sign) {
-        try {
-            Log log = new Log();
-            Connection con = log.getCon();
-            sign.insert(con);
-            con.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return sign;
-    }
+    // @PostMapping("/Signalements")
+    // Signalement newSign(@RequestBody Signalement sign) {
+    //     try {
+    //         Log log = new Log();
+    //         Connection con = log.getCon();
+    //         sign.insert(con);
+    //         con.close();
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+    //     return sign;
+    // }
 
     @GetMapping("/Signalements/Users/{id}")
     String signs(@PathVariable Long id) {

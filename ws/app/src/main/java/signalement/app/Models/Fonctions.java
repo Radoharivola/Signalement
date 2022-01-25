@@ -19,7 +19,11 @@ public class Fonctions {
         String[] nomChampsSplited = getGetWithoutGet(this);
         Method[] allGet = getGetWithoutId(this);
         String nomTable = getNomTable(this);
+
         String valeurs = "'" + String.valueOf(allGet[0].invoke(this, (Object[]) null)) + "'";
+        if(allGet[0].invoke(this, (Object[]) null)==null){
+            valeurs="null";
+        }
         String nomChamps = "";
         String virj = "";
         for (int i = 0; i < nomChampsSplited.length; i++) {
@@ -29,7 +33,17 @@ public class Fonctions {
             }
         }
         for (int j = 1; j < allGet.length; j++) {
-            valeurs = valeurs + ",'" + String.valueOf(allGet[j].invoke(this, (Object[]) null)) + "'";
+
+            if(allGet[j].invoke(this, (Object[]) null)==null){
+                System.out.println("le truc = "+String.valueOf(allGet[j].invoke(this, (Object[]) null)));
+
+                valeurs = valeurs + ",null";
+
+            }
+            else{
+                valeurs = valeurs + ",'" + String.valueOf(allGet[j].invoke(this, (Object[]) null)) + "'";
+
+            }
         }
         try {
             String req = "INSERT INTO " + nomTable + "(" + nomChamps + ") VALUES(" + valeurs + ")";
@@ -449,5 +463,30 @@ public class Fonctions {
         crypt.reset();
         crypt.update(mdp.getBytes("UTF-8"));
         return new BigInteger(1, crypt.digest()).toString(16);
+    }
+
+
+    public String getIdMax(Connection con){
+        String retour="";
+        try{
+            
+            String req="select max(id) as id from "+this.getClass().getSimpleName();
+              java.sql.Statement stmt = con.createStatement();
+
+            ResultSet res=stmt.executeQuery(req);
+            while(res.next()){
+                retour=res.getString(1);
+            }
+            if(retour==null){
+                retour="1";
+            }
+         
+
+            stmt.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return retour;
     }
 }
