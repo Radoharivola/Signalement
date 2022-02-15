@@ -10,6 +10,7 @@ import { RegionComponent } from './pages/body/region/region.component';
 import { TypeProblemComponent } from './pages/body/type-problem/type-problem.component';
 
 const routes: Routes = [
+  { path: '', component: MapComponent },
   { path: 'list', component: ListSignalementComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'login', component: AuthComponent },

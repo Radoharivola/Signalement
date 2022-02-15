@@ -11,6 +11,8 @@ import { Feature, Overlay } from 'ol';
 import { SignalementServiceService } from './signalement-service.service';
 import Select from 'ol/interaction/Select';
 import { Affectation } from './Affectation';
+import { CookieService } from 'ngx-cookie-service';
+
 // import { map } from 'rxjs';
 @Component({
   selector: 'app-map',
@@ -24,7 +26,7 @@ export class MapComponent implements OnInit {
   details: any;
   regions: any;
   affectation = new Affectation();
-  constructor(private signalementService: SignalementServiceService) { }
+  constructor(private signalementService: SignalementServiceService, private cookieService: CookieService) { }
 
   ngOnInit(): void {
     this.initMap();
@@ -41,9 +43,6 @@ export class MapComponent implements OnInit {
     this.loadSignalements();
   }
   initMap(): void {
-
-
-
     this.map = new Map({
       target: 'map',
       layers: [
@@ -59,42 +58,59 @@ export class MapComponent implements OnInit {
   }
   loadSignalements() {
     this.signalementService.getNASignalement().subscribe((data: any) => {
-      for (let i = 0; i < data.length; i++) {
-        let layer = new Vector({
-          source: new sourceVector({
-            features: [
-              new Feature({
-                geometry: new Point(fromLonLat([data[i].longitude, data[i].latitude]))
-              })
-            ]
-          })
-        });
-        layer.set('customAttributes', data[i].id);
-        this.map.addLayer(layer);
+      if (typeof data.data !== 'undefined' && data.data == false) {
+        this.reLogin();
+      } else {
+        for (let i = 0; i < data.length; i++) {
+          let layer = new Vector({
+            source: new sourceVector({
+              features: [
+                new Feature({
+                  geometry: new Point(fromLonLat([data[i].longitude, data[i].latitude]))
+                })
+              ]
+            })
+          });
+          layer.set('customAttributes', data[i].id);
+          this.map.addLayer(layer);
+        }
       }
     });
   }
   loadSignalementDetails(id: any) {
     this.signalementService.getSignalementById(id).subscribe((data: any) => {
-      this.details = data[0];
-      this.loadRegions();
-      this.popup = true;
-      console.log(this.details);
+      if (typeof data.data !== 'undefined' && data.data == false) {
+        this.reLogin();
+      } else {
+        this.details = data[0];
+        this.loadRegions();
+        this.popup = true;
+      }
     });
   }
   loadRegions() {
     this.signalementService.getRegions().subscribe((data: any) => {
-      this.regions = data;
-      console.log(this.regions);
+      if (typeof data.data !== 'undefined' && data.data == false) {
+        this.reLogin();
+      } else {
+        this.regions = data;
+      }
     });
   }
   affectRegion() {
-    this.affectation.idSignalement=this.details.id;
-    console.log(this.affectation);
+    this.affectation.idSignalement = this.details.id;
     this.signalementService.affectRegion(this.affectation).subscribe(data => {
-      console.log(data)
+      if (typeof data.data !== 'undefined' && data.data == false) {
+        this.reLogin();
+      } else {
+        this.loadSignalements();
+        window.location.reload();
+      }
     });
+    // this.popup = false;
+  }
+  reLogin() {
+    this.cookieService.delete('token');
     window.location.reload();
   }
-
 }
