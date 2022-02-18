@@ -84,30 +84,30 @@ export class InsertSignalementPage implements OnInit {
   imgURL;
 
   constructor(private camera: Camera, public actionSheetController: ActionSheetController, private file: File) { }
-  test(){
+  test() {
     alert("gege");
   }
-  insertSignalement(){
+  insertSignalement() {
     alert("youuuuhou lasa le signalement letye");
   }
-  getCamera(){
+  getCamera() {
     this.camera.getPicture({
       sourceType: this.camera.PictureSourceType.CAMERA,
-      destinationType: this.camera.DestinationType.FILE_URI
-    }).then((res)=>{
-      this.imgURL = res;
-    }).catch((err)=>{
+      destinationType: this.camera.DestinationType.DATA_URL
+    }).then((res) => {
+      this.imgURL = 'data:image/jpeg;base64,' + res;
+    }).catch((err) => {
       console.log(err);
       alert(err);
     })
   }
-  getGallery(){
+  getGallery() {
     this.camera.getPicture({
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       destinationType: this.camera.DestinationType.DATA_URL
-    }).then((res)=>{
-      this.imgURL ='data:image/jpeg;base64,'+ res;
-    }).catch((err)=>{
+    }).then((res) => {
+      this.imgURL = 'data:image/jpeg;base64,' + res;
+    }).catch((err) => {
       console.log(err);
       alert(err);
     })
