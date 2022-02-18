@@ -3,23 +3,30 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ListSignalementComponent } from './pages/body/list-signalement/list-signalement.component';
-import { HeaderComponent } from './pages/header/header.component';
-import { BodyComponent } from './pages/body/body.component';
-import { FooterComponent } from './pages/footer/footer.component';
-import { RegionComponent } from './pages/body/region/region.component';
-import { AdminComponent } from './pages/body/admin/admin.component';
-import { TypeProblemComponent } from './pages/body/type-problem/type-problem.component';
-import { StatsComponent } from './pages/body/stats/stats.component';
+import { ListSignalementComponent } from './pages/backoffice/body/list-signalement/list-signalement.component';
+import { HeaderComponent } from './pages/backoffice/header/header.component';
+import { BodyComponent } from './pages/backoffice/body/body.component';
+import { FooterComponent } from './pages/backoffice/footer/footer.component';
+import { RegionComponent } from './pages/backoffice/body/region/region.component';
+import { AdminComponent } from './pages/backoffice/body/admin/admin.component';
+import { TypeProblemComponent } from './pages/backoffice/body/type-problem/type-problem.component';
+// import { StatsComponent } from './pages/backoffice/body/stats/stats.component';
 import {HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { AuthComponent } from './pages/auth/auth.component';
-import { CookieService } from 'ngx-cookie-service';
+import { AuthComponent } from './pages/backoffice/auth/auth.component';
+// import { CookieService } from 'ngx-cookie-service';
 import { FormsModule } from '@angular/forms';
-import { MapComponent } from './pages/body/map/map.component';
+import { BackOfficeComponent } from './pages/backoffice/back-office.component';
+import { FrontOfficeComponent } from './pages/front-office/front-office.component';
+import { MysignalementComponent } from './pages/front-office/body/mysignalement/mysignalement.component';
+import { SignalementEnCoursComponent } from './pages/front-office/body/signalement-en-cours/signalement-en-cours.component';
+import { SignalementTermineComponent } from './pages/front-office/body/signalement-termine/signalement-termine.component';
+import { HeaderFrontComponent } from './pages/front-office/header-front/header-front.component';
+import { FooterFrontComponent } from './pages/front-office/footer-front/footer-front.component';
+// import { MapComponent } from './pages/backoffice/body/map/map.component';
 
 // resaka chart
-import {NgChartsModule} from 'ng2-charts';
+// import {NgChartsModule} from 'ng2-charts';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,10 +37,17 @@ import {NgChartsModule} from 'ng2-charts';
     RegionComponent,
     AdminComponent,
     TypeProblemComponent,
-    StatsComponent,
+    // StatsComponent,
     AuthComponent,
     ListSignalementComponent,
-    MapComponent
+    BackOfficeComponent,
+    FrontOfficeComponent,
+    MysignalementComponent,
+    SignalementEnCoursComponent,
+    SignalementTermineComponent,
+    HeaderFrontComponent,
+    FooterFrontComponent,
+    // MapComponent
   ],
  
   imports: [
@@ -42,9 +56,9 @@ import {NgChartsModule} from 'ng2-charts';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    NgChartsModule
+    // NgChartsModule
   ],
-  providers: [CookieService],
+  // providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

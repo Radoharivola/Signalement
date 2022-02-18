@@ -17,6 +17,7 @@ public class Signalement extends Fonctions {
     Object[] images;
     Object[] type;
     Object[] region;
+    Object[] user;
     public Signalement() {
     }
 
@@ -47,6 +48,8 @@ public class Signalement extends Fonctions {
 
     public void set_IdUser(Object idUser) {
         this.idUser = Integer.valueOf(String.valueOf(idUser));
+        this.user=this.getUser(idUser);
+
     }
 
     public Integer get_IdType() {
@@ -122,6 +125,23 @@ public class Signalement extends Fonctions {
         }
         return type;
     } 
+
+    public Object[] getUser(Object id) throws Exception{
+        Object[] type = null;
+        try {
+            AppUser typ = new AppUser();
+            typ.set_Id(id);
+            Log log = new Log();
+            Connection con = log.getCon();
+            type = typ.pgFind(con);
+            con.close();
+        }
+        catch (Exception e) {
+            throw e;
+        }
+        return type;
+    } 
+
     public Object[] getRegion(Object id) throws Exception{
         Object[] type = null;
         try {
