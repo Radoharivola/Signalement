@@ -18,6 +18,17 @@ export class HttpService {
 
   apiTypeSignalement="http://localhost:8080/TypeSignalements";
 
+
+  apiSignalement="http://localhost:8080/Signalements";
+
+
+  apiEnCours="http://localhost:8080/EnCours";
+
+  apiTermine="http://localhost:8080/Termine";
+
+
+
+
   public getRegion(){
     return this.httpclient.get(this.apiRegion+"/");
   }
@@ -75,4 +86,32 @@ export class HttpService {
   public deleteTypeSign(id:any){
     return this.httpclient.delete(this.apiTypeSignalement+"/"+id+"/");
   }
+
+
+///////////////////////////////     FRONT-OFFICE
+
+public getSignalement(token:any){
+  // return this.httpclient.get(this.apiSignalement+"/"+token);
+    return this.httpclient.get(this.apiSignalement);
+
+}
+
+
+public insertToEnCours(idSign:any){
+  return this.httpclient.post(this.apiEnCours,{_IdSignalement:idSign});
+}
+
+public getEnCours(){
+  return this.httpclient.get(this.apiEnCours);
+}
+
+
+public insertToTermine (idSign:any){
+  return this.httpclient.post(this.apiTermine,{_IdSignalement:idSign});
+}
+
+public getTermine(){
+  return this.httpclient.get(this.apiTermine);
+
+}
 }

@@ -28,61 +28,26 @@
                         <th>Type de Signalement</th>
                         <th>Date</th>
                         <th>Date de finalisation</th>
-                        <th>Description</th>
                         
 					</tr>
 				</thead>
 				<tbody>
-					<tr >
-						<td>User1</td>
-                        <td>TypeSign1</td>
-                        <td>AAAA-MM-JJ</td>
-                        <td>AAAA-MM-JJ</td>
-                        <td>description aaaaaaaaaaaaaaaaaaaaaaaaa</td>
-						
-					</tr>
-                    <tr >
-						<td>User1</td>
-                        <td>TypeSign1</td>
-                        <td>AAAA-MM-JJ</td>
-                        <td>AAAA-MM-JJ</td>
-                        <td>description aaaaaaaaaaaaaaaaaaaaaaaaa</td>
-						
-					</tr>
-                    <tr >
-						<td>User1</td>
-                        <td>TypeSign1</td>
-                        <td>AAAA-MM-JJ</td>
-                        <td>AAAA-MM-JJ</td>
-                        <td>description aaaaaaaaaaaaaaaaaaaaaaaaa</td>
-						
-					</tr>
-                    <tr >
-						<td>User1</td>
-                        <td>TypeSign1</td>
-                        <td>AAAA-MM-JJ</td>
-                        <td>AAAA-MM-JJ</td>
-                        <td>description aaaaaaaaaaaaaaaaaaaaaaaaa</td>
-						
-					</tr>
-                    <tr >
-						<td>User1</td>
-                        <td>TypeSign1</td>
-                        <td>AAAA-MM-JJ</td>
-                        <td>AAAA-MM-JJ</td>
-                        <td>description aaaaaaaaaaaaaaaaaaaaaaaaa</td>
-						
+					<tr *ngFor="let termine of realList">
+						<td>{{ termine.sign.user.nom}}</td>
+                        <td>{{termine.sign.type.nom}}</td>
+						<td>{{termine.sign.dateSignalement}}</td>
+                        <td>{{termine.dateTermine}}</td>
 					</tr>
 					
 				</tbody>
 			</table>
 			<div class="clearfix">
 				<!-- <div class="hint-text">Montrant <b>5</b> des <b>{{ regionList.length}}</b> regions</div> -->
-				<!-- <ul class="pagination">
+				<ul class="pagination">
 					<li class="page-item "><button (click)="previous()" class="page-link">Precedent</button></li>
 				
 					<li class="page-item"><button (click)="next()" class="page-link">Suivant</button></li>
-				</ul> -->
+				</ul>
 			</div>
 		</div>
 	</div>        

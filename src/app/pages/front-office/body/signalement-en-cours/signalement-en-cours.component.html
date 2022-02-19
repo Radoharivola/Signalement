@@ -28,71 +28,30 @@
                         <th>Type de Signalement</th>
                         <th>Date</th>
                         <th>Date d'execution</th>
-                        <th>Description</th>
                         <th>Option</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr >
-						<td>User1</td>
-                        <td>TypeSign1</td>
-                        <td>AAAA-MM-JJ</td>
-                        <td>AAAA-MM-JJ</td>
-                        <td>description aaaaaaaaaaaaaaaaaaaaaaaaa</td>
+					<tr *ngFor="let enCours of realList">
+						<td>{{ enCours.sign.user.nom}}</td>
+                        <td>{{enCours.sign.type.nom}}</td>
+						<td>{{enCours.sign.dateSignalement}}</td>
+                        <td>{{enCours.dateEncours}}</td>
 						<td>
-							<a href=""  class="edit">Finaliser</a>
+							<a href="#finalisation" data-toggle="modal" (click)="setId(enCours.sign.id)" class="edit">Finaliser</a>
 						</td>
 					</tr>
-                    <tr >
-						<td>User1</td>
-                        <td>TypeSign1</td>
-                        <td>AAAA-MM-JJ</td>
-                        <td>AAAA-MM-JJ</td>
-                        <td>description aaaaaaaaaaaaaaaaaaaaaaaaa</td>
-						<td>
-							<a href=""  class="edit">Finaliser</a>
-						</td>
-					</tr>
-                    <tr >
-						<td>User1</td>
-                        <td>TypeSign1</td>
-                        <td>AAAA-MM-JJ</td>
-                        <td>AAAA-MM-JJ</td>
-                        <td>description aaaaaaaaaaaaaaaaaaaaaaaaa</td>
-						<td>
-							<a href=""  class="edit">Finaliser</a>
-						</td>
-					</tr>
-                    <tr >
-						<td>User1</td>
-                        <td>TypeSign1</td>
-                        <td>AAAA-MM-JJ</td>
-                        <td>AAAA-MM-JJ</td>
-                        <td>description aaaaaaaaaaaaaaaaaaaaaaaaa</td>
-						<td>
-							<a href=""  class="edit">Finaliser</a>
-						</td>
-					</tr>
-                    <tr >
-						<td>User1</td>
-                        <td>TypeSign1</td>
-                        <td>AAAA-MM-JJ</td>
-                        <td>AAAA-MM-JJ</td>
-                        <td>description aaaaaaaaaaaaaaaaaaaaaaaaa</td>
-						<td>
-							<a href=""  class="edit">Finaliser</a>
-						</td>
-					</tr>
+                   
 					
 				</tbody>
 			</table>
 			<div class="clearfix">
 				<!-- <div class="hint-text">Montrant <b>5</b> des <b>{{ regionList.length}}</b> regions</div> -->
-				<!-- <ul class="pagination">
+				<ul class="pagination">
 					<li class="page-item "><button (click)="previous()" class="page-link">Precedent</button></li>
 				
 					<li class="page-item"><button (click)="next()" class="page-link">Suivant</button></li>
-				</ul> -->
+				</ul>
 			</div>
 		</div>
 	</div>        
@@ -101,3 +60,22 @@
 
 <!-- Edit Modal HTML -->
 
+<div id="finalisation" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			
+				<div class="modal-header">						
+					<h4 class="modal-title">Finalisation</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">					
+					<p>Etes vous sur de vouloir Finaliser ce Signalement</p>
+				</div>
+				<div class="modal-footer">
+					<input type="button" class="btn btn-default" data-dismiss="modal" value="Annuler">
+					<input type="button" class="btn btn-success" data-dismiss="modal" (click)="insertToTerminer()" value="Finaliser">
+				</div>
+	
+		</div>
+	</div>
+</div>

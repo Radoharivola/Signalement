@@ -15,9 +15,9 @@ public class Signalement extends Fonctions {
     String descriptionSignalement;
     Date dateSignalement;
     Object[] images;
-    Object[] type;
-    Object[] region;
-    Object[] user;
+    Object type;
+    Object region;
+    Object user;
     public Signalement() {
     }
 
@@ -46,7 +46,7 @@ public class Signalement extends Fonctions {
         return this.idUser;
     }
 
-    public void set_IdUser(Object idUser) {
+    public void set_IdUser(Object idUser) throws Exception{
         this.idUser = Integer.valueOf(String.valueOf(idUser));
         this.user=this.getUser(idUser);
 
@@ -110,7 +110,7 @@ public class Signalement extends Fonctions {
         return imgs;
     }
 
-    public Object[] getType(Object id) throws Exception{
+    public Object getType(Object id) throws Exception{
         Object[] type = null;
         try {
             TypeSignalement typ = new TypeSignalement();
@@ -123,10 +123,10 @@ public class Signalement extends Fonctions {
         catch (Exception e) {
             throw e;
         }
-        return type;
+        return type[0];
     } 
 
-    public Object[] getUser(Object id) throws Exception{
+    public Object getUser(Object id) throws Exception{
         Object[] type = null;
         try {
             AppUser typ = new AppUser();
@@ -139,10 +139,10 @@ public class Signalement extends Fonctions {
         catch (Exception e) {
             throw e;
         }
-        return type;
+        return type[0];
     } 
 
-    public Object[] getRegion(Object id) throws Exception{
+    public Object getRegion(Object id) throws Exception{
         Object[] type = null;
         try {
             Region typ = new Region();
@@ -155,7 +155,7 @@ public class Signalement extends Fonctions {
         catch (Exception e) {
             throw e;
         }
-        return type;
+        return type[0];
     } 
 
 

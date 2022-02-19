@@ -18,6 +18,7 @@ public class MainController {
     // List<UserToken> userTokens(){
     //     return userTokenRepository.findAll();
     // }
+    @CrossOrigin(origins="http://localhost:4200")
     @RequestMapping("/EnCours")
     public String enCours() {
         String retour = null;
@@ -27,15 +28,7 @@ public class MainController {
             Gson gson = new Gson();
             EnCours eC = new EnCours();
             Object[] enCours = eC.find(con);
-            Object[] signs = new Object[enCours.length];
-            for (int i = 0; i < enCours.length; i++) {
-                EnCours temp = new EnCours();
-                temp = (EnCours) enCours[i];
-                System.out.println(temp.get_IdSignalement());
-                Object[] t = temp.getSignalement();
-                signs[i] = t[0];
-            }
-            retour = gson.toJson(signs);
+            retour = gson.toJson(enCours);
             log.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -45,6 +38,7 @@ public class MainController {
 
     }
 
+    @CrossOrigin(origins="http://localhost:4200")
     @RequestMapping("/Termine")
     public String termine() {
         String retour = null;
@@ -54,15 +48,8 @@ public class MainController {
             Gson gson = new Gson();
             Termine eC = new Termine();
             Object[] termines = eC.find(con);
-            Object[] signs = new Object[termines.length];
-            for (int i = 0; i < termines.length; i++) {
-                Termine temp = new Termine();
-                temp = (Termine) termines[i];
-                System.out.println(temp.get_IdSignalement());
-                Object[] t = temp.getSignalement();
-                signs[i] = t[0];
-            }
-            retour = gson.toJson(signs);
+           
+            retour = gson.toJson(termines);
             log.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -91,25 +78,42 @@ public class MainController {
 
     }
 
+    @CrossOrigin(origins="http://localhost:4200")
     @PostMapping("/EnCours")
-    EnCours newEC(@RequestBody EnCours EC) {
+    String newEC(@RequestBody EnCours EC) {
+         Gson gson = new Gson();
         try {
             Log log = new Log();
             Connection con = log.getCon();
-            EC.insert(con);
+            Termine term=new Termine();
+            term.set_IdSignalement(EC.get_IdSignalement());
+            if(EC.find(con).length!=0 || term.find(con).length!=0){
+                return gson.toJson("Error");
+            }
+            else{
+                 EC.setDate();
+                EC.insert(con);
+            }
+
+           
             con.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return EC;
+        return gson.toJson("Success");
     }
 
+    @CrossOrigin(origins="http://localhost:4200")
     @PostMapping("/Termine")
     Termine newTerm(@RequestBody Termine term) {
         try {
             Log log = new Log();
             Connection con = log.getCon();
+            term.setDate();
             term.insert(con);
+            EnCours eC=new EnCours();
+            eC.set_IdSignalement(term.get_IdSignalement());
+            eC.delete(con);
             con.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -385,6 +389,7 @@ public class MainController {
             e.printStackTrace();
         }
     }
+
 
     @PostMapping("/Signalements")
     Signalement newSign(@RequestBody Signalement sign) {
