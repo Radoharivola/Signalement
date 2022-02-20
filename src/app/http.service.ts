@@ -96,6 +96,10 @@ public getSignalement(token:any){
 
 }
 
+public getThisSign(id:any){
+  return this.httpclient.get(this.apiSignalement+'/'+id);
+}
+
 
 public insertToEnCours(idSign:any){
   return this.httpclient.post(this.apiEnCours,{_IdSignalement:idSign});
@@ -114,4 +118,7 @@ public getTermine(){
   return this.httpclient.get(this.apiTermine);
 
 }
+
+
+
 }

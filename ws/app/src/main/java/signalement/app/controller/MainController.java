@@ -421,6 +421,8 @@ public class MainController {
         return retour;
     }
 
+    @CrossOrigin(origins="http://localhost:4200")
+
     @GetMapping("/Signalements/{id}")
     String fiche(@PathVariable Long id) {
         String retour = null;

@@ -12,6 +12,7 @@ export class MysignalementComponent implements OnInit {
   public idSignTemp:any;
   public signalements:any;
   public msg:any;
+  public idSign:any;
 
   public lim1=0;
   public lim2=4;
@@ -80,5 +81,10 @@ export class MysignalementComponent implements OnInit {
     }
 
   }
+
+  public setId(id:any){
+    this.idSign=id;
+  }
+
 
 }

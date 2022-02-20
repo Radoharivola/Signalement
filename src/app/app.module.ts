@@ -24,7 +24,7 @@ import { SignalementTermineComponent } from './pages/front-office/body/signaleme
 import { HeaderFrontComponent } from './pages/front-office/header-front/header-front.component';
 import { FooterFrontComponent } from './pages/front-office/footer-front/footer-front.component';
 // import { MapComponent } from './pages/backoffice/body/map/map.component';
-
+import { FicheComponent } from './pages/front-office/body/fiche/fiche.component';
 // resaka chart
 // import {NgChartsModule} from 'ng2-charts';
 @NgModule({
@@ -47,6 +47,7 @@ import { FooterFrontComponent } from './pages/front-office/footer-front/footer-f
     SignalementTermineComponent,
     HeaderFrontComponent,
     FooterFrontComponent,
+    FicheComponent,
     // MapComponent
   ],
  

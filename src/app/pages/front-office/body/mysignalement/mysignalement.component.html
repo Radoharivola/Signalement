@@ -37,7 +37,7 @@
 						<td>{{sign.user.nom}}</td>
                         <td>{{sign.type.nom}}</td>
                         <td>{{sign.dateSignalement}}</td>
-						<td><button id="button" > Voir details</button></td>
+						<td><a id="det" data-toggle="modal" href="#fiche" (click)="setId(sign.id)" > Voir details</a></td>
 						<td>
 							<a href="#execute" data-toggle="modal" (click)="choosen(sign.id)"  data-target="" class="edit">Executer</a>
 						</td>
@@ -106,3 +106,6 @@
 	</div>
 </div>
 
+
+
+<app-fiche [data]="idSign"></app-fiche>
