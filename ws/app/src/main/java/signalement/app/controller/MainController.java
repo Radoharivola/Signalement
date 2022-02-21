@@ -86,13 +86,26 @@ public class MainController {
             Log log = new Log();
             Connection con = log.getCon();
             Termine term=new Termine();
+         
             term.set_IdSignalement(EC.get_IdSignalement());
+            Signalement sign=(Signalement)term.getSignalement();
+
+
+            UserNotification notif=new UserNotification();
+            notif.set_DateNotification(notif.pgDateNow());
+            notif.set_IdAppUser(sign.get_IdUser());
+            notif.set_IdSignalement(sign.get_Id());
+            notif.set_NotificationDetail("Votre signalement concernant : "+sign.getTy().get_Nom()+" le "+sign.get_DateSignalement()+" est en cours de traitement.");
+            notif.set_NotificationTitle("Signalement en Cours ");
+
+
             if(EC.find(con).length!=0 || term.find(con).length!=0){
                 return gson.toJson("Error");
             }
             else{
-                 EC.setDate();
+                EC.setDate();
                 EC.insert(con);
+                notif.insert(con);
             }
 
            
@@ -114,6 +127,15 @@ public class MainController {
             EnCours eC=new EnCours();
             eC.set_IdSignalement(term.get_IdSignalement());
             eC.delete(con);
+            Signalement sign=(Signalement)term.getSignalement();
+            UserNotification notif=new UserNotification();
+            notif.set_DateNotification(notif.pgDateNow());
+            notif.set_IdAppUser(sign.get_IdUser());
+            notif.set_IdSignalement(sign.get_Id());
+            notif.set_NotificationDetail("Votre signalement concernant : "+sign.getTy().get_Nom()+" le "+sign.get_DateSignalement()+" a ete traite avec succes! Merci pour votre cooperation.");
+            notif.set_NotificationTitle("Signalement Termine ");
+
+            notif.insert(con);
             con.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -448,7 +470,7 @@ public class MainController {
         Object[] all = null;
         try {
             log = new Log();
-            UserNotification filter = new UserNotification(null, null, id, null, null);
+            UserNotification filter = new UserNotification(null, null, id, null, null,null);
             all = filter.find(log.getCon());
         } catch (Exception e) {
             throw e;

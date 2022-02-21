@@ -142,6 +142,14 @@ public class Signalement extends Fonctions {
         return type[0];
     } 
 
+    public AppUser getU(){
+        return (AppUser)this.user;
+    }
+
+     public TypeSignalement getTy(){
+        return (TypeSignalement)this.type;
+    }
+
     public Object getRegion(Object id) throws Exception{
         Object[] type = null;
         try {
