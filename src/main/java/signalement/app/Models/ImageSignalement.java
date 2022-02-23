@@ -1,5 +1,4 @@
 package signalement.app.Models;
-import java.sql.Connection;
 
 public class ImageSignalement  extends Fonctions{
     Integer id;

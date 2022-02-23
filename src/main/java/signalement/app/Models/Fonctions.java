@@ -11,7 +11,6 @@ import java.time.*;
 
 public class Fonctions {
     public Fonctions() {
-
     }
 
     // insert
@@ -20,6 +19,9 @@ public class Fonctions {
         Method[] allGet = getGetWithoutId(this);
         String nomTable = getNomTable(this);
         String valeurs = "'" + String.valueOf(allGet[0].invoke(this, (Object[]) null)) + "'";
+        if (allGet[0].invoke(this, (Object[]) null) == null) {
+            valeurs = "null";
+        }
         String nomChamps = "";
         String virj = "";
         for (int i = 0; i < nomChampsSplited.length; i++) {
@@ -29,7 +31,12 @@ public class Fonctions {
             }
         }
         for (int j = 1; j < allGet.length; j++) {
-            valeurs = valeurs + ",'" + String.valueOf(allGet[j].invoke(this, (Object[]) null)) + "'";
+
+            if (allGet[j].invoke(this, (Object[]) null) == null) {
+                valeurs = valeurs + ",null";
+            } else {
+                valeurs = valeurs + ",'" + String.valueOf(allGet[j].invoke(this, (Object[]) null)) + "'";
+            }
         }
         try {
             String req = "INSERT INTO " + nomTable + "(" + nomChamps + ") VALUES(" + valeurs + ")";
@@ -137,7 +144,7 @@ public class Fonctions {
 
     // find
     @SuppressWarnings("deprecation")
-    public Object[] find(Connection con) {
+    public Object[] find(Connection con) throws Exception {
         Class<? extends Fonctions> c = this.getClass();
         Object[] resultat = null;
         Method[] allGet = getGet(this);
@@ -183,7 +190,52 @@ public class Fonctions {
             res.close();
             stmt.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            throw e;
+        }
+        return resultat;
+    }
+
+    @SuppressWarnings("deprecation")
+    public Object[] findOne(Connection con) throws Exception {
+        Class<? extends Fonctions> c = this.getClass();
+        Object[] resultat = null;
+        Method[] allGet = getGet(this);
+        Method[] allSet = getSet(this);
+        String condition = " where ";
+        String and = "";
+        try {
+            int count = 0;
+            for (int i = 0; i < allGet.length; i++) {
+                if (allGet[i].invoke(this, (Object[]) null) != null) {
+                    condition = condition + and + allGet[i].getName().substring(4) + "='"
+                            + allGet[i].invoke(this, (Object[]) null) + "'";
+                    and = " and ";
+                } else {
+                    count += 1;
+                }
+            }
+            String nomTable = this.getClass().getSimpleName();
+            java.sql.Statement stmt = con.createStatement();
+            String query = "";
+            if (count == allGet.length) {
+                query = "select* from " + nomTable;
+            } else {
+                query = "Select * from " + nomTable + condition;
+            }
+            resultat = new Object[1];
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                resultat[0] = new Object();
+                resultat[0] = c.newInstance();
+                for (int x = 0; x < allSet.length; x++) {
+                    allSet[x].invoke(resultat[0], res.getString(allSet[x].getName().substring(4)));
+                }
+                break;
+            }
+            res.close();
+            stmt.close();
+        } catch (Exception e) {
+            throw e;
         }
         return resultat;
     }
@@ -421,6 +473,14 @@ public class Fonctions {
         return aaa;
     }
 
+    public static String pgDateNow() {
+        LocalDateTime now = LocalDateTime.now();
+        String aaa = String.valueOf(now.getDayOfMonth()) + "-" + String.valueOf(now.getMonthValue()) + "-"
+                + String.valueOf(now.getYear()) + " " + String.valueOf(now.getHour()) + ":"
+                + String.valueOf(now.getMinute()) + ":" + String.valueOf(now.getSecond());
+        return aaa;
+    }
+
     // token related debut
     public static String createToken(String newUserId) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         newUserId = newUserId + Fonctions.dateNow();
@@ -430,23 +490,45 @@ public class Fonctions {
         return new BigInteger(1, crypt.digest()).toString(16);
     }
 
-    // public static ReturnMessage verifyToken(String newToken, UserTokenRepository userTokenRepository) {
-    //     ReturnMessage resultat = null;
-    //     UserToken result=userTokenRepository.findByToken(newToken);
-    //     if (result.getIdUser()==null) {
-    //         resultat = new ReturnMessage(null, "invalid token", false, false, null);
-    //     } else {
-    //         resultat = new ReturnMessage(newToken, "valid Token", true, true, result.getIdUser());
-    //     }
-    //     return resultat;
-    // }
+    public static ReturnMessage verifyToken(String newToken, UserTokenRepository userTokenRepository) {
+        ReturnMessage resultat = null;
+        UserToken result = userTokenRepository.findByToken(newToken);
+        if (result == null) {
+            resultat = new ReturnMessage(null, "invalid token", false, false, null);
+        } else {
+            resultat = new ReturnMessage(newToken, "valid Token", true, true, result.getIdUser());
+        }
+        return resultat;
+    }
 
     // token related fin
     // mdp encryption
-    public String encrypt(String mdp) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    public static String encrypt(String mdp) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         MessageDigest crypt = MessageDigest.getInstance("SHA-1");
         crypt.reset();
         crypt.update(mdp.getBytes("UTF-8"));
         return new BigInteger(1, crypt.digest()).toString(16);
+    }
+
+    public String getIdMax(Connection con) {
+        String retour = "";
+        try {
+
+            String req = "select max(id) as id from " + this.getClass().getSimpleName();
+            java.sql.Statement stmt = con.createStatement();
+
+            ResultSet res = stmt.executeQuery(req);
+            while (res.next()) {
+                retour = res.getString(1);
+            }
+            if (retour == null) {
+                retour = "1";
+            }
+
+            stmt.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return retour;
     }
 }

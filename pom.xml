@@ -22,10 +22,15 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>42.3.1</version>
+			<version>42.3.3</version>
 		</dependency>
 
-
+		<!-- <dependency>
+			<groupId>sun.misc</groupId>
+			<artifactId>BASE64Decoder</artifactId>
+			<version>unknown</version>
+		</dependency> -->
+		
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
@@ -59,11 +64,11 @@
 			<scope>provided</scope>
 		</dependency> -->
 		<!-- </dependencies> -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<scope>annotationProcessor</scope>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 
 	<build>

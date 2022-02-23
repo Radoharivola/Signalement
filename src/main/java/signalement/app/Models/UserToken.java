@@ -1,36 +1,54 @@
-// package signalement.app.Models;
+package signalement.app.Models;
 
 // import org.springframework.data.annotation.Id;
-// import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-// import lombok.Getter;
-// import lombok.Setter;
-// import lombok.ToString;
-// @Getter
-// @Setter
-// @ToString
-// @Document(collection ="UserToken")
-// public class UserToken extends Fonctions{
-//     @Id
-//     Integer idUser;
-//     String token;
-//     public Integer getIdUser(){
-//         return idUser;
-//     }
-//     public String getToken(){
-//         return token;
-//     }
-//     public void setIdUser(Object newValue){
-//         idUser=Integer.valueOf(String.valueOf(newValue));
-//     }
-//     public void setToken(String newValue){
-//         token=newValue;
-//     }
-//     public UserToken(){
+@Document(collection ="UserToken")
+public class UserToken extends Fonctions{
+    Integer idUser;
+    String token;
 
-//     }
-//     public UserToken(Integer idUser,String token){
-//         this.idUser=idUser;
-//         this.token=token;
-//     }
-// }
+    public UserToken() {
+    }
+
+    public UserToken(Integer idUser, String token) {
+        this.idUser = idUser;
+        this.token = token;
+    }
+
+    public Integer getIdUser() {
+        return this.idUser;
+    }
+
+    public void setIdUser(Integer idUser) {
+        this.idUser = idUser;
+    }
+
+    public String getToken() {
+        return this.token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public UserToken idUser(Integer idUser) {
+        setIdUser(idUser);
+        return this;
+    }
+
+    public UserToken token(String token) {
+        setToken(token);
+        return this;
+    }
+
+
+    @Override
+    public String toString() {
+        return "{" +
+            " idUser='" + getIdUser() + "'" +
+            ", token='" + getToken() + "'" +
+            "}";
+    }
+    
+}
