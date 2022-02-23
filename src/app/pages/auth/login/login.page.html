@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content >
-  <form  #form="ngForm" (ngSubmit)="register(form)">
+  <form  #form="ngForm">
     <ion-grid>
       <ion-row justify-content-center>
         <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
@@ -14,14 +14,17 @@
           </div>
           <div padding>
             <ion-item>
-              <ion-input name="email" type="email" placeholder="your@email.com" ngModel required></ion-input>
+              <ion-input [(ngModel)]="appUser._Email" name="email" type="email" placeholder="your@email.com" ngModel required></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input name="password" type="password" placeholder="mot de passe" ngModel required></ion-input>
+              <ion-input [(ngModel)]="appUser._Mdp" name="password" type="password" placeholder="mot de passe" ngModel required></ion-input>
             </ion-item>
           </div>
           <div padding>
-            <ion-button  size="large" type="submit" [disabled]="form.invalid" expand="block">Se connecter</ion-button>
+            <div>{{errorMessage}}</div>
+            <ion-button (click)="login();"  size="large" type="submit" [disabled]="form.invalid" expand="block">Se connecter</ion-button>
+            <ion-button size="large"  expand="block" (click)="goToPage('register');">S'inscrire</ion-button>
+
           </div>
         </ion-col>
       </ion-row>

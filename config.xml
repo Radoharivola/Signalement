@@ -47,6 +47,9 @@
         <config-file parent="NSCameraUsageDescription" platform="ios" target="*-Info.plist">
             <string>You can take photos</string>
         </config-file>
+        <edit-config mode="merge" parent="NSLocationWhenInUseUsageDescription" platform="ios" target="*-Info.plist">
+            <string>We use your location for full functionality of certain app features.</string>
+        </edit-config>
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <icon height="57" src="resources/ios/icon/icon.png" width="57" />

@@ -12,12 +12,12 @@
 
   <ion-item>
     <ion-label>Type du problème:</ion-label>
-    <ion-select value="brown" okText="valider" cancelText="annuler">
-      <ion-select-option value="brown">Infrastructure</ion-select-option>
+    <ion-select [(ngModel)]="newSignalement.idType" value="brown" okText="valider" cancelText="annuler" required>
+      <ion-select-option *ngFor="let type of allType" value="{{type.id}}">{{type.nom}}</ion-select-option>
     </ion-select>
   </ion-item>
   <ion-item>
-    <ion-textarea placeholder="Entrez une description..."></ion-textarea>
+    <ion-textarea [(ngModel)]="newSignalement.descriptionSignalement" placeholder="Entrez une description..." required></ion-textarea>
   </ion-item>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>
@@ -35,14 +35,7 @@
     </ion-fab-list>
   </ion-fab>
 
-  <!-- <ion-button (click)="test()">
-    open my ass
-  </ion-button>
-  <ion-button (click)="getCamera()">
-    open camera
-  </ion-button>
-  <ion-button (click)="getGallery()">
-    open gallery
-  </ion-button> -->
   <img [src]="imgURL" width="300" height="300"/>
+  <hr>
+  <ion-label>{{errorMessage}}</ion-label>
 </ion-content>

@@ -6,9 +6,24 @@
 
 <ion-content>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button href="tabs/insert-signalement">
+    <ion-fab-button (click)="goToPage('tabs/insert-signalement')">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  <app-card-signalement></app-card-signalement>
+  
+  <ion-card *ngFor="let item of allSign">
+
+    <ion-item>
+      <h2>{{item.type[0].nom}}</h2>
+    </ion-item>
+
+    <img src="{{item.images[0]}}">
+
+    <ion-card-content>
+      <p>{{item.dateSignalement}}</p>
+      <p>{{item.descriptionSignalement}}</p>
+    </ion-card-content>
+
+  </ion-card>
+
 </ion-content>
