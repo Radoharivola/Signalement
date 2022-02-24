@@ -97,6 +97,7 @@ public class MainController {
             notif.set_IdSignalement(sign.get_Id());
             notif.set_NotificationDetail("Votre signalement concernant : "+sign.getTy().get_Nom()+" le "+sign.get_DateSignalement()+" est en cours de traitement.");
             notif.set_NotificationTitle("Signalement en Cours ");
+            notif.set_Lue(0);
 
 
             if(EC.find(con).length!=0 || term.find(con).length!=0){
@@ -134,6 +135,7 @@ public class MainController {
             notif.set_IdSignalement(sign.get_Id());
             notif.set_NotificationDetail("Votre signalement concernant : "+sign.getTy().get_Nom()+" le "+sign.get_DateSignalement()+" a ete traite avec succes! Merci pour votre cooperation.");
             notif.set_NotificationTitle("Signalement Termine ");
+            notif.set_Lue(0);
 
             notif.insert(con);
             con.close();
@@ -144,22 +146,27 @@ public class MainController {
     }
 
     @CrossOrigin(origins="http://localhost:4200")
-    @PostMapping("/Region")
-    Region newReg(@RequestBody Region regi) {
+    @PostMapping("/Regions")
+    String newReg(@RequestBody Region regi) {
+        Gson gson=new Gson();
         try {
             Log log = new Log();
             Connection con = log.getCon();
+            
+            if(regi.get_Nom().compareTo("")==0){
+                return gson.toJson("Error : vide");
+            }
             // regi.set_Etat(1);
             regi.insert(con);
             con.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return regi;
+        return gson.toJson("Success");
     }
         
     @CrossOrigin(origins="http://localhost:4200")
-    @RequestMapping("/Region")
+    @RequestMapping("/Regions")
     public String getReg() {
         String retour = null;
         try {
@@ -179,7 +186,7 @@ public class MainController {
     }
 
     @CrossOrigin(origins="http://localhost:4200")
-    @GetMapping("/Region/{id}")
+    @GetMapping("/Regions/{id}")
     public String getSimpleReg(@PathVariable Long id) {
         String retour = null;
         try {
@@ -200,14 +207,18 @@ public class MainController {
     }
 
     @CrossOrigin(origins="http://localhost:4200")
-    @PutMapping("Region")
+    @PutMapping("/Regions")
     String updateRegion(@RequestBody Region reg){
         String retour="";
          try {
             Log log = new Log();
             Connection con = log.getCon();
             Region temp = new Region();
-            Gson gson=new Gson();
+              Gson gson=new Gson();
+            if(reg.get_Nom().compareTo("")==0){
+                return gson.toJson("Erreur: vide");
+            }
+          
             reg.update(con);
 
             // temp.set_Id(reg.get_Id());
@@ -231,7 +242,7 @@ public class MainController {
     }
 
     @CrossOrigin(origins="http://localhost:4200")
-    @DeleteMapping("Region/{id}")
+    @DeleteMapping("/Regions/{id}")
     void del(@PathVariable Long id) {
         try {
             Log log = new Log();
@@ -245,25 +256,33 @@ public class MainController {
         }
     }
 
-    ///Admin
+    ///Admins
 
     @CrossOrigin(origins="http://localhost:4200")
-    @PostMapping("/Admin")
-    Admin newAdmin(@RequestBody Admin admin) {
+    @PostMapping("/Admins")
+    String newAdmin(@RequestBody Admin admin) {
+        Gson gson=new Gson();
         try {
             Log log = new Log();
             Connection con = log.getCon();
+        
+            if(admin.get_Nom().compareTo("")==0 && admin.get_Email().compareTo("")==0 && admin.get_IdRegion()!=null && admin.get_Mdp()!=null ){
+                 admin.insert(con);
+            }
+            else{
+                return gson.toJson("Error: vide");
+            }
             // admin.set_Etat(1);
-            admin.insert(con);
+           
             con.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return admin;
+        return gson.toJson("Success");
     }
         
     @CrossOrigin(origins="http://localhost:4200")
-    @RequestMapping("/Admin")
+    @RequestMapping("/Admins")
     public String getAdmin() {
         String retour = null;
         try {
@@ -284,7 +303,7 @@ public class MainController {
     }
 
     @CrossOrigin(origins="http://localhost:4200")
-    @GetMapping("/Admin/{id}")
+    @GetMapping("/Admins/{id}")
     public String getSingleAdmin(@PathVariable Long id) {
         String retour = null;
         try {
@@ -305,31 +324,32 @@ public class MainController {
     }
 
     @CrossOrigin(origins="http://localhost:4200")
-    @PutMapping("/Admin")
-    Admin updateAdmin(@RequestBody Admin reg){
+    @PutMapping("/Admins")
+    String updateAdmin(@RequestBody Admin admin){
         String retour="";
          try {
             Log log = new Log();
             Connection con = log.getCon();
             
             Gson gson=new Gson();
-            reg.update(con);
-            // temp.set_Id(reg.get_Id());
-            // Object[] temps=temp.find(con);
-            // temp=(Region)temps[0];
-            // temp.set(String.valueOf(reg.get_Id()),temp,reg,con);
 
-            retour=gson.toJson("Success");
-            // sign.delete(con);
+            if(admin.get_Nom().compareTo("")!=0 && admin.get_Email().compareTo("")!=0 && admin.get_IdRegion()!=null && admin.get_Mdp().compareTo("")!=0 ){
+                admin.update(con);
+                retour=gson.toJson("Success");
+            }
+            else{
+                return gson.toJson("Error: vide");
+            }
+           
             con.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return  reg;
+        return  retour;
     }
 
     @CrossOrigin(origins="http://localhost:4200")
-    @DeleteMapping("Admin/{id}")
+    @DeleteMapping("/Admins/{id}")
     void delAdmin(@PathVariable Long id) {
         try {
             Log log = new Log();
@@ -346,21 +366,26 @@ public class MainController {
     ///End Admin
 
     @CrossOrigin(origins="http://localhost:4200")
-    @PostMapping("/TypeSignalement")
-    TypeSignalement newType(@RequestBody TypeSignalement regi) {
+    @PostMapping("/TypeSignalements")
+    String newType(@RequestBody TypeSignalement regi) {
+        Gson gson=new Gson();
         try {
             Log log = new Log();
             Connection con = log.getCon();
+            if(regi.get_Nom().compareTo("")==0){
+                return gson.toJson("Error: vide");
+
+            }
             regi.insert(con);
             con.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return regi;
+        return gson.toJson("Succcess");
     }
 
     @CrossOrigin(origins="http://localhost:4200")
-    @RequestMapping("/TypeSignalement")
+    @RequestMapping("/TypeSignalements")
     public String getType() {
         String retour = null;
         try {
@@ -379,7 +404,7 @@ public class MainController {
     }
 
     @CrossOrigin(origins="http://localhost:4200")
-    @PutMapping("/TypeSignalement")
+    @PutMapping("/TypeSignalements")
     String updateRegion(@RequestBody TypeSignalement reg){
         String retour="";
          try {
@@ -387,6 +412,9 @@ public class MainController {
             Connection con = log.getCon();
             TypeSignalement temp = new TypeSignalement();
             Gson gson=new Gson();
+            if(reg.get_Nom().compareTo("")==0){
+                return gson.toJson("Error: vide");
+            }
             reg.update(con);
             retour=gson.toJson("Success");
             // sign.delete(con);
@@ -398,7 +426,7 @@ public class MainController {
     }
 
     @CrossOrigin(origins="http://localhost:4200")
-    @DeleteMapping("/TypeSignalement/{id}")
+    @DeleteMapping("/TypeSignalements/{id}")
     void delType(@PathVariable Long id) {
         try {
             Log log = new Log();
@@ -470,7 +498,7 @@ public class MainController {
         Object[] all = null;
         try {
             log = new Log();
-            UserNotification filter = new UserNotification(null, null, id, null, null,null);
+            UserNotification filter = new UserNotification(null, null, id, null, null,null,0);
             all = filter.find(log.getCon());
         } catch (Exception e) {
             throw e;

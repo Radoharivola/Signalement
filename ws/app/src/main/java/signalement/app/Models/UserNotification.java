@@ -8,17 +8,19 @@ public class UserNotification extends Fonctions{
     Integer idSignalement;
     String notificationDetail;
     String notificationTitle;
+    int lue;
 
     public UserNotification() {
     }
 
-    public UserNotification(Integer id, Date dateNotification, Integer idAppUser, Integer idSignalement, String notificationDetail, String notificationTitle) {
+    public UserNotification(Integer id, Date dateNotification, Integer idAppUser, Integer idSignalement, String notificationDetail, String notificationTitle,int l) {
         this.id = id;
         this.dateNotification = dateNotification;
         this.idAppUser = idAppUser;
         this.idSignalement = idSignalement;
         this.notificationDetail = notificationDetail;
         this.notificationTitle = notificationTitle;
+        this.lue=l;
     }
 
     public Integer get_Id() {
@@ -27,6 +29,14 @@ public class UserNotification extends Fonctions{
 
     public void set_Id(Object id) {
         this.id = Integer.valueOf(String.valueOf(id));
+    }
+
+    public int get_Lue() {
+        return this.lue;
+    }
+
+    public void set_Lue(Object l) {
+        this.lue = Integer.valueOf(String.valueOf(l));
     }
 
     public Date get_DateNotification() {

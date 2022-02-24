@@ -30,57 +30,57 @@ export class HttpService {
 
 
   public getRegion(){
-    return this.httpclient.get(this.apiRegion+"/");
+    return this.httpclient.get(this.apiRegion);
   }
   public ajoutRegion(nom:String){
-    return this.httpclient.post(this.apiRegion+"/",{ _Nom:nom} );
+    return this.httpclient.post(this.apiRegion,{ _Nom:nom} );
   }
 
   public modifierRegion(id:any,nom:String){
-    return this.httpclient.put(this.apiRegion+"/",{ _Id:id, _Nom:nom});
+    return this.httpclient.put(this.apiRegion,{ _Id:id, _Nom:nom});
   }
   public getSingleRegion(id:String){
-    return this.httpclient.get(this.apiRegion+"/"+id+"/");
+    return this.httpclient.get(this.apiRegion+"/"+id);
 
   }
 
   public deleteRegion(id:String){
-    return this.httpclient.delete(this.apiRegion+"/"+id+"/");
+    return this.httpclient.delete(this.apiRegion+"/"+id);
   }
 
   public getAdmins(){
-    return this.httpclient.get(this.apiAdmin+"/");
+    return this.httpclient.get(this.apiAdmin);
   }
   public getAdmin(id:any){
-    return this.httpclient.get(this.apiAdmin+"/"+id+"/");
+    return this.httpclient.get(this.apiAdmin+"/"+id);
   }
 
   public addAdmin(admin:Admin){
     const headers= { 'content-type': 'application/json'}
     const body=JSON.stringify(admin);
-    return this.httpclient.post(this.apiAdmin+"/",body, { 'headers':headers});
+    return this.httpclient.post(this.apiAdmin,body, { 'headers':headers});
   }
 
   public modifierAdmin(admin:Admin){
     const headers= { 'content-type': 'application/json'}
     const body=JSON.stringify(admin);
-    return this.httpclient.put(this.apiAdmin+"/",body, { 'headers':headers});
+    return this.httpclient.put(this.apiAdmin,body, { 'headers':headers});
   }
 
   public deleteAdmin(id:any){
-    return this.httpclient.delete(this.apiAdmin+"/"+id+"/");
+    return this.httpclient.delete(this.apiAdmin+"/"+id);
   }
 
   public addTypeSign(nom:any){
-    return this.httpclient.post(this.apiTypeSignalement+"/",{ _Nom:nom});
+    return this.httpclient.post(this.apiTypeSignalement,{ _Nom:nom});
   }
 
   public getTypeSign(){
-    return this.httpclient.get(this.apiTypeSignalement+"/");
+    return this.httpclient.get(this.apiTypeSignalement);
   }
 
   public modifTypeSign(id:any,nom:any){
-    return this.httpclient.put(this.apiTypeSignalement+"/",{_Id:id,_Nom:nom});
+    return this.httpclient.put(this.apiTypeSignalement,{_Id:id,_Nom:nom});
   }
 
   public deleteTypeSign(id:any){
