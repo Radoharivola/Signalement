@@ -372,3 +372,4 @@ target
 *.pack
 *.pack
 *.old
+*.json
