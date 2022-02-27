@@ -367,3 +367,4 @@ npm-debug.log*
 .angular/cache/babel-webpack/dfca03d515a21b97a4e21dce1a2b6d96.json
 .angular/cache/babel-webpack/d1b0b3f9d6d2d62c2624876f13d91248.json
 .angular/cache/angular-webpack/a3b989546adfdbd7cac217d2571abb1409dd0193/index.pack
+*.pack
