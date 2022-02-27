@@ -116,7 +116,8 @@ public class Signalement extends Fonctions {
     public Object[] getImages(Object id) throws Exception {
         Object[] imgs = null;
         Object[] result = null;
-        String UPLOAD_DIR = new ClassPathResource("/image").getFile().getAbsolutePath() + "/";
+        // String UPLOAD_DIR = new ClassPathResource("/image").getFile().getAbsolutePath() + "/";
+        String UPLOAD_DIR="imagestorage.c1.biz/image/";
         try {
             // System.out.println(images);
             // if(this.images.length!= 0){
