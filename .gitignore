@@ -369,3 +369,6 @@ target
 .angular/cache/babel-webpack/d1b0b3f9d6d2d62c2624876f13d91248.json
 .angular/cache/angular-webpack/a3b989546adfdbd7cac217d2571abb1409dd0193/index.pack
 *.pack
+*.pack
+*.pack
+*.old
