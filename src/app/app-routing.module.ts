@@ -35,10 +35,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/signalement/insert-signalement/insert-signalement.module').then( m => m.InsertSignalementPageModule)
   },
   {
-    path: 'details-signalement',
-    loadChildren: () => import('./pages/signalement/details-signalement/details-signalement.module').then( m => m.DetailsSignalementPageModule)
-  },
-  {
     path: 'menu',
     loadChildren: () => import('./pages/menu/menu.module').then( m => m.MenuPageModule)
   },

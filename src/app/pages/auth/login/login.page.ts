@@ -10,24 +10,23 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  appUser=new AppUser();
-  errorMessage='';
-  constructor(private storage:NativeStorage,private loginService:LoginServiceService,private router:Router) { }
+  appUser = new AppUser();
+  errorMessage = '';
+  constructor(private storage: NativeStorage, private loginService: LoginServiceService, private router: Router) { }
 
   ngOnInit() {
   }
   login() {
     this.loginService.login(this.appUser).subscribe((data: any) => {
       if (typeof data.data !== undefined && data.connectionStatus == false) {
-        this.errorMessage= data.message;
+        this.errorMessage = data.message;
       } else {
-        localStorage.setItem('token',data.token);
+        localStorage.setItem('token', data.token);
         this.goToPage('tabs');
       }
-      console.log(data);
     });
   }
-  goToPage(page:string):void {
+  goToPage(page: string): void {
     this.router.navigate([`${page}`])
   }
 }

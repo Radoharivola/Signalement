@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NotificationServiceService} from './notification-service.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-list-notification',
   templateUrl: './list-notification.page.html',
@@ -7,7 +9,7 @@ import {NotificationServiceService} from './notification-service.service';
 })
 export class ListNotificationPage implements OnInit {
   allNotifications;
-  constructor(private notificationService: NotificationServiceService) { }
+  constructor(private notificationService: NotificationServiceService,private router: Router) { }
 
   ngOnInit() {
     this.loadAllNotifications();
@@ -22,5 +24,15 @@ export class ListNotificationPage implements OnInit {
       }
     });
   }
-
+  
+  goToPage(page: string): void {
+    this.router.navigate([`${page}`])
+  } 
+  goToDetails(idSignalement:string): void {
+    localStorage.setItem('idSignalement',idSignalement);
+    this.goToPage('/tabs/detail');
+  }
+  reload(){
+    location.reload();
+  }
 }

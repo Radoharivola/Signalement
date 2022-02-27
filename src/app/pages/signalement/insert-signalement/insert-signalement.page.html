@@ -1,6 +1,8 @@
 <ion-header>
   <ion-toolbar>
-    Créer un signalement
+    <ion-buttons slot="start">
+      <ion-button (click)="goToPage('/tabs/list-signalement');">retour</ion-button>
+    </ion-buttons>
     <ion-button slot="end" (click)="insertSignalement()">
       Poster
     </ion-button>
@@ -17,12 +19,13 @@
     </ion-select>
   </ion-item>
   <ion-item>
-    <ion-textarea [(ngModel)]="newSignalement.descriptionSignalement" placeholder="Entrez une description..." required></ion-textarea>
+    <ion-textarea [(ngModel)]="newSignalement.descriptionSignalement" placeholder="Entrez une description..." required>
+    </ion-textarea>
   </ion-item>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>
       <ion-icon name="camera"></ion-icon>
-    </ion-fab-button >
+    </ion-fab-button>
     <ion-fab-list side="top">
       <ion-fab-button (click)="getGallery()">
         <ion-icon name="image"></ion-icon>
@@ -35,7 +38,7 @@
     </ion-fab-list>
   </ion-fab>
 
-  <img [src]="imgURL" width="300" height="300"/>
+  <img [src]="imgURL" width="300" height="300" />
   <hr>
   <ion-label>{{errorMessage}}</ion-label>
 </ion-content>

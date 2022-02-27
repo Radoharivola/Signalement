@@ -7,13 +7,15 @@ import { Router } from '@angular/router';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor(private router: Router) {}
+
+  constructor(private router: Router) { }
   ngOnInit() {
-    if(localStorage.getItem('token')==null){
+    // alert(localStorage.getItem('token'));
+    if (localStorage.getItem('token') == null) {
       this.goToPage('login');
     }
   }
-  goToPage(page:string):void {
+  goToPage(page: string): void {
     this.router.navigate([`${page}`])
   }
 }

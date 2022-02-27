@@ -1,9 +1,26 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goToPage('/tabs/list-notification');">retour</ion-button>
+    </ion-buttons>
     <ion-title>details-notification</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-card>
+
+    <ion-item>
+      <h2>En cours</h2>
+    </ion-item>
+
+    <img src="https://cdn.pixabay.com/photo/2015/04/20/15/59/road-731721_960_720.jpg">
+
+    <ion-card-content>
+      <p>Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a
+        DeLorean?! Whoa. This is heavy.</p>
+    </ion-card-content>
+
+  </ion-card>
 
 </ion-content>

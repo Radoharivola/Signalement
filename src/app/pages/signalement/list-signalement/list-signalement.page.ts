@@ -27,4 +27,7 @@ export class ListSignalementPage implements OnInit {
   goToPage(page:string):void {
     this.router.navigate([`${page}`])
   }
+  reload(){
+    location.reload();
+  }
 }

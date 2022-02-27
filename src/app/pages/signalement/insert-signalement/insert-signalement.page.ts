@@ -32,11 +32,7 @@ export class InsertSignalementPage implements OnInit {
           console.log(this.newSignalement);
 
           this.insertServiceService.insertSignalement(this.newSignalement).subscribe((data: any) => {
-            if (typeof data.data !== undefined && data.data == false) {
-              alert('error');
-            } else {
-              alert('success');
-            }
+            this.errorMessage='Envoi réussi';
           });
         }).catch((error) => {
           this.errorMessage='Error getting location: no internet connection.';

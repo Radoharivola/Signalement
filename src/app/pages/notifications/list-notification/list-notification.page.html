@@ -1,15 +1,19 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="reload();">actualiser</ion-button>
+    </ion-buttons>
     <ion-title>Notifications</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-card *ngFor="let notification of allNotifications">
-    <ion-card-header>
+    <ion-card-header (click)="goToDetails(notification.idSignalement);">
       <ion-card-subtitle>{{notification.notificationTitle}} le {{notification.dateNotification}}</ion-card-subtitle>
     </ion-card-header>
-  
-    <ion-card-content>{{notification.notificationDetail}}</ion-card-content>
+
+    <ion-card-content (click)="goToDetails(notification.idSignalement);">{{notification.notificationDetail}}
+    </ion-card-content>
   </ion-card>
 </ion-content>
