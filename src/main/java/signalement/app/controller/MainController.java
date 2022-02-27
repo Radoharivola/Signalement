@@ -17,13 +17,13 @@ public class MainController {
     @Autowired
     private UserTokenRepository userTokenRepository;
 
-    // @CrossOrigin(origins = "")
+
     @GetMapping("/userTokens")
     List<UserToken> userTokens() {
         return userTokenRepository.findAll();
     }
 
-    // @CrossOrigin(origins = "")
+
     @RequestMapping("/EnCours")
     public String enCours(@RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -57,7 +57,7 @@ public class MainController {
 
     }
 
-    // @CrossOrigin(origins = "")
+
     @RequestMapping("/Termine")
     public String termine(@RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -90,7 +90,7 @@ public class MainController {
 
     }
 
-    // @CrossOrigin(origins = "")
+
     @GetMapping("/Signalements")
     public String signalements(@RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -115,7 +115,7 @@ public class MainController {
 
     }
 
-    // @CrossOrigin(origins = "")
+
     @GetMapping("/NASignalements")
     public String nASignalements(@RequestHeader("token") String token) throws Exception {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -130,7 +130,7 @@ public class MainController {
         return result;
     }
 
-    // @CrossOrigin(origins = "")
+
     @PostMapping("/EnCours")
     String newEC(@RequestBody EnCours EC, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -152,7 +152,7 @@ public class MainController {
         return result;
     }
 
-    // @CrossOrigin(origins = "")
+
     @PostMapping("/Termine")
     String newTerm(@RequestBody Termine term, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -174,7 +174,7 @@ public class MainController {
         return result;
     }
 
-    // @CrossOrigin(origins = "")
+
     @PostMapping("/Regions")
     String newReg(@RequestBody Region regi, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -196,7 +196,7 @@ public class MainController {
         return result;
     }
 
-    // @CrossOrigin(origins = "")
+
     @RequestMapping("/Regions")
     public String getReg(@RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -221,7 +221,7 @@ public class MainController {
         return retour;
     }
 
-    // @CrossOrigin(origins = "")
+
     @GetMapping("/Regions/{id}")
     public String getSimpleReg(@PathVariable Long id, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -247,7 +247,7 @@ public class MainController {
         return retour;
     }
 
-    // @CrossOrigin(origins = "")
+
     @PutMapping("/Regions")
     String updateRegion(@RequestBody Region reg, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -270,7 +270,7 @@ public class MainController {
         return retour;
     }
 
-    // @CrossOrigin(origins = "")
+
     @DeleteMapping("Regions/{id}")
     String del(@PathVariable Long id, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -296,7 +296,7 @@ public class MainController {
 
     /// Admins
 
-    // @CrossOrigin(origins = "")
+
     @PostMapping("/Admins")
     String newAdmin(@RequestBody Admin admin, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -318,7 +318,7 @@ public class MainController {
         return result;
     }
 
-    // @CrossOrigin(origins = "")
+
     @RequestMapping("/Admins")
     public String getAdmin(@RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -344,7 +344,7 @@ public class MainController {
         return retour;
     }
 
-    // @CrossOrigin(origins = "")
+
     @GetMapping("/Admins/{id}")
     public String getSingleAdmin(@PathVariable Long id, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -370,7 +370,7 @@ public class MainController {
         return retour;
     }
 
-    // @CrossOrigin(origins = "")
+
     @PutMapping("/Admins")
     String updateAdmin(@RequestBody Admin reg, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -392,7 +392,7 @@ public class MainController {
         return retour;
     }
 
-    // @CrossOrigin(origins = "")
+
     @DeleteMapping("/Admins/{id}")
     String delAdmin(@PathVariable Long id, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -418,7 +418,7 @@ public class MainController {
 
     /// End Admin
 
-    // @CrossOrigin(origins = "")
+
     @PostMapping("/TypeSignalements")
     String newType(@RequestBody TypeSignalement regi, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -440,7 +440,7 @@ public class MainController {
         return result;
     }
 
-    // @CrossOrigin(origins = "")
+
     @RequestMapping("/TypeSignalements")
     public String getType(@RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -464,7 +464,7 @@ public class MainController {
         return result;
     }
 
-    // @CrossOrigin(origins = "")
+
     @PutMapping("/TypeSignalements")
     String updateRegion(@RequestBody TypeSignalement reg, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -486,7 +486,7 @@ public class MainController {
         return retour;
     }
 
-    // @CrossOrigin(origins = "")
+
     @DeleteMapping("/TypeSignalements/{id}")
     String delType(@PathVariable Long id, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -566,7 +566,7 @@ public class MainController {
         return gson.toJson(retour);
     }
 
-    // @CrossOrigin(origins = "")
+
     @GetMapping("/Signalements/User")
     String signs(@RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -589,7 +589,7 @@ public class MainController {
         }
         return retour;
     }
-    // @CrossOrigin(origins = "")
+
 
     @GetMapping("/Signalements/Regions/{id}")
     public String signalements(@PathVariable Long id) {
@@ -613,7 +613,7 @@ public class MainController {
 
     }
 
-    // @CrossOrigin(origins = "")
+
     @GetMapping("/Signalements/{id}")
     String fiche(@PathVariable Long id, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -637,7 +637,7 @@ public class MainController {
     }
     // notifications debut
 
-    // @CrossOrigin(origins = "")
+
     @GetMapping("/notifications")
     String getAllNotifications(@RequestHeader("token") String token) throws Exception {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -663,7 +663,7 @@ public class MainController {
     // notifications fin
 
     // stats debut
-    // @CrossOrigin(origins = "")
+
     @GetMapping("/typeGlobalStat/{year}")
     String typeGlobalStat(@PathVariable Integer year) throws Exception {
         Log log = null;
@@ -706,7 +706,7 @@ public class MainController {
         return json.toJson(stat);
     }
 
-    // @CrossOrigin(origins = "")
+
     @GetMapping("/typeGlobalStat/{month}/{year}")
     String typeGlobalStat(@PathVariable Integer month, @PathVariable Integer year) throws Exception {
         Log log = null;
@@ -750,7 +750,7 @@ public class MainController {
         return json.toJson(stat);
     }
 
-    // @CrossOrigin(origins = "")
+
     @GetMapping("/signalementRegionStat/{year}")
     String signalementRegionStat(@PathVariable Integer year) throws Exception {
         Log log = null;
@@ -790,7 +790,7 @@ public class MainController {
         return json.toJson(stat);
     }
 
-    // @CrossOrigin(origins = "")
+
     @GetMapping("/signalementRegionStat/{year}/{month}")
     String signalementRegionStatym(@PathVariable Integer year, @PathVariable Integer month) throws Exception {
         Log log = null;
@@ -834,7 +834,7 @@ public class MainController {
     // stats fin
 
     // affectation début
-    // @CrossOrigin(origins = "")
+
     @PostMapping("/affectations")
     public String affect(@RequestBody Affectation aff, @RequestHeader("token") String token) throws Exception {
         // Token verification
@@ -868,7 +868,7 @@ public class MainController {
     }
     // affectation fin
 
-    // @CrossOrigin(origins = "")
+
     @PostMapping("/Login")
     String login(@RequestBody AppUser user) {
         Gson json = new Gson();
@@ -904,7 +904,7 @@ public class MainController {
         return json.toJson(result);
     }
 
-    // @CrossOrigin(origins = "")
+
     @PostMapping("/SULogin")
     String suLogin(@RequestBody SuperAdmin user) throws Exception {
         Gson json = new Gson();
@@ -944,7 +944,7 @@ public class MainController {
         return json.toJson(result);
     }
 
-    // @CrossOrigin(origins = "")
+
     @PostMapping("/ALogin")
     String aLogin(@RequestBody Admin user) throws Exception {
         Gson json = new Gson();
@@ -1012,7 +1012,7 @@ public class MainController {
         return gson.toJson(new ReturnMessage(token, message, conStatus, tokenStatus, null));
     }
 
-    // @CrossOrigin(origins = "")
+
     @GetMapping("/testToken")
     String testToken() {
         Gson gson = new Gson();
