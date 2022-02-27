@@ -540,6 +540,7 @@ public class MainController {
                 String imageName = String.valueOf(sign.get_IdUser()) + Fonctions.imagePathDateNow() + ".jpg";
                 System.out.println(imageName);
                 String UPLOAD_DIR = new FileSystemResource("/images").getFile().getAbsolutePath();
+                System.out.println(UPLOAD_DIR);
                 // String UPLOAD_DIR ="https://imagestorage.c1.biz/image" ;
                 File myFile = new File(UPLOAD_DIR + "/" + imageName);
                 byte[] imageByte = Base64.getDecoder().decode(newSignalement.getImage().split(",")[1]);
