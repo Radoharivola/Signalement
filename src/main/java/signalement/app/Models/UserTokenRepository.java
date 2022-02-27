@@ -1,11 +1,9 @@
 package signalement.app.Models;
 
-import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
-import org.springframework.stereotype.Repository;
-@Repository
+
 public interface UserTokenRepository extends MongoRepository<UserToken,Integer> {
     @Query("{token : ?0}")                                         
     UserToken findByToken(String token);

@@ -2,23 +2,12 @@ package signalement.app.controller;
 
 import java.sql.*;
 import java.util.List;
-
 import com.google.gson.Gson;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-// import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
-import signalement.app.helper.*;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.util.Base64;
 import signalement.app.Models.*;
 
@@ -35,8 +24,8 @@ public class MainController {
     }
 
     // @CrossOrigin(origins = "")
-    @RequestMapping("/EnCours/{token}")
-    public String enCours(@PathVariable String token) {
+    @RequestMapping("/EnCours")
+    public String enCours(@RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
         String retour = null;
         Gson gson = new Gson();
@@ -69,8 +58,8 @@ public class MainController {
     }
 
     // @CrossOrigin(origins = "")
-    @RequestMapping("/Termine/{token}")
-    public String termine(@PathVariable String token) {
+    @RequestMapping("/Termine")
+    public String termine(@RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
         Gson gson = new Gson();
         String retour = null;
@@ -102,8 +91,8 @@ public class MainController {
     }
 
     // @CrossOrigin(origins = "")
-    @GetMapping("/Signalements/{token}")
-    public String signalements(@PathVariable String token) {
+    @GetMapping("/Signalements")
+    public String signalements(@RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
         Gson gson = new Gson();
         String retour = null;
@@ -127,8 +116,8 @@ public class MainController {
     }
 
     // @CrossOrigin(origins = "")
-    @GetMapping("/NASignalements/{token}")
-    public String nASignalements(@PathVariable String token) throws Exception {
+    @GetMapping("/NASignalements")
+    public String nASignalements(@RequestHeader("token") String token) throws Exception {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
         String result = null;
         Gson gson = new Gson();
@@ -142,8 +131,8 @@ public class MainController {
     }
 
     // @CrossOrigin(origins = "")
-    @PostMapping("/EnCours/{token}")
-    String newEC(@RequestBody EnCours EC, @PathVariable String token) {
+    @PostMapping("/EnCours")
+    String newEC(@RequestBody EnCours EC, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
         String result = null;
         Gson gson = new Gson();
@@ -164,8 +153,8 @@ public class MainController {
     }
 
     // @CrossOrigin(origins = "")
-    @PostMapping("/Termine/{token}")
-    String newTerm(@RequestBody Termine term, @PathVariable String token) {
+    @PostMapping("/Termine")
+    String newTerm(@RequestBody Termine term, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
         String result = null;
         Gson gson = new Gson();
@@ -186,8 +175,8 @@ public class MainController {
     }
 
     // @CrossOrigin(origins = "")
-    @PostMapping("/Regions/{token}")
-    String newReg(@RequestBody Region regi, @PathVariable String token) {
+    @PostMapping("/Regions")
+    String newReg(@RequestBody Region regi, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
         String result = null;
         Gson gson = new Gson();
@@ -208,8 +197,8 @@ public class MainController {
     }
 
     // @CrossOrigin(origins = "")
-    @RequestMapping("/Regions/{token}")
-    public String getReg(@PathVariable String token) {
+    @RequestMapping("/Regions")
+    public String getReg(@RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
         String retour = null;
         Gson gson = new Gson();
@@ -233,8 +222,8 @@ public class MainController {
     }
 
     // @CrossOrigin(origins = "")
-    @GetMapping("/Regions/{id}/{token}")
-    public String getSimpleReg(@PathVariable Long id, @PathVariable String token) {
+    @GetMapping("/Regions/{id}")
+    public String getSimpleReg(@PathVariable Long id, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
         String retour = null;
         Gson gson = new Gson();
@@ -259,8 +248,8 @@ public class MainController {
     }
 
     // @CrossOrigin(origins = "")
-    @PutMapping("/Regions/{token}")
-    String updateRegion(@RequestBody Region reg, @PathVariable String token) {
+    @PutMapping("/Regions")
+    String updateRegion(@RequestBody Region reg, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
         String retour = null;
         Gson gson = new Gson();
@@ -282,8 +271,8 @@ public class MainController {
     }
 
     // @CrossOrigin(origins = "")
-    @DeleteMapping("Regions/{id}/{token}")
-    String del(@PathVariable Long id, @PathVariable String token) {
+    @DeleteMapping("Regions/{id}")
+    String del(@PathVariable Long id, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
         ReturnMessage result = null;
         Gson gson = new Gson();
@@ -308,8 +297,8 @@ public class MainController {
     /// Admins
 
     // @CrossOrigin(origins = "")
-    @PostMapping("/Admins/{token}")
-    String newAdmin(@RequestBody Admin admin, @PathVariable String token) {
+    @PostMapping("/Admins")
+    String newAdmin(@RequestBody Admin admin, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
         String result = null;
         Gson gson = new Gson();
@@ -330,8 +319,8 @@ public class MainController {
     }
 
     // @CrossOrigin(origins = "")
-    @RequestMapping("/Admins/{token}")
-    public String getAdmin(@PathVariable String token) {
+    @RequestMapping("/Admins")
+    public String getAdmin(@RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
         String retour = null;
         Gson gson = new Gson();
@@ -356,8 +345,8 @@ public class MainController {
     }
 
     // @CrossOrigin(origins = "")
-    @GetMapping("/Admins/{id}/{token}")
-    public String getSingleAdmin(@PathVariable Long id, @PathVariable String token) {
+    @GetMapping("/Admins/{id}")
+    public String getSingleAdmin(@PathVariable Long id, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
         String retour = null;
         Gson gson = new Gson();
@@ -382,8 +371,8 @@ public class MainController {
     }
 
     // @CrossOrigin(origins = "")
-    @PutMapping("/Admins/{token}")
-    String updateAdmin(@RequestBody Admin reg, @PathVariable String token) {
+    @PutMapping("/Admins")
+    String updateAdmin(@RequestBody Admin reg, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
         String retour = null;
         Gson gson = new Gson();
@@ -404,8 +393,8 @@ public class MainController {
     }
 
     // @CrossOrigin(origins = "")
-    @DeleteMapping("/Admins/{id}/{token}")
-    String delAdmin(@PathVariable Long id, @PathVariable String token) {
+    @DeleteMapping("/Admins/{id}")
+    String delAdmin(@PathVariable Long id, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
         ReturnMessage result = null;
         Gson gson = new Gson();
@@ -430,8 +419,8 @@ public class MainController {
     /// End Admin
 
     // @CrossOrigin(origins = "")
-    @PostMapping("/TypeSignalements/{token}")
-    String newType(@RequestBody TypeSignalement regi, @PathVariable String token) {
+    @PostMapping("/TypeSignalements")
+    String newType(@RequestBody TypeSignalement regi, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
         String result = null;
         Gson gson = new Gson();
@@ -476,8 +465,8 @@ public class MainController {
     }
 
     // @CrossOrigin(origins = "")
-    @PutMapping("/TypeSignalements/{token}")
-    String updateRegion(@RequestBody TypeSignalement reg, @PathVariable String token) {
+    @PutMapping("/TypeSignalements")
+    String updateRegion(@RequestBody TypeSignalement reg, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
         String retour = null;
         Gson gson = new Gson();
@@ -498,8 +487,8 @@ public class MainController {
     }
 
     // @CrossOrigin(origins = "")
-    @DeleteMapping("/TypeSignalements/{id}/{token}")
-    String delType(@PathVariable Long id, @PathVariable String token) {
+    @DeleteMapping("/TypeSignalements/{id}")
+    String delType(@PathVariable Long id, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
         ReturnMessage result = null;
         Gson gson = new Gson();
@@ -521,75 +510,6 @@ public class MainController {
         return gson.toJson(result);
     }
 
-    // @Autowired
-    // private FileUploadHelper fileUploadHelper;
-
-    // @CrossOrigin(origins = "")
-    // @PostMapping("/Signalements/{token}")
-    // String newSign(@PathVariable String token, @RequestParam("_IdType") String
-    // _IdType,
-    // @RequestParam("_DescriptionSignalement") String _DescriptionSignalement,
-    // @RequestParam("_Longitude") String _Longitude,
-    // @RequestParam("_Latitude") String _Latitude, @RequestParam("file")
-    // MultipartFile[] file) throws Exception {
-    // ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
-    // ReturnMessage retour = null;
-    // Gson gson = new Gson();
-    // if (letMeIn.getConnectionStatus()) {
-    // try {
-    // if (file.length == 0) {
-    // throw new Exception("file is empty");
-    // }
-    // Signalement sign = new Signalement();
-    // sign.set_DescriptionSignalement(_DescriptionSignalement);
-    // sign.set_DateSignalement(Fonctions.pgDateNow());
-    // sign.set_Longitude(_Longitude);
-    // sign.set_Latitude(_Latitude);
-    // sign.set_IdType(_IdType);
-    // sign.set_IdUser((Integer) letMeIn.getData());
-    // Log log = new Log();
-    // Connection con = log.getCon();
-    // sign.insert(con);
-    // // get id last sign
-    // // Object[]tests=new Signalement().find(con);
-    // sign = (Signalement) sign.findOne(con)[0];
-    // // System.out.println("last id: ");
-    // // fin
-    // // Object[] imgs = sign.getImages(con);
-    // for (int i = 0; i < file.length; i++) {
-    // ImageSignalement imgsSign = new ImageSignalement();
-
-    // // for (int i = 0; i < imgs.length; i++) {
-    // // imgsSign[i] = new ImageSignalement();
-    // imgsSign.set_IdSignalement(sign.get_Id());
-    // imgsSign.set_ImageSignalement(file[i].getOriginalFilename());
-    // imgsSign.insert(con);
-    // boolean f = fileUploadHelper.uploadFile(file[i]);
-    // if (f) {
-    // retour = new ReturnMessage(token, "success", true, true, token);
-    // } else {
-    // throw new Exception("Upload error");
-    // }
-
-    // }
-    // // }
-
-    // // // file upload code...
-
-    // // retour = new ReturnMessage(token, "success", true, true, token);
-
-    // log.close();
-    // } catch (Exception e) {
-    // e.printStackTrace();
-    // throw e;
-    // }
-    // } else {
-    // retour = (new ReturnMessage(null, "invalid token", false, false, false));
-    // }
-    // return gson.toJson(retour);
-    // }
-
-    // @CrossOrigin(origins = "")
     @PostMapping("/Signalements")
     String insertSignalement(@RequestBody NewSignalement newSignalement, @RequestHeader("token") String token)
             throws Exception {
@@ -602,7 +522,7 @@ public class MainController {
                 Signalement sign = new Signalement();
                 sign.set_DescriptionSignalement(newSignalement.getDescriptionSignalement());
                 sign.set_DateSignalement(Fonctions.pgDateNow());
-                System.out.println(newSignalement.getLongitude()+" erg "+newSignalement.getLatitude());
+                System.out.println(newSignalement.getLongitude() + " erg " + newSignalement.getLatitude());
                 sign.set_Longitude(newSignalement.getLongitude());
                 sign.set_Latitude(newSignalement.getLatitude());
                 sign.set_IdType(newSignalement.getIdType());
@@ -616,7 +536,7 @@ public class MainController {
                 // System.out.println("last id: ");
                 // fin
                 // Object[] imgs = sign.getImages(con);
-                String imageName = String.valueOf(sign.get_IdUser()) + String.valueOf(sign.get_Longitude()) + String.valueOf(sign.get_Latitude()) + ".jpg";
+                String imageName = String.valueOf(sign.get_IdUser()) + Fonctions.dateNow() + ".jpg";
                 System.out.println(imageName);
                 String UPLOAD_DIR = new ClassPathResource("/image").getFile().getAbsolutePath();
                 File myFile = new File(UPLOAD_DIR + "/" + imageName);
@@ -692,8 +612,8 @@ public class MainController {
     }
 
     // @CrossOrigin(origins = "")
-    @GetMapping("/Signalements/{id}/{token}")
-    String fiche(@PathVariable Long id, @PathVariable String token) {
+    @GetMapping("/Signalements/{id}")
+    String fiche(@PathVariable Long id, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
         String retour = null;
         Gson gson = new Gson();
@@ -726,7 +646,7 @@ public class MainController {
             try {
                 log = new Log();
                 UserNotification filter = new UserNotification();
-                filter.set_IdAppUser((Integer)letMeIn.getData());
+                filter.set_IdAppUser((Integer) letMeIn.getData());
                 all = filter.find(log.getCon());
             } catch (Exception e) {
                 throw e;
@@ -913,8 +833,8 @@ public class MainController {
 
     // affectation début
     // @CrossOrigin(origins = "")
-    @PostMapping("/affectations/{token}")
-    public String affect(@RequestBody Affectation aff, @PathVariable String token) throws Exception {
+    @PostMapping("/affectations")
+    public String affect(@RequestBody Affectation aff, @RequestHeader("token") String token) throws Exception {
         // Token verification
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
         ReturnMessage result = null;
@@ -1081,8 +1001,8 @@ public class MainController {
             Connection con = log.getCon();
             user.set_Mdp(Fonctions.encrypt(user.get_Mdp()));
             user.insert(con);
-            conStatus=true;
-            tokenStatus=true;
+            conStatus = true;
+            tokenStatus = true;
             message = "success";
         } catch (Exception e) {
             message = e.getMessage();

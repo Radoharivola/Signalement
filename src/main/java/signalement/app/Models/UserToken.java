@@ -2,13 +2,10 @@ package signalement.app.Models;
 
 // import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection ="UserToken")
 public class UserToken extends Fonctions{
-    @Field
     Integer idUser;
-    @Field
     String token;
 
     public UserToken() {
@@ -53,5 +50,6 @@ public class UserToken extends Fonctions{
             ", token='" + getToken() + "'" +
             "}";
     }
+    
     
 }
