@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+*.pack
+node_modules
+platforms
+plugins
+www
