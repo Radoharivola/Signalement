@@ -536,7 +536,7 @@ public class MainController {
                 // System.out.println("last id: ");
                 // fin
                 // Object[] imgs = sign.getImages(con);
-                String imageName = String.valueOf(sign.get_IdUser()) + Fonctions.dateNow() + ".jpg";
+                String imageName = String.valueOf(sign.get_IdUser()) + Fonctions.imagePathDateNow() + ".jpg";
                 System.out.println(imageName);
                 // String UPLOAD_DIR = new ClassPathResource("/image").getFile().getAbsolutePath();
                 String UPLOAD_DIR ="https://imagestorage.c1.biz/image" ;

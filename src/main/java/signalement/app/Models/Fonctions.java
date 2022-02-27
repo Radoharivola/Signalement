@@ -481,6 +481,12 @@ public class Fonctions {
         return aaa;
     }
 
+    public static String imagePathDateNow() {
+        LocalDateTime now = LocalDateTime.now();
+        String aaa = String.valueOf(now.getDayOfMonth()) + String.valueOf(now.getMonthValue())+ String.valueOf(now.getYear()) +  String.valueOf(now.getHour()) + String.valueOf(now.getMinute()) + String.valueOf(now.getSecond());
+        return aaa;
+    }
+
     // token related debut
     public static String createToken(String newUserId) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         newUserId = newUserId + Fonctions.dateNow();
