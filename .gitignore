@@ -50,3 +50,5 @@ www
 plugins
 target
 ionic.config.json
+package.json
+package-lock.json

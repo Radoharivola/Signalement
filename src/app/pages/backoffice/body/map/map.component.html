@@ -1,10 +1,8 @@
-<!-- <div id="map" class="map"></div>
+<div id="map" class="map"></div>
 <div class="overlay" *ngIf="popup">
     <div class="popup">
-        <img class="img1"
-            src="https://www.omcfaa.org/pics/data/actualites/images/64-26-620x330.jpg">
-        <img class="img1"
-            src="https://www.pressafrik.com/photo/art/grande/42174533-35256191.jpg?v=1580030345">
+        <img class="img1" src="{{details.image}}">
+
         <h2>Catégorie signalement: {{details.type[0].nom}}</h2>
         <p>Date: {{details.dateSignalement}}</p>
         <a class="close" (click)="popup = false">&times;</a>
@@ -23,4 +21,4 @@
 
         </div>
     </div>
-</div> -->
+</div>

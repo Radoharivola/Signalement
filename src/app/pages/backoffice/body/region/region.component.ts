@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from "../../../../http.service";
-// import { CookieService } from 'ngx-cookie-service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-region',
@@ -37,13 +37,13 @@ export class RegionComponent implements OnInit {
     });
   }
 
-  // getSingleRegion(){
-  //   this.http.getSingleRegion(this.idTemp).subscribe((data:any)=>{
-  //     // this.nomTemp=data;
-  //     // this.setPagination(this.lim1,this.lim2);
-  //     console.log(data);
-  //   });
-  // }
+  getSingleRegion(){
+    this.http.getSingleRegion(this.idTemp).subscribe((data:any)=>{
+      // this.nomTemp=data;
+      // this.setPagination(this.lim1,this.lim2);
+      console.log(data);
+    });
+  }
 
   getTotalPage() {
     return (this.regionList.length + 5 - 1) / 5;
@@ -55,13 +55,13 @@ export class RegionComponent implements OnInit {
     this.idTemp = id;
     this.nomTemp = nom;
 
-    // this.getSingleRegion();
+    this.getSingleRegion();
 
   }
 
   clickDel(id: any, nom: any) {
     this.idTemp = id;
-    // this.getSingleRegion();
+    this.getSingleRegion();
   }
 
   ajout() {

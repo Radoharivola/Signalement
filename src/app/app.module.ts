@@ -14,7 +14,7 @@ import { TypeProblemComponent } from './pages/backoffice/body/type-problem/type-
 import {HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AuthComponent } from './pages/backoffice/auth/auth.component';
-// import { CookieService } from 'ngx-cookie-service';
+import { CookieService } from 'ngx-cookie-service';
 import { FormsModule } from '@angular/forms';
 import { BackOfficeComponent } from './pages/backoffice/back-office.component';
 import { FrontOfficeComponent } from './pages/front-office/front-office.component';
@@ -23,10 +23,10 @@ import { SignalementEnCoursComponent } from './pages/front-office/body/signaleme
 import { SignalementTermineComponent } from './pages/front-office/body/signalement-termine/signalement-termine.component';
 import { HeaderFrontComponent } from './pages/front-office/header-front/header-front.component';
 import { FooterFrontComponent } from './pages/front-office/footer-front/footer-front.component';
-// import { MapComponent } from './pages/backoffice/body/map/map.component';
+import { MapComponent } from './pages/backoffice/body/map/map.component';
 import { FicheComponent } from './pages/front-office/body/fiche/fiche.component';
 // resaka chart
-// import {NgChartsModule} from 'ng2-charts';
+import {ChartsModule} from 'ng2-charts';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +48,7 @@ import { FicheComponent } from './pages/front-office/body/fiche/fiche.component'
     HeaderFrontComponent,
     FooterFrontComponent,
     FicheComponent,
-    // MapComponent
+    MapComponent
   ],
  
   imports: [
@@ -57,9 +57,9 @@ import { FicheComponent } from './pages/front-office/body/fiche/fiche.component'
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    // NgChartsModule
+    ChartsModule
   ],
-  // providers: [CookieService],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

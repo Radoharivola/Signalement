@@ -1,16 +1,16 @@
-// import { TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
-// import { SignalementServiceService } from './signalement-service.service';
+import { SignalementServiceService } from './signalement-service.service';
 
-// describe('SignalementServiceService', () => {
-//   let service: SignalementServiceService;
+describe('SignalementServiceService', () => {
+  let service: SignalementServiceService;
 
-//   beforeEach(() => {
-//     TestBed.configureTestingModule({});
-//     service = TestBed.inject(SignalementServiceService);
-//   });
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(SignalementServiceService);
+  });
 
-//   it('should be created', () => {
-//     expect(service).toBeTruthy();
-//   });
-// });
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+});

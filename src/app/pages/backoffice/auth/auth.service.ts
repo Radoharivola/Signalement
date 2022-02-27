@@ -8,11 +8,17 @@ import { Observable } from 'rxjs';
 export class AuthService {
 
   constructor(private httpClient: HttpClient) { }
-  
+
   login(superAdmin: SuperAdmin): Observable<any> {
     const headers = { 'content-type': 'application/json' }
     const body = JSON.stringify(superAdmin);
     console.log(body)
-    return this.httpClient.post('http://localhost:8080/SULogin', body, { 'headers': headers })
+    return this.httpClient.post('https://s5-signalement.herokuapp.com/SULogin', body, { 'headers': headers })
+  }
+  loginRegion(superAdmin: SuperAdmin): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    const body = JSON.stringify(superAdmin);
+    console.log(body)
+    return this.httpClient.post('https://s5-signalement.herokuapp.com/ALogin', body, { 'headers': headers })
   }
 }
