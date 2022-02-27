@@ -6,6 +6,7 @@ import java.util.Date;
 import com.google.gson.Gson;
 
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
@@ -116,8 +117,8 @@ public class Signalement extends Fonctions {
     public Object[] getImages(Object id) throws Exception {
         Object[] imgs = null;
         Object[] result = null;
-        // String UPLOAD_DIR = new ClassPathResource("/image").getFile().getAbsolutePath() + "/";
-        String UPLOAD_DIR="https://imagestorage.c1.biz/image/";
+        String UPLOAD_DIR = new FileSystemResource("/images").getFile().getAbsolutePath();
+        // String UPLOAD_DIR="https://imagestorage.c1.biz/image/";
         try {
             // System.out.println(images);
             // if(this.images.length!= 0){
@@ -131,7 +132,7 @@ public class Signalement extends Fonctions {
             result = new Object[imgs.length];
             for (int i = 0; i < imgs.length; i++) {
                 ImageSignalement temp = (ImageSignalement) imgs[i];
-                String imagePath = UPLOAD_DIR + temp.get_ImageSignalement();
+                String imagePath = UPLOAD_DIR+"/" + temp.get_ImageSignalement();
                 try {
                     byte[] data = Files.readAllBytes(Paths.get(imagePath));
                     result[i] = "data:image/jpeg;base64,"+Base64.getEncoder().encodeToString(data);

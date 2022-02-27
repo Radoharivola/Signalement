@@ -5,6 +5,7 @@ import java.util.List;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.web.bind.annotation.*;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -538,8 +539,8 @@ public class MainController {
                 // Object[] imgs = sign.getImages(con);
                 String imageName = String.valueOf(sign.get_IdUser()) + Fonctions.imagePathDateNow() + ".jpg";
                 System.out.println(imageName);
-                // String UPLOAD_DIR = new ClassPathResource("/image").getFile().getAbsolutePath();
-                String UPLOAD_DIR ="https://imagestorage.c1.biz/image" ;
+                String UPLOAD_DIR = new FileSystemResource("/images").getFile().getAbsolutePath();
+                // String UPLOAD_DIR ="https://imagestorage.c1.biz/image" ;
                 File myFile = new File(UPLOAD_DIR + "/" + imageName);
                 byte[] imageByte = Base64.getDecoder().decode(newSignalement.getImage().split(",")[1]);
                 FileOutputStream fos = new FileOutputStream(myFile);
