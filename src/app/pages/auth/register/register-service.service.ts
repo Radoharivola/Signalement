@@ -10,6 +10,6 @@ export class RegisterServiceService {
   constructor(private http: HttpClient) { }
   register(appUser:AppUser){
     const body = JSON.stringify(appUser);
-    return this.http.post('http://localhost:8080/inscription',body,{'headers':this.headers});
+    return this.http.post('https://s5-signalement.herokuapp.com/inscription',body,{'headers':this.headers});
   }
 }

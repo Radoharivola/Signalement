@@ -8,6 +8,6 @@ export class NotificationServiceService {
 
   constructor(private http: HttpClient) { }
   getAllNotifications(){
-    return this.http.get('http://localhost:8080/notifications',{'headers':this.headers});
+    return this.http.get('https://s5-signalement.herokuapp.com/notifications',{'headers':this.headers});
   }
 }

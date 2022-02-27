@@ -8,6 +8,6 @@ export class ListServiceService {
   headers ={'content-type': 'application/json','token': localStorage.getItem('token')};
   constructor(private http:HttpClient) { }
   getAllSignalement(){
-    return this.http.get('http://localhost:8080/Signalements/User',{'headers':this.headers});
+    return this.http.get('https://s5-signalement.herokuapp.com/Signalements/User',{'headers':this.headers});
   }
 }
