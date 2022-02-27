@@ -29,6 +29,7 @@ npm-debug.log*
 /platforms
 /plugins
 /www
+target
 .angular/cache/13.2.3/angular-webpack/bf820fa00ddddc4adc637b4bce55b7ed8bc86bf3/index.pack.old
 .angular/cache/13.2.3/babel-webpack/00fc4a93e2daed7d5e29ab5bc97cc941.json
 .angular/cache/13.2.3/babel-webpack/02f4aecad7b075e018f7ca05e3911191.json
