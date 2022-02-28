@@ -12,19 +12,20 @@ export class HttpService {
   headers = { 'content-type': 'application/json', 'token': this.cookieService.get('token') };
 
 
-  apiRegion = "http://localhost:8080/Regions";
+  apiRegion = "https://s5-signalement.herokuapp.com/Regions";
 
-  apiAdmin = "http://localhost:8080/Admins"
+  apiAdmin = "https://s5-signalement.herokuapp.com/Admins"
 
-  apiTypeSignalement = "http://localhost:8080/TypeSignalements";
-
-
-  apiSignalement = "http://localhost:8080/Signalements";
+  apiTypeSignalement = "https://s5-signalement.herokuapp.com/TypeSignalements";
 
 
-  apiEnCours = "http://localhost:8080/EnCours";
+  apiNASignalement = "https://s5-signalement.herokuapp.com/NASignalements";
 
-  apiTermine = "http://localhost:8080/Termine";
+  apiSignalement = "https://s5-signalement.herokuapp.com/Signalements";
+
+  apiEnCours = "https://s5-signalement.herokuapp.com/EnCours";
+
+  apiTermine = "https://s5-signalement.herokuapp.com/Termine";
 
 
 
@@ -90,7 +91,7 @@ export class HttpService {
 
   public getSignalement(token: any) {
     // return this.httpclient.get(this.apiSignalement+"/"+token);
-    return this.httpclient.get(this.apiSignalement, { 'headers': this.headers });
+    return this.httpclient.get(this.apiSignalement+"/Regions", { 'headers': this.headers });
 
   }
 

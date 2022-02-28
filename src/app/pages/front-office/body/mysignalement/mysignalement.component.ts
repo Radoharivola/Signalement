@@ -25,6 +25,7 @@ export class MysignalementComponent implements OnInit {
 
   public getSignalement(){
     this.http.getSignalement("").subscribe((data:any)=>{
+      console.log(data);
       this.signalements=data;
       this.setPagination(this.lim1, this.lim2);
 
@@ -37,6 +38,7 @@ export class MysignalementComponent implements OnInit {
 
   public execute(){
     this.http.insertToEnCours(this.idSignTemp).subscribe((data:any)=>{
+      console.log(data);
         if(data=="Error"){
             this.msg=0;
         }

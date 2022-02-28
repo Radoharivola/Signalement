@@ -23,9 +23,7 @@
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
-					
-						<th>Nom de l'utilisateur</th>
-                        <th>Type de Signalement</th>
+                        <th>Signalement</th>
                         <th>Date</th>
 						<th></th>
                         <th>Option</th>
@@ -34,8 +32,7 @@
 				<tbody>
 					
 					<tr *ngFor="let sign of realList" >
-						<td>{{sign.user.nom}}</td>
-                        <td>{{sign.type.nom}}</td>
+                        <td>{{sign.descriptionSignalement}}</td>
                         <td>{{sign.dateSignalement}}</td>
 						<td><a id="det" data-toggle="modal" href="#fiche" (click)="setId(sign.id)" > Voir details</a></td>
 						<td>

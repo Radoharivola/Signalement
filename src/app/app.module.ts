@@ -11,7 +11,7 @@ import { RegionComponent } from './pages/backoffice/body/region/region.component
 import { AdminComponent } from './pages/backoffice/body/admin/admin.component';
 import { TypeProblemComponent } from './pages/backoffice/body/type-problem/type-problem.component';
 // import { StatsComponent } from './pages/backoffice/body/stats/stats.component';
-import {HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AuthComponent } from './pages/backoffice/auth/auth.component';
 import { CookieService } from 'ngx-cookie-service';
@@ -26,7 +26,7 @@ import { FooterFrontComponent } from './pages/front-office/footer-front/footer-f
 import { MapComponent } from './pages/backoffice/body/map/map.component';
 import { FicheComponent } from './pages/front-office/body/fiche/fiche.component';
 // resaka chart
-import {ChartsModule} from 'ng2-charts';
+import { ChartsModule } from 'ng2-charts';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,7 +50,7 @@ import {ChartsModule} from 'ng2-charts';
     FicheComponent,
     MapComponent
   ],
- 
+
   imports: [
     FormsModule,
     BrowserModule,

@@ -72,7 +72,7 @@ export class TypeProblemComponent implements OnInit {
 
   ajouterTypeSign(nom: any) {
     this.http.addTypeSign(nom).subscribe((data: any) => {
-      console.log("success");
+      console.log(data);
       this.getTypeSigns();
     });
   }
