@@ -17,12 +17,10 @@ public class MainController {
     @Autowired
     private UserTokenRepository userTokenRepository;
 
-
     @GetMapping("/userTokens")
     List<UserToken> userTokens() {
         return userTokenRepository.findAll();
     }
-
 
     @RequestMapping("/EnCours")
     public String enCours(@RequestHeader("token") String token) {
@@ -35,16 +33,10 @@ public class MainController {
                 Log log = new Log();
                 Connection con = log.getCon();
                 EnCours eC = new EnCours();
-                Object[] enCours = eC.find(con);
-                Object[] signs = new Object[enCours.length];
-                for (int i = 0; i < enCours.length; i++) {
-                    EnCours temp = new EnCours();
-                    temp = (EnCours) enCours[i];
-                    System.out.println(temp.get_IdSignalement());
-                    Object[] t = temp.getSignalement();
-                    signs[i] = t[0];
-                }
-                retour = gson.toJson(signs);
+                // ec.set_IdRegion((Integer)letMeIn.getData());
+
+                Object[] enCours = eC.getEncoursRegion(con,(String)letMeIn.getData());
+                retour = gson.toJson(enCours);
                 log.close();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -57,7 +49,6 @@ public class MainController {
 
     }
 
-
     @RequestMapping("/Termine")
     public String termine(@RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -68,16 +59,10 @@ public class MainController {
                 Log log = new Log();
                 Connection con = log.getCon();
                 Termine eC = new Termine();
-                Object[] termines = eC.find(con);
-                Object[] signs = new Object[termines.length];
-                for (int i = 0; i < termines.length; i++) {
-                    Termine temp = new Termine();
-                    temp = (Termine) termines[i];
-                    System.out.println(temp.get_IdSignalement());
-                    Object[] t = temp.getSignalement();
-                    signs[i] = t[0];
-                }
-                retour = gson.toJson(signs);
+                // ec.set_IdRegion((Integer)letMeIn.getData());
+                Object[] termines = eC.getTermineRegion(con,(String)letMeIn.getData());
+
+                retour = gson.toJson(termines);
                 log.close();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -89,7 +74,6 @@ public class MainController {
         return retour;
 
     }
-
 
     @GetMapping("/Signalements")
     public String signalements(@RequestHeader("token") String token) {
@@ -115,7 +99,6 @@ public class MainController {
 
     }
 
-
     @GetMapping("/NASignalements")
     public String nASignalements(@RequestHeader("token") String token) throws Exception {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -130,7 +113,6 @@ public class MainController {
         return result;
     }
 
-
     @PostMapping("/EnCours")
     String newEC(@RequestBody EnCours EC, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -140,8 +122,28 @@ public class MainController {
             try {
                 Log log = new Log();
                 Connection con = log.getCon();
-                EC.insert(con);
-                result = gson.toJson(new ReturnMessage(token, "success", true, true, true));
+                Termine term = new Termine();
+
+                term.set_IdSignalement(EC.get_IdSignalement());
+                Signalement sign = (Signalement) term.getSignalement();
+
+                UserNotification notif = new UserNotification();
+                notif.set_DateNotification(Fonctions.pgDateNow());
+                notif.set_IdAppUser(sign.get_IdUser());
+                notif.set_IdSignalement(sign.get_Id());
+                notif.set_NotificationDetail("Votre signalement concernant : " + sign.getTy().get_Nom() + " le "
+                        + sign.get_DateSignalement() + " est en cours de traitement.");
+                notif.set_NotificationTitle("Signalement en Cours ");
+                notif.set_Lue(0);
+
+                if (EC.find(con).length != 0 || term.find(con).length != 0) {
+                    return gson.toJson("Error");
+                } else {
+                    EC.setDate();
+                    EC.insert(con);
+                    notif.insert(con);
+                }
+
                 con.close();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -151,7 +153,6 @@ public class MainController {
         }
         return result;
     }
-
 
     @PostMapping("/Termine")
     String newTerm(@RequestBody Termine term, @RequestHeader("token") String token) {
@@ -162,8 +163,22 @@ public class MainController {
             try {
                 Log log = new Log();
                 Connection con = log.getCon();
+                term.setDate();
                 term.insert(con);
-                result = gson.toJson(new ReturnMessage(token, "success", true, true, true));
+                EnCours eC = new EnCours();
+                eC.set_IdSignalement(term.get_IdSignalement());
+                eC.delete(con);
+                Signalement sign = (Signalement) term.getSignalement();
+                UserNotification notif = new UserNotification();
+                notif.set_DateNotification(Fonctions.pgDateNow());
+                notif.set_IdAppUser(sign.get_IdUser());
+                notif.set_IdSignalement(sign.get_Id());
+                notif.set_NotificationDetail("Votre signalement concernant : " + sign.getTy().get_Nom() + " le "
+                        + sign.get_DateSignalement() + " a ete traite avec succes! Merci pour votre cooperation.");
+                notif.set_NotificationTitle("Signalement Termine ");
+                notif.set_Lue(0);
+
+                notif.insert(con);
                 con.close();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -171,9 +186,8 @@ public class MainController {
         } else {
             result = gson.toJson(new ReturnMessage(null, "invalid token", false, false, false));
         }
-        return result;
+        return "success";
     }
-
 
     @PostMapping("/Regions")
     String newReg(@RequestBody Region regi, @RequestHeader("token") String token) {
@@ -184,6 +198,11 @@ public class MainController {
             try {
                 Log log = new Log();
                 Connection con = log.getCon();
+                if (regi.get_Nom().compareTo("") == 0) {
+                    return gson.toJson("Error : vide");
+                }
+                // regi.set_Etat(1);
+                regi.insert(con);
                 regi.insert(con);
                 result = gson.toJson(new ReturnMessage(token, "success", true, true, true));
                 con.close();
@@ -195,7 +214,6 @@ public class MainController {
         }
         return result;
     }
-
 
     @RequestMapping("/Regions")
     public String getReg(@RequestHeader("token") String token) {
@@ -220,7 +238,6 @@ public class MainController {
         }
         return retour;
     }
-
 
     @GetMapping("/Regions/{id}")
     public String getSimpleReg(@PathVariable Long id, @RequestHeader("token") String token) {
@@ -247,7 +264,6 @@ public class MainController {
         return retour;
     }
 
-
     @PutMapping("/Regions")
     String updateRegion(@RequestBody Region reg, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -257,7 +273,23 @@ public class MainController {
             try {
                 Log log = new Log();
                 Connection con = log.getCon();
+                if (reg.get_Nom().compareTo("") == 0) {
+                    return gson.toJson("Erreur: vide");
+                }
+
                 reg.update(con);
+
+                // temp.set_Id(reg.get_Id());
+                // Object[] temps=temp.find(con);
+                // temp=(Region)temps[0];
+                // System.out.println(temp.get_Nom());
+
+                // System.out.println(reg.get_Nom());
+
+                // System.out.print(reg.get_Id());
+
+                // temp.set(String.valueOf(reg.get_Id()),temp,reg,con);
+
                 retour = gson.toJson("Success");
                 // sign.delete(con);
                 con.close();
@@ -269,7 +301,6 @@ public class MainController {
         }
         return retour;
     }
-
 
     @DeleteMapping("Regions/{id}")
     String del(@PathVariable Long id, @RequestHeader("token") String token) {
@@ -296,7 +327,6 @@ public class MainController {
 
     /// Admins
 
-
     @PostMapping("/Admins")
     String newAdmin(@RequestBody Admin admin, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -306,8 +336,17 @@ public class MainController {
             try {
                 Log log = new Log();
                 Connection con = log.getCon();
-                admin.insert(con);
-                result = gson.toJson(new ReturnMessage(token, "success", true, true, true));
+
+                if (admin.get_Nom().compareTo("") == 0 && admin.get_Email().compareTo("") == 0
+                        && admin.get_IdRegion() != null && admin.get_Mdp() != null) {
+                    admin.insert(con);
+                    result = gson.toJson(new ReturnMessage(token, "success", true, true, true));
+
+                } else {
+                    return gson.toJson("Error: vide");
+                }
+                // admin.set_Etat(1);
+
                 con.close();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -317,7 +356,6 @@ public class MainController {
         }
         return result;
     }
-
 
     @RequestMapping("/Admins")
     public String getAdmin(@RequestHeader("token") String token) {
@@ -344,7 +382,6 @@ public class MainController {
         return retour;
     }
 
-
     @GetMapping("/Admins/{id}")
     public String getSingleAdmin(@PathVariable Long id, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -370,9 +407,8 @@ public class MainController {
         return retour;
     }
 
-
     @PutMapping("/Admins")
-    String updateAdmin(@RequestBody Admin reg, @RequestHeader("token") String token) {
+    String updateAdmin(@RequestBody Admin admin, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
         String retour = null;
         Gson gson = new Gson();
@@ -380,8 +416,15 @@ public class MainController {
             try {
                 Log log = new Log();
                 Connection con = log.getCon();
-                reg.update(con);
-                retour = gson.toJson(new ReturnMessage(token, "success", true, true, true));
+
+                if (admin.get_Nom().compareTo("") != 0 && admin.get_Email().compareTo("") != 0
+                        && admin.get_IdRegion() != null && admin.get_Mdp().compareTo("") != 0) {
+                    admin.update(con);
+                    retour = gson.toJson(new ReturnMessage(token, "success", true, true, true));
+                } else {
+                    return gson.toJson("Error: vide");
+                }
+
                 con.close();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -391,7 +434,6 @@ public class MainController {
         }
         return retour;
     }
-
 
     @DeleteMapping("/Admins/{id}")
     String delAdmin(@PathVariable Long id, @RequestHeader("token") String token) {
@@ -418,7 +460,6 @@ public class MainController {
 
     /// End Admin
 
-
     @PostMapping("/TypeSignalements")
     String newType(@RequestBody TypeSignalement regi, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -428,6 +469,10 @@ public class MainController {
             try {
                 Log log = new Log();
                 Connection con = log.getCon();
+                if (regi.get_Nom().compareTo("") == 0) {
+                    return gson.toJson("Error: vide");
+
+                }
                 regi.insert(con);
                 result = gson.toJson(new ReturnMessage(token, "success", true, true, true));
                 con.close();
@@ -439,7 +484,6 @@ public class MainController {
         }
         return result;
     }
-
 
     @RequestMapping("/TypeSignalements")
     public String getType(@RequestHeader("token") String token) {
@@ -464,7 +508,6 @@ public class MainController {
         return result;
     }
 
-
     @PutMapping("/TypeSignalements")
     String updateRegion(@RequestBody TypeSignalement reg, @RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -474,7 +517,11 @@ public class MainController {
             try {
                 Log log = new Log();
                 Connection con = log.getCon();
+                if (reg.get_Nom().compareTo("") == 0) {
+                    return gson.toJson("Error: vide");
+                }
                 reg.update(con);
+                // sign.delete(con);
                 retour = gson.toJson(new ReturnMessage(token, "success", true, true, true));
                 con.close();
             } catch (Exception e) {
@@ -485,7 +532,6 @@ public class MainController {
         }
         return retour;
     }
-
 
     @DeleteMapping("/TypeSignalements/{id}")
     String delType(@PathVariable Long id, @RequestHeader("token") String token) {
@@ -566,7 +612,6 @@ public class MainController {
         return gson.toJson(retour);
     }
 
-
     @GetMapping("/Signalements/User")
     String signs(@RequestHeader("token") String token) {
         ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
@@ -590,7 +635,6 @@ public class MainController {
         return retour;
     }
 
-
     @GetMapping("/Signalements/Regions/{id}")
     public String signalements(@PathVariable Long id) {
         String retour = null;
@@ -612,7 +656,6 @@ public class MainController {
         return retour;
 
     }
-
 
     @GetMapping("/Signalements/{id}")
     String fiche(@PathVariable Long id, @RequestHeader("token") String token) {
@@ -636,7 +679,6 @@ public class MainController {
         return retour;
     }
     // notifications debut
-
 
     @GetMapping("/notifications")
     String getAllNotifications(@RequestHeader("token") String token) throws Exception {
@@ -706,7 +748,6 @@ public class MainController {
         return json.toJson(stat);
     }
 
-
     @GetMapping("/typeGlobalStat/{month}/{year}")
     String typeGlobalStat(@PathVariable Integer month, @PathVariable Integer year) throws Exception {
         Log log = null;
@@ -750,7 +791,6 @@ public class MainController {
         return json.toJson(stat);
     }
 
-
     @GetMapping("/signalementRegionStat/{year}")
     String signalementRegionStat(@PathVariable Integer year) throws Exception {
         Log log = null;
@@ -789,7 +829,6 @@ public class MainController {
         }
         return json.toJson(stat);
     }
-
 
     @GetMapping("/signalementRegionStat/{year}/{month}")
     String signalementRegionStatym(@PathVariable Integer year, @PathVariable Integer month) throws Exception {
@@ -868,7 +907,6 @@ public class MainController {
     }
     // affectation fin
 
-
     @PostMapping("/Login")
     String login(@RequestBody AppUser user) {
         Gson json = new Gson();
@@ -903,7 +941,6 @@ public class MainController {
         }
         return json.toJson(result);
     }
-
 
     @PostMapping("/SULogin")
     String suLogin(@RequestBody SuperAdmin user) throws Exception {
@@ -944,7 +981,6 @@ public class MainController {
         return json.toJson(result);
     }
 
-
     @PostMapping("/ALogin")
     String aLogin(@RequestBody Admin user) throws Exception {
         Gson json = new Gson();
@@ -964,7 +1000,7 @@ public class MainController {
                 if (eUserResult.length != 0) {
                     Object[] emUserResult = emUser.find(con);
                     if (emUserResult.length != 0) {
-                        Integer idUser = ((Admin) emUserResult[0]).get_Id();
+                        Integer idUser = Integer.valueOf(((Admin) emUserResult[0]).get_IdRegion());
                         UserToken token = new UserToken(idUser, Fonctions.createToken(email));
                         userTokenRepository.insert(token);
                         // token.insert(con);
@@ -1011,7 +1047,6 @@ public class MainController {
         }
         return gson.toJson(new ReturnMessage(token, message, conStatus, tokenStatus, null));
     }
-
 
     @GetMapping("/testToken")
     String testToken() {
