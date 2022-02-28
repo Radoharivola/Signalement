@@ -635,23 +635,29 @@ public class MainController {
         return retour;
     }
 
-    @GetMapping("/Signalements/Regions/{id}")
-    public String signalements(@PathVariable Long id) {
+    @GetMapping("/Signalements/Regions")
+    public String signalements(@RequestHeader('token') String token) {
+        ReturnMessage letMeIn = Fonctions.verifyToken(token, userTokenRepository);
         String retour = null;
-        try {
-            Log log = new Log();
-            Connection con = log.getCon();
-            Gson gson = new Gson();
-            Admin admin = new Admin();
-            Signalement sign = new Signalement();
-            sign.set_IdRegion(id);
-            Object[] signs = sign.find(con);
-            retour = gson.toJson(signs);
-            log.close();
+        
+        Gson gson = new Gson();
+        if (letMeIn.getConnectionStatus()) {
+            try {
+                Log log = new Log();
+                Connection con = log.getCon();
+                Admin admin = new Admin();
+                Signalement sign = new Signalement();
+                sign.set_IdRegion((Integer)letMeIn.getData());
+                Object[] signs = sign.find(con);
+                retour = gson.toJson(signs);
+                log.close();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return e.getMessage();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return e.getMessage();
+            }
+        } else {
+            retour = gson.toJson(new ReturnMessage(null, "invalid token", false, false, false));
         }
         return retour;
 
